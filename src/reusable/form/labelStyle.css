@@ -1,0 +1,19 @@
+label#form-label {
+  color: #505050;
+}
+input#outlined-basic {
+  height: 48px;
+  font-size: 14px;
+  font-family: var(--font-family-monospace);
+  color: var(--midas-color-dark-blue) !important;
+  /* width: 100%; */
+}
+.custom-div {
+  background: rgba(250, 251, 252, 0.38);
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  color: var(--midas-color-dark-blue);
+  width: 100%;
+  padding: 1rem;
+  margin: 0 0.5rem 0.96rem;
+}
