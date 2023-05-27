@@ -4,7 +4,7 @@ import {IntlProvider} from 'react-intl';
 import {jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
-
+import './style.css';
 
 import theme from './themes';
 import Routes from './routes';

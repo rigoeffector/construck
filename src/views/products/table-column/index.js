@@ -2,8 +2,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MoreIcon from '@mui/icons-material/More';
 import {GridActionsCellItem} from '@mui/x-data-grid';
+import './style.css';
 export const columns = [
-    {field: 'id', headerName: 'ID', width: 90},
+    {field: 'id', headerName: 'ID', width: 30},
+    {
+        field: 'image',
+        headerName: 'Image',
+        renderCell: (params) => {
+            return (
+                <div>
+                    <img src={'/assets/images/users/meat.png'} alt="" id="product_img" />
+                </div>
+            );
+        }
+    },
     {
         field: 'firstName',
         headerName: 'Product name',
@@ -18,24 +30,25 @@ export const columns = [
     },
     {
         field: 'age',
-        headerName: 'Available Quantity',
-        width: 150,
+        headerName: 'Quantity',
+        width: 100,
         editable: true
     },
+    
     {
-        field: 'age',
+        field: 'price',
         headerName: 'Price',
         type: 'number',
-        width: 110,
+        width: 100,
         editable: true
     },
+    
     {
-        field: 'fullName',
-        headerName: 'Description',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`
+        field: 'isAvaible',
+        headerName: 'Available',
+        type: 'number',
+        width: 100,
+        editable: true
     },
     {
         field: '',

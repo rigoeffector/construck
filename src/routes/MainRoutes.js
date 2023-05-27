@@ -12,6 +12,7 @@ const OrderCheckoutPage = lazy(() => import('../views/orderCheckout'));
 const TransactionsPage = lazy(() => import('../views/transactions'));
 const SettingsPage = lazy(() => import('../views/settings'));
 const UsersListPage = lazy(() => import('../views/users'));
+const Vendors = lazy(() => import('../views/vendors'));
 
 const MainRoutes = () => {
     const location = useLocation();
@@ -28,6 +29,7 @@ const MainRoutes = () => {
                 '/dashboard/checkout',
                 '/dashboard/settings',
                 '/dashboard/users',
+                '/dashboard/vendors',
 
             ]}
         >
@@ -42,6 +44,7 @@ const MainRoutes = () => {
                     <Route path="/dashboard/settings" component={SettingsPage} />
                     <Route path="/dashboard/checkout" component={OrderCheckoutPage} />
                     <Route path="/dashboard/users" component={UsersListPage} />
+                    <Route path="/dashboard/vendors" component={Vendors} />
                 </Switch>
             </MainLayout>
         </Route>

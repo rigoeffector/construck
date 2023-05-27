@@ -7,38 +7,24 @@ import DashBoardLayoutForPage from '../../reusable/dashboard-layouts';
 const columns = [
     {field: 'id', headerName: 'ID', width: 20},
     {
-        field: 'Product name',
-        headerName: 'product',
-        width: 160,
-        editable: true,
-        renderCell: (params) => {
-            return (
-                <div>
-                    <img src={'/assets/images/users/meat.png'} alt="" id="product_img" />
-                </div>
-            );
-        }
+        field: 'firstName',
+        headerName: 'First name',
+        width: 150,
+        editable: true
     },
     {
-        field: 'firstName',
-        headerName: 'Full Names',
+        field: 'lastName',
+        headerName: 'Last name',
         width: 150,
-        editable: true,
-        renderCell: (params) => `${params.row.firstName}  ${params.row.lastName}`
+        editable: true
     },
-    
     {
         field: 'contact',
         headerName: 'Contact',
         width: 100,
         editable: true
     },
-    {
-        field: 'amount',
-        headerName: 'Total Amount Paid',
-        width: 150,
-        editable: true
-    },
+   
     {
         field: 'email',
         headerName: 'Email',
@@ -51,13 +37,7 @@ const columns = [
         width: 160,
         editable: true
     },
-   
-    {
-        field: 'payment',
-        headerName: 'Payment Mode',
-        width: 160,
-        editable: true
-    },
+    
 ];
 
 const rows = [
@@ -68,7 +48,7 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',        address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 2,
@@ -77,7 +57,7 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',        address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 3,
@@ -87,7 +67,7 @@ const rows = [
         email: 'rigo@gmail.com',
         contact: '0785674809',
         address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 4,
@@ -96,9 +76,9 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',      address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
-    {id: 5, lastName: 'Targaryen', firstName: 'Daenerys', payment: 'MTN Momo', email: 'rigo@gmail.com'},
+    {id: 5, lastName: 'Targaryen', firstName: 'Daenerys', payment: 'Bank Account', email: 'rigo@gmail.com'},
     {
         id: 6,
         lastName: 'Melisandre',
@@ -106,7 +86,7 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',      address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 7,
@@ -115,7 +95,7 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',        address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 8,
@@ -124,23 +104,23 @@ const rows = [
         payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',        address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     },
     {
         id: 9,
         lastName: 'Roxie',
         firstName: 'Harvey',
-        payment: 'MTN Momo',
+        payment: 'Bank Account',
         email: 'rigo@gmail.com',
         contact: '0785674809',        address: 'Kigali KK 140 ST',
-        amount: '4500 RWF'
+        price: '4500 RWF'
     }
 ];
 
-export default function Transactions() {
+export default function Vendors() {
     return (
         <BodyContainer>
-            <DashBoardLayoutForPage title={'All Transactions Information'} contents={<DataTable rows={rows} columns={columns} />} />
+            <DashBoardLayoutForPage title={'All Vendors Information'} contents={<DataTable rows={rows} columns={columns} />} />
         </BodyContainer>
     );
 }

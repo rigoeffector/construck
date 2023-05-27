@@ -3,7 +3,9 @@ import {FormattedMessage} from 'react-intl';
 
 import {
     IconAtom,
+    IconUserOff,
     IconBasket,
+    IconBrandProducthunt,
     IconBellRinging,
     IconBorderAll,
     IconBorderRadius,
@@ -12,7 +14,9 @@ import {
     IconBrandGravatar,
     IconBrush,
     IconBug,
+    IconTruckDelivery,
     IconCalendar,
+    IconTransferIn,
     IconChartArcs,
     IconChartCandle,
     IconChartInfographic,
@@ -52,12 +56,13 @@ import {
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
-
+    IconUserOff:IconUserOff,
     IconChartArcs: IconChartArcs,
     IconClipboardList: IconClipboardList,
     IconChartInfographic: IconChartInfographic,
-
+    IconTruckDelivery:IconTruckDelivery,
     IconForms: IconForms,
+    IconTransferIn:IconTransferIn,
     IconReceipt2: IconReceipt2,
     IconPencil: IconPencil,
     IconPalette: IconPalette,
@@ -79,6 +84,7 @@ const icons = {
     IconBorderRadius: IconBorderRadius,
     IconBrandGravatar: IconBrandGravatar,
     IconShape: IconShape,
+    IconBrandProducthunt:IconBrandProducthunt,
     IconUserCheck: IconUserCheck,
     IconId: IconId,
     IconLayoutList: IconLayoutList,
@@ -111,7 +117,7 @@ const menuItems = {
                     title: <FormattedMessage id="Dashboard" />,
                     type: 'item',
                     url: '/dashboard/home',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconMenu'],
                     breadcrumbs: false
                 },
                 {
@@ -119,7 +125,7 @@ const menuItems = {
                     title: <FormattedMessage id="Products" />,
                     type: 'item',
                     url: '/dashboard/products',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconBrandProducthunt'],
                     breadcrumbs: false
                 },
                 {
@@ -127,7 +133,7 @@ const menuItems = {
                     title: <FormattedMessage id="Transactions" />,
                     type: 'item',
                     url: '/dashboard/transactions',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconTransferIn'],
                     breadcrumbs: false
                 },
                 {
@@ -135,15 +141,23 @@ const menuItems = {
                     title: <FormattedMessage id="Delivery Track" />,
                     type: 'item',
                     url: '/dashboard/delivery-tracking',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconTruckDelivery'],
                     breadcrumbs: false
                 },
                 {
                     id: 'dash-users',
-                    title: <FormattedMessage id="Users" />,
+                    title: <FormattedMessage id="Customers" />,
                     type: 'item',
                     url: '/dashboard/users',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconPictureInPicture'],
+                    breadcrumbs: false
+                },
+                {
+                    id: 'dash-vendors',
+                    title: <FormattedMessage id="Vendors" />,
+                    type: 'item',
+                    url: '/dashboard/vendors',
+                    icon: icons['IconUserOff'],
                     breadcrumbs: false
                 },
                 {
@@ -151,7 +165,7 @@ const menuItems = {
                     title: <FormattedMessage id="Settings" />,
                     type: 'item',
                     url: '/dashboard/settings',
-                    icon: icons['IconDashboard'],
+                    icon: icons['IconBrandGravatar'],
                     breadcrumbs: false
                 }
             ]
