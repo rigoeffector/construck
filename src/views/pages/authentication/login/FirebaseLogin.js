@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     Box,
     Button,
     Checkbox,
+    CircularProgress,
     Divider,
     FormControl,
     FormControlLabel,
@@ -25,6 +27,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Google from './../../../../assets/images/icons/social-google.svg';
+import {LOGIN_USER_REQUEST, LOGIN_USER_RESET} from '../../../../reducers/auth/constant';
+import DaaDAlerts from '../../../../reusable/alerts';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -107,14 +111,16 @@ const useStyles = makeStyles((theme) => ({
 
 const FirebaseLogin = (props, {className, ...rest}) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {
+        auth: {data, loading, message: error_message, success, error}
+    } = useSelector((state) => state);
     const customization = useSelector((state) => state.customization);
     const scriptedRef = useScriptRef();
     const [showPassword, setShowPassword] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
 
-    const googleHandler = async () => {
-
-    };
+    const googleHandler = async () => {};
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -124,6 +130,9 @@ const FirebaseLogin = (props, {className, ...rest}) => {
         event.preventDefault();
     };
 
+    const handleClose = () => {
+        dispatch({type: LOGIN_USER_RESET});
+    };
     return (
         <React.Fragment>
             <Grid container direction="column" justifyContent="center" spacing={2}>
@@ -165,58 +174,51 @@ const FirebaseLogin = (props, {className, ...rest}) => {
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
-                    submit: null
+                    username: 'admin@daada.app',
+                    password: '!Daada123',
+                    api_key: ''
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+                    username: Yup.string().email('Must be a valid username').max(255).required('Username is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
-                onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
-                    try {
-
-                        if (scriptedRef.current) {
-                            setStatus({success: true});
-                            setSubmitting(false);
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        if (scriptedRef.current) {
-                            setStatus({success: false});
-                            setErrors({submit: err.message});
-                            setSubmitting(false);
-                        }
-                    }
+                onSubmit={async (values) => {
+                    const keys = process.env.REACT_APP_ADDAX_API_KEY;
+                    const payload = {
+                        ...values,
+                        api_key: keys
+                    };
+                    debugger;
+                    dispatch({type: LOGIN_USER_REQUEST, payload});
                 }}
             >
                 {({errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values}) => (
                     <form noValidate onSubmit={handleSubmit} className={clsx(classes.root, className)} {...rest}>
                         <FormControl
                             fullWidth
-                            error={Boolean(touched.email && errors.email)}
+                            error={Boolean(touched.username && errors.username)}
                             className={classes.loginput}
                             variant="outlined"
                         >
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-login"> Username</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-login"
-                                type="email"
-                                value={values.email}
-                                name="email"
+                                type="text"
+                                value={values.username}
+                                name="username"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                label='Email Address / Username'
+                                label="Username"
                                 inputProps={{
                                     classes: {
                                         notchedOutline: classes.notchedOutline
                                     }
                                 }}
                             />
-                            {touched.email && errors.email && (
+                            {touched.username && errors.username && (
                                 <FormHelperText error id="standard-weight-helper-text-email-login">
                                     {' '}
-                                    {errors.email}{' '}
+                                    {errors.username}{' '}
                                 </FormHelperText>
                             )}
                         </FormControl>
@@ -247,7 +249,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label='Password'
+                                label="Password"
                                 inputProps={{
                                     classes: {
                                         notchedOutline: classes.notchedOutline
@@ -276,10 +278,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                                 />
                             </Grid>
                             <Grid item>
-                                <Typography
-                                    variant="subtitle1">
-                                    Forgot Password?
-                                </Typography>
+                                <Typography variant="subtitle1">Forgot Password?</Typography>
                             </Grid>
                         </Grid>
                         {errors.submit && (
@@ -291,19 +290,22 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                         <Box mt={2}>
                             <Button
                                 disableElevation
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || loading}
                                 fullWidth
                                 size="large"
                                 type="submit"
                                 variant="contained"
                                 className={classes.login}
                             >
-                                Sign in
+                                {loading ? <CircularProgress size={15} /> : 'Sign In'}
                             </Button>
                         </Box>
                     </form>
                 )}
             </Formik>
+            {!success && !loading && error_message && (
+                <DaaDAlerts show={!success && !loading} message={error_message} handleClose={handleClose} variant={'error'} />
+            )}
         </React.Fragment>
     );
 };

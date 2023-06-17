@@ -2,16 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 
-import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import App from './App';
-import reducer from './store/reducer';
+
 import config from './config';
 import './assets/scss/style.scss';
 import * as serviceWorker from './serviceWorker';
-
-const store = createStore(reducer);
+import store from './store';
 
 ReactDOM.render(
     <Provider store={store}>

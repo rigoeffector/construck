@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid} from '@material-ui/core';
-
+import { withRouter } from 'react-router-dom';
 import {gridSpacing} from '../../store/constant';
 import EarningCard from '../../ui-component/cards/EarningCard';
 import TotalChartCard from '../../ui-component/cards/TotalChartCard';
@@ -46,4 +46,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);
