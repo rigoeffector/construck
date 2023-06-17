@@ -1,4 +1,9 @@
-import {LOGIN_USER_ERROR, LOGIN_USER_LOADING, LOGIN_USER_SUCCESS, LOGIN_USER_RESET, LOGIN_USER_REQUEST} from './constant';
+import {
+    GET_VENDORS_LIST_ERROR,
+    GET_VENDORS_LIST_LOADING,
+    GET_VENDORS_LIST_SUCCESS,
+    GET_VENDORS_LIST_RESET,
+} from './constant';
 
 const initialState = {
     loading: false,
@@ -8,12 +13,12 @@ const initialState = {
     message: null
 };
 
-const loginUserReducer = (state = initialState, action) => {
+const getVendorsListReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case LOGIN_USER_LOADING:
+        case GET_VENDORS_LIST_LOADING:
             return {...state, loading: payload.loading};
-        case LOGIN_USER_SUCCESS:
+        case GET_VENDORS_LIST_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -21,13 +26,13 @@ const loginUserReducer = (state = initialState, action) => {
                 error: null,
                 data: payload.result
             };
-        case LOGIN_USER_ERROR:
+        case GET_VENDORS_LIST_ERROR:
             return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case LOGIN_USER_RESET:
+        case GET_VENDORS_LIST_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default loginUserReducer;
+export default getVendorsListReducer;

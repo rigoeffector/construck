@@ -9,8 +9,9 @@ import App from './App';
 import config from './config';
 import './assets/scss/style.scss';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
-
+import storeConfig from './store/store.dev';
+// import store from './store';
+const store = storeConfig();
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter basename={config.basename}>

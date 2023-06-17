@@ -23,7 +23,6 @@ import {
 
 import {IconLogout, IconSettings} from '@tabler/icons';
 
-
 import User1 from './../../../../assets/images/users/user-round.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -112,8 +111,9 @@ const ProfileSection = () => {
     const anchorRef = React.useRef(null);
     const handleLogout = async () => {
         try {
-            //handleClose();
-            //await logout();
+            localStorage.clear();
+            // FIX ME
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -136,6 +136,10 @@ const ProfileSection = () => {
 
         prevOpen.current = open;
     }, [open]);
+
+    const {
+        auth: {data}
+    } = useSelector((state) => state);
     return (
         <React.Fragment>
             <Chip
@@ -184,14 +188,40 @@ const ProfileSection = () => {
                                 <Card elevation={16}>
                                     <CardContent className={classes.cardContent}>
                                         <Grid container direction="column" spacing={0}>
-                                            <Grid item className={classes.flex}>
-                                                <Typography variant="h4">Good Morning,</Typography>
-                                                <Typography component="span" variant="h4" className={classes.name}>
-                                                    Rigo Ninja
+                                            <Grid
+                                                item
+                                                className={classes.flex}
+                                                sx={{
+                                                    display: 'block !important'
+                                                }}
+                                            >
+                                                <Typography variant="h4">Welcome,</Typography>
+                                                <Typography
+                                                    component="span"
+                                                    variant="h4"
+                                                    className={classes.name}
+                                                    sx={{
+                                                        fontSize: '18px',
+                                                        fontWeight: '700',
+                                                        margin: '13px 0px'
+                                                    }}
+                                                >
+                                                    {data?.username}
+                                                    <Grid item>
+                                                        <Typography variant="subtitle2">{data?.role}</Typography>
+                                                    </Grid>
                                                 </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="subtitle2">Project Admin</Typography>
+
+                                                <Typography
+                                                    component="span"
+                                                    variant="h4"
+                                                    className={classes.name}
+                                                    sx={{
+                                                        display: 'block'
+                                                    }}
+                                                >
+                                                    Last Login: {data?.last_login}
+                                                </Typography>
                                             </Grid>
                                         </Grid>
 

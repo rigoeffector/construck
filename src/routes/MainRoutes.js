@@ -37,14 +37,14 @@ const MainRoutes = () => {
                 <Switch location={location} key={location.pathname}>
                     <Route path="/user/login" component={FirebaseLogin} />
                     <ProtectedRoute exact path="/dashboard" component={DashboardDefault} />
-                    <Route path="/dashboard/products" component={ProductsPage} />
-                    <Route path="/dashboard/product-details" component={ProductDetailsPage} />
-                    <Route path="/dashboard/delivery-tracking" component={DeliveryTrackingPage} />
-                    <Route path="/dashboard/transactions" component={TransactionsPage} />
-                    <Route path="/dashboard/settings" component={SettingsPage} />
-                    <Route path="/dashboard/checkout" component={OrderCheckoutPage} />
-                    <Route path="/dashboard/users" component={UsersListPage} />
-                    <Route path="/dashboard/vendors" component={Vendors} />
+                    <ProtectedRoute path="/dashboard/products" component={ProductsPage} />
+                    <ProtectedRoute path="/dashboard/product-details" component={ProductDetailsPage} />
+                    <ProtectedRoute path="/dashboard/delivery-tracking" component={DeliveryTrackingPage} />
+                    <ProtectedRoute path="/dashboard/transactions" component={TransactionsPage} />
+                    <ProtectedRoute path="/dashboard/settings" component={SettingsPage} />
+                    <ProtectedRoute path="/dashboard/checkout" component={OrderCheckoutPage} />
+                    <ProtectedRoute path="/dashboard/users" component={UsersListPage} />
+                    <ProtectedRoute path="/dashboard/vendors" component={Vendors} />
                 </Switch>
             </MainLayout>
         </Route>

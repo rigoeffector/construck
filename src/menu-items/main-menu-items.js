@@ -116,7 +116,7 @@ const menuItems = {
                     id: 'dash-default',
                     title: <FormattedMessage id="Dashboard" />,
                     type: 'item',
-                    url: '/dashboard/home',
+                    url: '/dashboard',
                     icon: icons['IconMenu'],
                     breadcrumbs: false
                 },

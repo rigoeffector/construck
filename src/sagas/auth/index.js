@@ -13,11 +13,14 @@ export function* loginRequestSaga(action) {
         const {payload} = action;
         const response = yield call(loginApi.auth.login, {...payload});
         if (response && response.success) {
-            history.push('/dashboard');
-            const ctx = buildContext(response.data || {});
+            const ctx = buildContext(response.result || {});
+
             saveState('ctx', ctx);
             yield put(success('CONTEXT', ctx));
             yield put(success(LOGIN_USER_SUCCESS, response));
+            history.push('/dashboard');
+            yield delay(1000);
+            window.location.reload();
         } else {
             yield put(error(LOGIN_USER_ERROR, response));
             yield delay(1000);
