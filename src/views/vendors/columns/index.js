@@ -1,4 +1,8 @@
-export const columns = [
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
+import {GridActionsCellItem} from '@mui/x-data-grid';
+export const columns = (editAction, deleteAction) => [
     {
         field: 'name',
         headerName: 'Vendor Name',
@@ -17,7 +21,6 @@ export const columns = [
         width: 150,
         editable: true
     },
-
     {
         field: 'email',
         headerName: 'Vendor Email',
@@ -29,5 +32,35 @@ export const columns = [
         headerName: 'Created Time',
         width: 160,
         editable: true
+    },
+    {
+        field: '',
+        headerName: 'Actions',
+        type: 'actions',
+        width: 150,
+        getActions: (params) => [
+            <div className="actions_button">
+                <GridActionsCellItem
+                    style={{
+                        border: '1px solid'
+                    }}
+                    icon={<EditIcon />}
+                    label="Edit"
+                    color="success"
+                    onClick={() => editAction(params)}
+                />
+            </div>,
+            <div className="actions_button">
+                <GridActionsCellItem
+                    style={{
+                        border: '1px solid'
+                    }}
+                    icon={<DeleteForeverIcon />}
+                    label="Delete"
+                    color="error"
+                    onClick={() => deleteAction(params)}
+                />
+            </div>
+        ]
     }
 ];

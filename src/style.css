@@ -1,3 +1,30 @@
 img#product_img {
     width: 50px;
 }
+.sweet-alert h2 {
+    font-size: 20px !important;
+    line-height: 30px !important;
+    font-weight: 200 !important;
+}
+.sweet-alert a.btn.btn-lg.btn-secondary {
+    background: #e7e7e7;
+    color: #635d5d;
+    text-decoration: none;
+    height: 46px;
+    width: 100px;
+    line-height: 46px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+.sweet-alert a.btn.btn-lg.btn-danger {
+    background: #6c412c;
+    width: 100px;
+    border-radius: 8px;
+}
+.sweet-alert a.btn.btn-lg.btn-danger {
+    HEIGHT: 46PX;
+    color: wheat;
+    text-decoration: none;
+    line-height: 46px;
+    font-weight: 700;
+}

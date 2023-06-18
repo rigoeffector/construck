@@ -7,5 +7,11 @@ export  const vendorsApi = {
     },
     create: {
         vendor: (data) => request('POST', `entity/save`, data, true)
+    },
+    update: {
+        vendor: (data) => request('POST', `entity/instance/update`, data, true)
+    },
+    delete: {
+        vendor: (data) => request('POST', `entity/instance/delete`, data, true)
     }
 };
