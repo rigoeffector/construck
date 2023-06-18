@@ -12,19 +12,26 @@ import createProductCategoryReducer from './product/categories/create';
 import updateProductCategoryReducer from './product/categories/update';
 import deleteProductCategoryReducer from './product/categories/delete';
 import readProductCategoriesReducer from './product/categories/read';
+import updateProductReducer from './product/update';
+import deleteProductReducer from './product/delete';
+import readProductsListReducer from './product/read';
 const rootReducer = combineReducers({
     customization: customizationReducer,
     snackbar: snackbarReducer,
     auth: loginUserReducer,
     listVendors: getVendorsListReducer,
     createVendor: createVendorReducer,
-    createProduct: createProductReducer,
     updateVendor: updateVendorReducer,
     deleteVendor: deleteVendorReducer,
+    createProduct: createProductReducer,
+    updateProduct: updateProductReducer,
+    deleteProduct: deleteProductReducer,
+    listProducts: readProductsListReducer,
     listProductCategories: readProductCategoriesReducer,
     createProductCategory: createProductCategoryReducer,
     updateProductCategory: updateProductCategoryReducer,
-    deleteProductCategory: deleteProductCategoryReducer
+    deleteProductCategory: deleteProductCategoryReducer,
+
 });
 
 export default rootReducer;
