@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+
 import React, {useEffect, useState} from 'react';
 import BodyContainer from '../../reusable/container';
 import {useFormik} from 'formik';
@@ -6,7 +7,7 @@ import * as yup from 'yup';
 import DataTable from '../../reusable/table';
 import DashBoardLayoutForPage from '../../reusable/dashboard-layouts';
 import {useDispatch, useSelector} from 'react-redux';
-import {GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
+import {CREATE_VENDOR_REQUEST, GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
 import {CircularProgress} from '@mui/material';
 import DaaDAlerts from '../../reusable/alerts';
 import {columns} from './columns';
@@ -24,7 +25,8 @@ export default function Vendors() {
     const dispatch = useDispatch();
     const {
         auth,
-        listVendors: {loading, success, data, message}
+        listVendors: {loading, success, data},
+        createVendor: {loading: createLoading, success: successCreate, message}
     } = useSelector((state) => state);
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export default function Vendors() {
         };
         debugger;
         dispatch({type: GET_VENDORS_LIST_REQUEST, payload});
-    }, []);
+    }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
 
     const handleAddNewVendor = () => {
         setThisState((prev) => ({
@@ -66,7 +68,8 @@ export default function Vendors() {
                 api_key: keys,
                 details: {...values}
             };
-            console.log(payload);
+
+            dispatch({type: CREATE_VENDOR_REQUEST, payload});
         }
     });
 
@@ -76,6 +79,12 @@ export default function Vendors() {
             showAddNewModal: false
         }));
     };
+
+    useEffect(() => {
+        if (successCreate) {
+            handleClose();
+        }
+    }, [successCreate]);
     return (
         <BodyContainer>
             <DaaDaModal title={'Add New Vendor'} show={thisState.showAddNewModal} handleClose={handleClose}>
@@ -156,7 +165,8 @@ export default function Vendors() {
                         </Grid>
                     </Grid>
 
-                    <SubmitButton isLoading={false}>Save</SubmitButton>
+                    <SubmitButton isLoading={createLoading}>Save</SubmitButton>
+                    {message && !successCreate && <DaaDAlerts show={!successCreate} message={message} variant={'error'} />}
                 </form>
             </DaaDaModal>
             <DashBoardLayoutForPage
@@ -172,6 +182,7 @@ export default function Vendors() {
                     )
                 }
             />
+            {!loading && successCreate && <DaaDAlerts show={successCreate} message={'Vendor is created successful'} variant={'success'} />}
         </BodyContainer>
     );
 }

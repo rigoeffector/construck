@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function DaaDAlerts({ message, show, handleClose, variant, action }) {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', margin: '10px 0px' }}>
       <Collapse in={show}>
         <Alert
           severity={variant}

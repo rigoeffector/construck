@@ -1,9 +1,4 @@
-import {
-    CREATE_VENDOR_ERROR,
-    CREATE_VENDOR_LOADING,
-    CREATE_VENDOR_SUCCESS,
-    CREATE_VENDOR_RESET,
-} from './constant';
+import {CREATE_VENDOR_ERROR, CREATE_VENDOR_LOADING, CREATE_VENDOR_SUCCESS, CREATE_VENDOR_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -24,7 +19,8 @@ const createVendorReducer = (state = initialState, action) => {
                 loading: false,
                 success: payload.success,
                 error: null,
-                data: payload.result
+                data: payload.result,
+                message: payload.message
             };
         case CREATE_VENDOR_ERROR:
             return {...state, loading: false, error: payload.error, message: payload.error_message};

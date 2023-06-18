@@ -5,6 +5,7 @@ const SubmitButton = ({children, isLoading}) => {
     return (
         <div>
             <Button
+                disabled={isLoading}
                 variant="contained"
                 type="submit"
                 style={{

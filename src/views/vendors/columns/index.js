@@ -21,7 +21,7 @@ export const columns = [
     {
         field: 'email',
         headerName: 'Vendor Email',
-        width: 200,
+        width: 250,
         editable: true
     },
     {

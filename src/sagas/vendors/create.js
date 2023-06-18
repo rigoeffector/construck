@@ -10,15 +10,18 @@ import {
     CREATE_VENDOR_SUCCESS
 } from '../../reducers/vendors/constant';
 import {vendorsApi} from '../../api/vendors';
+import {listVendorsRequestSaga} from './read';
 
 export function* createVendorRequestSaga(action) {
     try {
         yield put(loading(CREATE_VENDOR_LOADING, {loading: true}));
         const {payload} = action;
         const response = yield call(vendorsApi.create.vendor, {...payload});
-        debugger;
         if (response && response.success) {
             yield put(success(CREATE_VENDOR_SUCCESS, response));
+            yield* listVendorsRequestSaga(action);
+            yield delay(2000);
+            yield put({type: CREATE_VENDOR_RESET});
         } else {
             yield put(error(CREATE_VENDOR_ERROR, response));
             yield delay(2000);
