@@ -2,7 +2,7 @@ import React, {lazy} from 'react';
 import {Route, Switch, useLocation} from 'react-router-dom';
 
 import MainLayout from './../layout/MainLayout';
-import FirebaseLogin from '../views/pages/authentication/login/FirebaseLogin';
+// import FirebaseLogin from '../views/pages/authentication/login/FirebaseLogin';
 import ProtectedRoute from './ProtectedRoute';
 
 const DashboardDefault = lazy(() => import('../views/dashboard/Default'));
@@ -21,7 +21,7 @@ const MainRoutes = () => {
     return (
         <Route
             path={[
-                '/user/login',
+                // '/user/login',
                 '/dashboard',
                 '/dashboard/products',
                 '/dashboard/product-details',
@@ -35,7 +35,7 @@ const MainRoutes = () => {
         >
             <MainLayout showBreadcrumb={true}>
                 <Switch location={location} key={location.pathname}>
-                    <Route path="/user/login" component={FirebaseLogin} />
+                    {/* <Route path="/user/login" component={FirebaseLogin} /> */}
                     <ProtectedRoute exact path="/dashboard" component={DashboardDefault} />
                     <ProtectedRoute path="/dashboard/products" component={ProductsPage} />
                     <ProtectedRoute path="/dashboard/product-details" component={ProductDetailsPage} />
