@@ -6,7 +6,6 @@ import reducers from '../reducers';
 import logger from 'redux-logger';
 import rootSaga from '../sagas';
 import { loadState, saveState, loadFromLocalStorage } from '../utils';
-// const ctx = loadFromLocalStorage('ctx') || {};
 
 const sagaMiddleware = createSageMiddleware();
 let middleware;
