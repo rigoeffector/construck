@@ -50,9 +50,8 @@ export default function Settings() {
                     <Box sx={{width: '100%'}}>
                         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Product Categories" {...a11yProps(0)} />
-                                <Tab label="User Roles" {...a11yProps(1)} />
-                                <Tab label="My Profile" {...a11yProps(2)} />
+                                <Tab label="My Profiles" {...a11yProps(0)} />
+                                <Tab label="Roles & Permissions" {...a11yProps(1)} />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
