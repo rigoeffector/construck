@@ -18,7 +18,7 @@ export function* loginRequestSaga(action) {
             saveState('ctx', ctx);
             yield put(success('CONTEXT', ctx));
             yield put(success(LOGIN_USER_SUCCESS, response));
-            history.push('/daada/dashboard');
+            history.push('/daada/dashboard/home');
             yield delay(1000);
             window.location.reload();
         } else {

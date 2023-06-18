@@ -36,7 +36,7 @@ const MainRoutes = () => {
             <MainLayout showBreadcrumb={true}>
                 <Switch location={location} key={location.pathname}>
                     {/* <Route path="/user/login" component={FirebaseLogin} /> */}
-                    <ProtectedRoute exact path="/dashboard" component={DashboardDefault} />
+                    <ProtectedRoute  path="/dashboard/home" component={DashboardDefault} />
                     <ProtectedRoute path="/dashboard/products" component={ProductsPage} />
                     <ProtectedRoute path="/dashboard/product-details" component={ProductDetailsPage} />
                     <ProtectedRoute path="/dashboard/delivery-tracking" component={DeliveryTrackingPage} />

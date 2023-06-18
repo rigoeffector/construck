@@ -11,20 +11,36 @@ import * as yup from 'yup';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-
 import {useDropzone} from 'react-dropzone';
 import TextField from '@material-ui/core/TextField';
-import {Box} from '@mui/material';
+import {Box, Skeleton} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import SubmitButton from '../../reusable/submit-button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {DataTable} from '../../reusable/table';
 import {rows} from './table-column/row';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
+const keys = process.env.REACT_APP_ADDAX_API_KEY;
 const initialState = {
     showAddNewModal: false
 };
 export const Products = (props) => {
+    const {
+        auth,
+        listVendors: {data: listVendors, loading: listVendorsLoading}
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const payload = {
+            entity_name: 'vendor',
+            username: auth?.data?.username,
+            login_token: auth?.data?.login_token,
+            api_key: keys
+        };
+        debugger;
+        dispatch({type: GET_VENDORS_LIST_REQUEST, payload});
+    }, []);
     const thumbsContainer = {
         display: 'flex',
         flexDirection: 'row',
@@ -116,8 +132,8 @@ export const Products = (props) => {
         quantity: yup.string('Enter product quantity').required('Product quantity is required'),
         category: yup.string('Choose product category').required('Product category is required'),
         vendor: yup.string('Choose product vendor').required('Product vendor is required'),
-        description: yup.string('Enter product description').required('Product description is required'),
-        images: yup.string('Choose product images').required('Product images are required')
+        description: yup.string('Enter product description').required('Product description is required')
+        // images: yup.string('Choose product images').required('Product images are required')
     });
     const formik = useFormik({
         initialValues: {
@@ -245,22 +261,29 @@ export const Products = (props) => {
                                     margin: '4px 0px'
                                 }}
                             >
-                                <TextField
-                                    fullWidth
-                                    id="vendor"
-                                    name="vendor"
-                                    select
-                                    label="Vendors"
-                                    type="text"
-                                    value={formik.values.vendor}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.vendor && Boolean(formik.errors.vendor)}
-                                    helperText={formik.touched.vendor && formik.errors.vendor}
-                                >
-                                    <MenuItem value={10}>Java House</MenuItem>
-                                    <MenuItem value={20}>Riders</MenuItem>
-                                    <MenuItem value={30}>The Shouters</MenuItem>
-                                </TextField>
+                                {listVendorsLoading ? (
+                                    <Skeleton />
+                                ) : (
+                                    <TextField
+                                        fullWidth
+                                        id="vendor"
+                                        name="vendor"
+                                        select
+                                        label="Vendors"
+                                        type="text"
+                                        value={formik.values.vendor}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.vendor && Boolean(formik.errors.vendor)}
+                                        helperText={formik.touched.vendor && formik.errors.vendor}
+                                    >
+                                        {listVendors ||
+                                            [].map((vendor) => (
+                                                <MenuItem key={vendor?.id} value={vendor?.id}>
+                                                    {vendor?.name}
+                                                </MenuItem>
+                                            ))}
+                                    </TextField>
+                                )}
                             </Box>
                         </Grid>
 

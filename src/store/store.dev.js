@@ -5,7 +5,7 @@ import reducers from '../reducers';
 import logger from 'redux-logger';
 import rootSaga from '../sagas';
 import { loadState, saveState, loadFromLocalStorage } from '../utils';
-const ctx = loadFromLocalStorage('ctx') || {};
+// const ctx = loadFromLocalStorage('ctx') || {};
 
 const sagaMiddleware = createSageMiddleware();
 let middleware;
@@ -22,7 +22,7 @@ const storeConfig = () => {
     window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
   );
 
-  const store = createStore(reducers, { auth: persistedState, ctx }, storeCompose);
+  const store = createStore(reducers, { auth: persistedState }, storeCompose);
 
   store.subscribe(
     throttle(() => {
