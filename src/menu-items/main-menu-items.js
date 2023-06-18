@@ -112,12 +112,20 @@ const menuItems = {
             // title: <FormattedMessage id="dashboard" />,
             type: 'group',
             children: [
+                // {
+                //     id: 'dash-default',
+                //     title: <FormattedMessage id="Dashboard" />,
+                //     type: 'item',
+                //     url: '/dashboard',
+                //     icon: icons['IconMenu'],
+                //     breadcrumbs: false
+                // },
                 {
-                    id: 'dash-default',
-                    title: <FormattedMessage id="Dashboard" />,
+                    id: 'dash-product-categories',
+                    title: <FormattedMessage id="Product Categories" />,
                     type: 'item',
-                    url: '/dashboard',
-                    icon: icons['IconMenu'],
+                    url: '/dashboard/products-categories',
+                    icon: icons['IconBug'],
                     breadcrumbs: false
                 },
                 {
@@ -128,30 +136,30 @@ const menuItems = {
                     icon: icons['IconBrandProducthunt'],
                     breadcrumbs: false
                 },
-                {
-                    id: 'dash-transactions',
-                    title: <FormattedMessage id="Transactions" />,
-                    type: 'item',
-                    url: '/dashboard/transactions',
-                    icon: icons['IconTransferIn'],
-                    breadcrumbs: false
-                },
-                {
-                    id: 'dash-delivery',
-                    title: <FormattedMessage id="Delivery Track" />,
-                    type: 'item',
-                    url: '/dashboard/delivery-tracking',
-                    icon: icons['IconTruckDelivery'],
-                    breadcrumbs: false
-                },
-                {
-                    id: 'dash-users',
-                    title: <FormattedMessage id="Customers" />,
-                    type: 'item',
-                    url: '/dashboard/users',
-                    icon: icons['IconPictureInPicture'],
-                    breadcrumbs: false
-                },
+                // {
+                //     id: 'dash-transactions',
+                //     title: <FormattedMessage id="Transactions" />,
+                //     type: 'item',
+                //     url: '/dashboard/transactions',
+                //     icon: icons['IconTransferIn'],
+                //     breadcrumbs: false
+                // },
+                // {
+                //     id: 'dash-delivery',
+                //     title: <FormattedMessage id="Delivery Track" />,
+                //     type: 'item',
+                //     url: '/dashboard/delivery-tracking',
+                //     icon: icons['IconTruckDelivery'],
+                //     breadcrumbs: false
+                // },
+                // {
+                //     id: 'dash-users',
+                //     title: <FormattedMessage id="Customers" />,
+                //     type: 'item',
+                //     url: '/dashboard/users',
+                //     icon: icons['IconPictureInPicture'],
+                //     breadcrumbs: false
+                // },
                 {
                     id: 'dash-vendors',
                     title: <FormattedMessage id="Vendors" />,
@@ -160,14 +168,14 @@ const menuItems = {
                     icon: icons['IconUserOff'],
                     breadcrumbs: false
                 },
-                {
-                    id: 'dash-settings',
-                    title: <FormattedMessage id="Settings" />,
-                    type: 'item',
-                    url: '/dashboard/settings',
-                    icon: icons['IconBrandGravatar'],
-                    breadcrumbs: false
-                }
+                // {
+                //     id: 'dash-settings',
+                //     title: <FormattedMessage id="Settings" />,
+                //     type: 'item',
+                //     url: '/dashboard/settings',
+                //     icon: icons['IconBrandGravatar'],
+                //     breadcrumbs: false
+                // }
             ]
         }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {lazy} from 'react';
 import {Route, Switch, useLocation} from 'react-router-dom';
 
@@ -7,6 +8,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 const DashboardDefault = lazy(() => import('../views/dashboard/Default'));
 const ProductsPage = lazy(() => import('../views/products'));
+const ProductsCategoryPage = lazy(() => import('../views/productCategories/index'));
 const ProductDetailsPage = lazy(() => import('../views/productDetails'));
 const DeliveryTrackingPage = lazy(() => import('../views/deliveryTracking'));
 const OrderCheckoutPage = lazy(() => import('../views/orderCheckout'));
@@ -24,6 +26,7 @@ const MainRoutes = () => {
                 // '/user/login',
                 '/dashboard',
                 '/dashboard/products',
+                '/dashboard/products-categories',
                 '/dashboard/product-details',
                 '/dashboard/delivery-tracking',
                 '/dashboard/transactions',
@@ -36,8 +39,9 @@ const MainRoutes = () => {
             <MainLayout showBreadcrumb={true}>
                 <Switch location={location} key={location.pathname}>
                     {/* <Route path="/user/login" component={FirebaseLogin} /> */}
-                    <ProtectedRoute  path="/dashboard/home" component={DashboardDefault} />
+                    <ProtectedRoute path="/dashboard/home" component={DashboardDefault} />
                     <ProtectedRoute path="/dashboard/products" component={ProductsPage} />
+                    <ProtectedRoute path="/dashboard/products-categories" component={ProductsCategoryPage} />
                     <ProtectedRoute path="/dashboard/product-details" component={ProductDetailsPage} />
                     <ProtectedRoute path="/dashboard/delivery-tracking" component={DeliveryTrackingPage} />
                     <ProtectedRoute path="/dashboard/transactions" component={TransactionsPage} />

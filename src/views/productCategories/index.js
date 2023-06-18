@@ -7,23 +7,19 @@ import BodyContainer from '../../reusable/container';
 import AddNewButton from '../../reusable/actions-button/addnew';
 import {DaaDaModal} from '../../reusable/modal';
 import {columns} from './table-column';
-import {Box, CircularProgress} from '@mui/material';
+import {Box} from '@mui/material';
 import {DataTable} from '../../reusable/table';
 import {rows} from './table-column/row';
 import {useDispatch, useSelector} from 'react-redux';
 import {GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import {initialState} from './schema';
 import DaaDAlerts from '../../reusable/alerts';
-import CreateProductForm from './form/create.product.form';
+import CreateProductCategoryForm from './form/create.category.form';
 import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
-export const Products = (props) => {
+export const ProductDetailsPage = (props) => {
     const {
         auth,
         listVendors: {data: listVendors, loading: listVendorsLoading},
@@ -53,16 +49,14 @@ export const Products = (props) => {
     }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
     const [thisState, setThisState] = useState(initialState);
 
-    const handleAddNewProduct = () => {
-        debugger;
+    const handleAddNewCategory = () => {
         setThisState((prev) => ({
             ...prev,
-            showAddNewModal: true,
-            addCategoryClicked: false,
-            showAddNewCategoryModal: false
+            showAddNewModal: false,
+            showAddNewCategoryModal: true,
+            addCategoryClicked: true
         }));
     };
-
     const handleClose = () => {
         setThisState((prev) => ({
             ...prev,
@@ -72,37 +66,25 @@ export const Products = (props) => {
         }));
     };
 
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     useEffect(() => {
         if (success) {
             handleClose();
         }
     }, [success]);
     return (
+        
         <BodyContainer>
             <DashBoardLayoutForPage
-                title={'All Products'}
-                actionButton={<AddNewButton title={'Add New Product'} onClick={handleAddNewProduct} />}
+                title={'All Products Categories'}
+                actionButton={<AddNewButton title={'Add New Category'} onClick={handleAddNewCategory} />}
                 contents={
                     <Box sx={{width: '100%'}}>
-                        <DaaDaModal title={'Add New Product'} show={thisState.showAddNewModal} handleClose={handleClose}>
-                            {thisState.showAddNewModal && value === 1 && listVendorsLoading ? (
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <CircularProgress />
-                                </Box>
-                            ) : (
-                                <CreateProductForm listVendors={listVendors} />
-                            )}
+                        <DaaDaModal
+                            title={'Add New Category'}
+                            show={thisState.showAddNewCategoryModal}
+                            handleClose={handleClose}
+                        >
+                            <CreateProductCategoryForm />
                         </DaaDaModal>
                         <DataTable rows={rows} columns={columns} />
                     </Box>
@@ -113,4 +95,4 @@ export const Products = (props) => {
     );
 };
 
-export default Products;
+export default ProductDetailsPage;
