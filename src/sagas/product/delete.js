@@ -10,6 +10,7 @@ import {
     DELETE_PRODUCT_SUCCESS
 } from '../../reducers/product/constant';
 import {productApi} from '../../api/product';
+import {listProductRequestSaga} from './read';
 
 
 export function* deleteProductRequestSaga(action) {
@@ -19,6 +20,8 @@ export function* deleteProductRequestSaga(action) {
         const response = yield call(productApi.products.delete, {...payload});
         if (response && response.success) {
             yield put(success(DELETE_PRODUCT_SUCCESS, response));
+            yield* listProductRequestSaga(action);
+
             yield delay(2000);
             yield put({type: DELETE_PRODUCT_RESET});
         } else {

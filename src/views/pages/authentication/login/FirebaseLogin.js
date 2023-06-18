@@ -188,7 +188,6 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                         ...values,
                         api_key: keys
                     };
-                    debugger;
                     dispatch({type: LOGIN_USER_REQUEST, payload});
                 }}
             >

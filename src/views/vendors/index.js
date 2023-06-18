@@ -69,7 +69,6 @@ export default function Vendors() {
             editClicked: true,
             showEditForm: true
         }));
-        debugger;
     };
     const handleDelete = (row) => {
         setThisState((prev) => ({

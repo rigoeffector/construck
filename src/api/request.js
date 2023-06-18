@@ -5,7 +5,6 @@ import history from '../history';
 const determineUrl = (endpoint) => {
   const coreServerUrl = process.env.REACT_APP_MAIN_API_URL;
   let url = endpoint;
-  debugger;
   if (url.split('/')[0] !== '') url = `/${endpoint}`;
   return coreServerUrl + url;
 };
@@ -41,12 +40,12 @@ const request = (verb, endpoint, data, requireAuth = false, multipart = false) =
 
   return axios(config)
     .then((res) => {
-      const { headers } = res;
-      const token = headers && headers['x-auth-token'];
+      // const { headers } = res;
+      // const token = headers && headers['x-auth-token'];
 
-      if (token) {
-        localStorage.setItem('login_token', token);
-      }
+      // if (token) {
+      //   localStorage.setItem('login_token', token);
+      // }
 
       return res && res.data;
     })
@@ -58,10 +57,11 @@ const request = (verb, endpoint, data, requireAuth = false, multipart = false) =
           }
         } = error;
         // FIX ME 
-        if (message === 'Invalid token' || message === 'jwt malformed') {
-          history.push('/');
+        if (message === 'User is not authenticated.' || message === 'Authentication failure.') {
           localStorage.removeItem('state');
           localStorage.removeItem('login_token');
+          localStorage.clear();
+          history.push('/');
         }
         return error.response.data;
       }

@@ -10,7 +10,7 @@ import {
     CREATE_PRODUCT_SUCCESS
 } from '../../reducers/product/constant';
 import {productApi} from '../../api/product';
-// import {listPRODUCTsRequestSaga} from './read';
+import {listProductRequestSaga} from './read';
 
 export function* createProductRequestSaga(action) {
     try {
@@ -19,7 +19,7 @@ export function* createProductRequestSaga(action) {
         const response = yield call(productApi.products.create, {...payload});
         if (response && response.success) {
             yield put(success(CREATE_PRODUCT_SUCCESS, response));
-            // yield* listProductsRequestSaga(action);
+            yield* listProductRequestSaga(action);
             yield delay(2000);
             yield put({type: CREATE_PRODUCT_RESET});
         } else {

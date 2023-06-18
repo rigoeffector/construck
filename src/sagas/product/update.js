@@ -11,6 +11,7 @@ import {
 } from '../../reducers/product/constant';
 import {productApi} from '../../api/product';
 
+import {listProductRequestSaga} from './read';
 
 export function* updateProductRequestSaga(action) {
     try {
@@ -19,6 +20,8 @@ export function* updateProductRequestSaga(action) {
         const response = yield call(productApi.products.delete, {...payload});
         if (response && response.success) {
             yield put(success(UPDATE_PRODUCT_SUCCESS, response));
+            yield* listProductRequestSaga(action);
+
             yield delay(2000);
             yield put({type: UPDATE_PRODUCT_RESET});
         } else {
