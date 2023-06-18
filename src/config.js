@@ -1,5 +1,4 @@
 const config = {
-    // basename: only at build time to set, and don't add '/' at end off BASENAME for breadcrumbs,  like '/berry-material-react/react/default'
     basename: '/daada',
     defaultPath: '/login',
     fontFamily: `'Roboto', sans-serif`,
