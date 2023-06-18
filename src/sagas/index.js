@@ -4,7 +4,9 @@ import {watchVendorsListData} from './vendors/read';
 import {watchVendorCreateData} from './vendors/create';
 import {watchProductCreateData} from './product/create';
 import {watchVendorDeleteData} from './vendors/delete';
-import { watchVendorUpdateData } from './vendors/update';
+import {watchVendorUpdateData} from './vendors/update';
+import {watchProductCreateCategoryData} from './product/categories/create';
+import {watchProductListCategoryData} from './product/categories/read';
 
 export default function* rootSaga() {
     yield all([
@@ -13,6 +15,8 @@ export default function* rootSaga() {
         fork(watchVendorCreateData),
         fork(watchProductCreateData),
         fork(watchVendorDeleteData),
-        fork(watchVendorUpdateData)
+        fork(watchVendorUpdateData),
+        fork(watchProductCreateCategoryData),
+        fork(watchProductListCategoryData)
     ]);
 }

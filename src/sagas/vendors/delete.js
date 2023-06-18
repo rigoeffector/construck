@@ -16,7 +16,7 @@ export function* deleteVendorRequestSaga(action) {
     try {
         yield put(loading(DELETE_VENDOR_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(vendorsApi.delete.vendor, {...payload});
+        const response = yield call(vendorsApi.vendors.delete, {...payload});
         if (response && response.success) {
             yield put(success(DELETE_VENDOR_SUCCESS, response));
             yield* listVendorsRequestSaga(action);

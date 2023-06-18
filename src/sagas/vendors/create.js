@@ -16,7 +16,7 @@ export function* createVendorRequestSaga(action) {
     try {
         yield put(loading(CREATE_VENDOR_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(vendorsApi.create.vendor, {...payload});
+        const response = yield call(vendorsApi.vendors.create, {...payload});
         if (response && response.success) {
             yield put(success(CREATE_VENDOR_SUCCESS, response));
             yield* listVendorsRequestSaga(action);

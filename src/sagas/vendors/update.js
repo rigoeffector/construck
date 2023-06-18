@@ -16,7 +16,7 @@ export function* updateVendorRequestSaga(action) {
     try {
         yield put(loading(UPDATE_VENDOR_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(vendorsApi.update.vendor, {...payload});
+        const response = yield call(vendorsApi.vendors.update, {...payload});
         if (response && response.success) {
             yield put(success(UPDATE_VENDOR_SUCCESS, response));
             yield* listVendorsRequestSaga(action);

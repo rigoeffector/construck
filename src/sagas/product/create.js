@@ -16,7 +16,7 @@ export function* createProductRequestSaga(action) {
     try {
         yield put(loading(CREATE_PRODUCT_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(productApi.create.product, {...payload});
+        const response = yield call(productApi.products.create, {...payload});
         if (response && response.success) {
             yield put(success(CREATE_PRODUCT_SUCCESS, response));
             // yield* listProductsRequestSaga(action);
