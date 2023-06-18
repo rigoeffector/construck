@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { throttle } from 'lodash';
 import createSageMiddleware from 'redux-saga';
