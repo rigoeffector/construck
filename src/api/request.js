@@ -27,16 +27,16 @@ const request = (verb, endpoint, data, requireAuth = false, multipart = false) =
     config.headers = {
       'Content-Type': contentType
     };
-    try {
-      const token = localStorage.getItem('login_token');
-      if (token) {
-        config.headers['X-Auth-Token'] = token;
-      } else {
-        return errorHandler('User not authenticated');
-      }
-    } catch (error) {
-      return errorHandler(error);
-    }
+    // try {
+    //   const token = localStorage.getItem('login_token');
+    //   if (token) {
+    //     config.headers['X-Auth-Token'] = token;
+    //   } else {
+    //     return errorHandler('User not authenticated');
+    //   }
+    // } catch (error) {
+    //   return errorHandler(error);
+    // }
   }
 
   return axios(config)

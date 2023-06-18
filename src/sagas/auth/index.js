@@ -23,12 +23,12 @@ export function* loginRequestSaga(action) {
             window.location.reload();
         } else {
             yield put(error(LOGIN_USER_ERROR, response));
-            yield delay(1000);
+            yield delay(2000);
             yield put({type: LOGIN_USER_RESET});
         }
     } catch (err) {
         yield put(error(LOGIN_USER_ERROR, err));
-        yield delay(1000);
+        yield delay(2000);
         yield put({type: LOGIN_USER_RESET});
     }
 }

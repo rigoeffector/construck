@@ -137,7 +137,7 @@ export const Products = (props) => {
 
     return (
         <BodyContainer>
-            <DaaDaModal title={'Add new product'} show={thisState.showAddNewModal} handleClose={handleClose}>
+            <DaaDaModal title={'Add New Product'} show={thisState.showAddNewModal} handleClose={handleClose}>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>

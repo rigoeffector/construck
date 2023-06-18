@@ -1,4 +1,4 @@
-import {LOGIN_USER_ERROR, LOGIN_USER_LOADING, LOGIN_USER_SUCCESS, LOGIN_USER_RESET, LOGIN_USER_REQUEST} from './constant';
+import {LOGIN_USER_ERROR, LOGIN_USER_LOADING, LOGIN_USER_SUCCESS, LOGIN_USER_RESET} from './constant';
 
 const initialState = {
     loading: false,
