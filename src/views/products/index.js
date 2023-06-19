@@ -56,13 +56,12 @@ export const Products = (props) => {
             login_token: auth?.data?.login_token,
             api_key: keys
         };
-        debugger;
+
         dispatch({type: GET_PRODUCT_CATEGORIES_LIST_REQUEST, payload});
     }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
     const [thisState, setThisState] = useState(initialState);
 
     const handleAddNewProduct = () => {
-        debugger;
         setThisState((prev) => ({
             ...prev,
             showAddNewModal: true,
@@ -82,10 +81,21 @@ export const Products = (props) => {
 
     const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleEdit = (row) => {
+        setThisState((prev) => ({
+            editRow: row.row,
+            editClicked: true,
+            showEditForm: true
+        }));
     };
-
+    const handleDelete = (row) => {
+        setThisState((prev) => ({
+            ...prev,
+            deleteRow: row,
+            editClicked: false,
+            showAlertConfirm: true
+        }));
+    };
     useEffect(() => {
         if (success) {
             handleClose();
@@ -112,7 +122,11 @@ export const Products = (props) => {
                                 <CreateProductForm listVendors={listVendors} />
                             )}
                         </DaaDaModal>
-                        {listProductsLoading ? <CircularProgress /> : <DataTable rows={listProducts || []} columns={columns} />}
+                        {listProductsLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <DataTable rows={listProducts || []} columns={columns(handleEdit, handleDelete)} />
+                        )}
                     </Box>
                 }
             />

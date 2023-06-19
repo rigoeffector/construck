@@ -15,6 +15,7 @@ import {initialState} from './schema';
 import DaaDAlerts from '../../reusable/alerts';
 import CreateProductCategoryForm from './form/create.category.form';
 import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
+import EditProductCategoryForm from './form/edit.category.form';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
@@ -23,7 +24,8 @@ export const ProductDetailsPage = (props) => {
         auth,
         listVendors: {data: listVendors, loading: listVendorsLoading},
         listProductCategories: {data: listCategories, loading: listCategoriesLoading},
-        createProductCategory: {loading, success}
+        createProductCategory: {loading, success},
+        updateProductCategory: {loading: updateLoading, success: updateSuccess}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -62,15 +64,34 @@ export const ProductDetailsPage = (props) => {
             ...prev,
             showAddNewModal: false,
             showAddNewCategoryModal: false,
-            addCategoryClicked: false
+            addCategoryClicked: false,
+            editRow: {},
+            editClicked: false,
+            showEditForm: false,
+            showAlertConfirm: false,
+            deleteRow: {}
         }));
     };
-
+    const handleEdit = (row) => {
+        setThisState((prev) => ({
+            editRow: row.row,
+            editClicked: true,
+            showEditForm: true
+        }));
+    };
+    const handleDelete = (row) => {
+        setThisState((prev) => ({
+            ...prev,
+            deleteRow: row,
+            editClicked: false,
+            showAlertConfirm: true
+        }));
+    };
     useEffect(() => {
-        if (success) {
+        if (success || updateSuccess) {
             handleClose();
         }
-    }, [success]);
+    }, [success, updateSuccess]);
     return (
         <BodyContainer>
             <DashBoardLayoutForPage
@@ -81,11 +102,17 @@ export const ProductDetailsPage = (props) => {
                         <DaaDaModal title={'Add New Category'} show={thisState.showAddNewCategoryModal} handleClose={handleClose}>
                             <CreateProductCategoryForm />
                         </DaaDaModal>
-                        <DataTable rows={listCategories || []} columns={columns} />
+                        <DaaDaModal title={'Edit Category'} show={thisState.editClicked} handleClose={handleClose}>
+                            <EditProductCategoryForm categoryData={thisState.editRow} />
+                        </DaaDaModal>
+                        <DataTable rows={listCategories || []} columns={columns(handleEdit, handleDelete)} />
                     </Box>
                 }
             />
             {!loading && success && <DaaDAlerts show={success} message={'Product category is created successful'} variant={'success'} />}
+            {!updateLoading && updateSuccess && (
+                <DaaDAlerts show={updateSuccess} message={'Product category is updated successful'} variant={'success'} />
+            )}
         </BodyContainer>
     );
 };

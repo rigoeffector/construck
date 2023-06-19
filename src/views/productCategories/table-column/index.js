@@ -2,9 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {GridActionsCellItem} from '@mui/x-data-grid';
 import './style.css';
-export const columns = [
- 
-   
+export const columns = (handleEdit, handleDelete) => [
     {
         field: 'name',
         headerName: 'Category name',
@@ -29,7 +27,7 @@ export const columns = [
         width: 150,
         editable: true
     },
-    
+
     {
         field: '',
         headerName: 'Actions',
@@ -44,7 +42,7 @@ export const columns = [
                     icon={<EditIcon />}
                     label="Edit"
                     color="success"
-                    // onClick={}
+                    onClick={() => handleEdit(params)}
                 />
             </div>,
             <div className="actions_button">
@@ -55,7 +53,7 @@ export const columns = [
                     icon={<DeleteForeverIcon />}
                     label="Delete"
                     color="error"
-                    // onClick={}
+                    onClick={() => handleDelete(params)}
                 />
             </div>
         ]

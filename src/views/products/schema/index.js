@@ -1,13 +1,20 @@
 import * as yup from 'yup';
 
-
 export const initialState = {
     showAddNewModal: false,
     showAddNewCategoryModal: false,
-    addCategoryClicked: false
+    addCategoryClicked: false,
+    editRow: {},
+    editClicked: false,
+    showEditForm: false,
+    deleteRow: {},
+    showAlertConfirm: false
 };
 export const validationSchema = yup.object({
-    name: yup.string('Enter product name').min(2, 'Product name should be of minimum 8 characters length').required('Product name is required'),
+    name: yup
+        .string('Enter product name')
+        .min(2, 'Product name should be of minimum 8 characters length')
+        .required('Product name is required'),
     price: yup.string('Enter product price').required('Product price is required'),
     quantity: yup.string('Enter product quantity').required('Product quantity is required'),
     category: yup.string('Choose product category').required('Product category is required'),
@@ -17,9 +24,11 @@ export const validationSchema = yup.object({
 });
 
 export const validationCategorySchema = yup.object({
-    name: yup.string('Enter category name').min(2, 'Product category name should be of minimum 8 characters length').required('Product name is required'),
+    name: yup
+        .string('Enter category name')
+        .min(2, 'Product category name should be of minimum 8 characters length')
+        .required('Product name is required'),
     description: yup.string('Enter product category description').required('Product category description is required')
-    
 });
 
 export const thumbsContainer = {

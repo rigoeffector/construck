@@ -4,7 +4,12 @@ import * as yup from 'yup';
 export const initialState = {
     showAddNewModal: false,
     showAddNewCategoryModal: false,
-    addCategoryClicked: false
+    addCategoryClicked: false,
+    editRow: {},
+    editClicked: false,
+    showEditForm: false,
+    deleteRow: {},
+    showAlertConfirm: false
 };
 export const validationSchema = yup.object({
     name: yup.string('Enter product name').min(2, 'Product name should be of minimum 8 characters length').required('Product name is required'),

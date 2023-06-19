@@ -5,19 +5,20 @@ import SubmitButton from '../../../reusable/submit-button';
 import {Box, Grid, TextField} from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
 import {keys} from '../../vendors';
-import {CREATE_PRODUCT_CATEGORY_REQUEST} from '../../../reducers/product/categories/constant';
+import {UPDATE_PRODUCT_CATEGORY_REQUEST} from '../../../reducers/product/categories/constant';
 import DaaDAlerts from '../../../reusable/alerts';
 
-const CreateProductCategoryForm = () => {
+const EditProductCategoryForm = (props) => {
+    const {categoryData} = props;
     const dispatch = useDispatch();
     const {
         auth,
-        createProductCategory: {loading, success, message}
+        updateProductCategory: {loading, success, message}
     } = useSelector((state) => state);
     const formik = useFormik({
         initialValues: {
-            name: '',
-            description: ''
+            name: categoryData.name,
+            description: categoryData.description
         },
         validationSchema: validationCategorySchema,
         onSubmit: (values) => {
@@ -25,11 +26,12 @@ const CreateProductCategoryForm = () => {
                 entity_name: 'product_category',
                 username: auth?.data?.username,
                 login_token: auth?.data?.login_token,
+                instance_id: categoryData?.uuid,
                 api_key: keys,
                 details: {...values}
             };
 
-            dispatch({type: CREATE_PRODUCT_CATEGORY_REQUEST, payload});
+            dispatch({type: UPDATE_PRODUCT_CATEGORY_REQUEST, payload});
         }
     });
     return (
@@ -77,11 +79,11 @@ const CreateProductCategoryForm = () => {
                     </Grid>
                 </Grid>
 
-                <SubmitButton isLoading={loading}>Save</SubmitButton>
+                <SubmitButton isLoading={loading}>Update</SubmitButton>
                 {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
             </form>
         </div>
     );
 };
 
-export default CreateProductCategoryForm;
+export default EditProductCategoryForm;
