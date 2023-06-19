@@ -15,7 +15,8 @@ import {initialState} from './schema';
 import DaaDAlerts from '../../reusable/alerts';
 import CreateProductForm from './form/create.product.form';
 import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
-import {GET_PRODUCTS_LIST_REQUEST} from '../../reducers/product/constant';
+import {DELETE_PRODUCT_REQUEST, GET_PRODUCTS_LIST_REQUEST} from '../../reducers/product/constant';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
@@ -24,6 +25,7 @@ export const Products = (props) => {
         auth,
         listVendors: {data: listVendors, loading: listVendorsLoading},
         listProducts: {data, loading: listProductsLoading},
+        deleteProduct: {loading: deleteLoading, message, success: deleteSuccess},
         createProduct: {loading: createLoading, success: createSuccess},
         listProductCategories: {data: listCategories, loading: listCategoriesLoading}
     } = useSelector((state) => state);
@@ -73,6 +75,7 @@ export const Products = (props) => {
     const handleClose = () => {
         setThisState((prev) => ({
             ...prev,
+            showAlertConfirm: false,
             showAddNewModal: false,
             showAddNewCategoryModal: false,
             addCategoryClicked: false
@@ -94,13 +97,45 @@ export const Products = (props) => {
             showAlertConfirm: true
         }));
     };
+    const handleConfirmDelete = () => {
+        const {row} = thisState.deleteRow;
+
+        const payload = {
+            entity_name: 'product',
+            username: auth?.data?.username,
+            login_token: auth?.data?.login_token,
+            api_key: keys,
+            instance_id: row.uuid
+        };
+
+        dispatch({type: DELETE_PRODUCT_REQUEST, payload});
+    };
     useEffect(() => {
-        if (createSuccess) {
+        if (createSuccess || deleteSuccess) {
             handleClose();
         }
-    }, [createSuccess]);
+    }, [createSuccess, deleteSuccess]);
     return (
         <BodyContainer>
+            <SweetAlert
+                warning
+                show={deleteSuccess ? false : thisState.showAlertConfirm}
+                showCancel
+                title={`Are you sure you want to delete this product information ?`}
+                onConfirm={() => handleConfirmDelete()}
+                onCancel={() =>
+                    setThisState((prev) => ({
+                        ...prev,
+                        showAlertConfirm: false
+                    }))
+                }
+                focusCancelBtn
+                confirmBtnText={
+                    deleteLoading ? <CircularProgress style={{width: '24px', height: '24px', color: 'white', margin: '10px 0px'}} /> : 'Yes'
+                }
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="secondary"
+            />
             <DashBoardLayoutForPage
                 title={'All Products'}
                 actionButton={<AddNewButton title={'Add New Product'} onClick={handleAddNewProduct} />}
@@ -123,13 +158,16 @@ export const Products = (props) => {
                         {listProductsLoading ? (
                             <CircularProgress />
                         ) : (
-                            <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />
+                            <DataTable rows={data || []} columns={columns(handleDelete, handleEdit)} />
                         )}
                     </Box>
                 }
             />
             {!createLoading && createSuccess && (
-                <DaaDAlerts show={createSuccess} message={'Product  is created successful'} variant={'success'} />
+                <DaaDAlerts show={createSuccess} message={'Product is created successful'} variant={'success'} />
+            )}
+            {!deleteLoading && deleteSuccess && (
+                <DaaDAlerts show={deleteSuccess} message={'Product is deleted successful'} variant={'success'} />
             )}
         </BodyContainer>
     );

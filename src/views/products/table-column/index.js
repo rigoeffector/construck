@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MoreIcon from '@mui/icons-material/More';
@@ -57,7 +58,7 @@ export const columns = (handleDelete, handleEdit) => [
                     icon={<EditIcon />}
                     label="Edit"
                     color="success"
-                    onClick={(params) => handleEdit(params)}
+                    onClick={() => handleEdit(params)}
                 />
             </div>,
             <div className="actions_button">
@@ -68,20 +69,20 @@ export const columns = (handleDelete, handleEdit) => [
                     icon={<DeleteForeverIcon />}
                     label="Delete"
                     color="error"
-                    onClick={(params) => handleDelete(params)}
+                    onClick={() => handleDelete(params)}
                 />
             </div>,
-            <div className="actions_button">
-                <GridActionsCellItem
-                    style={{
-                        border: '1px solid'
-                    }}
-                    icon={<MoreIcon />}
-                    label="More"
-                    color="info"
-                    // onClick={}
-                />
-            </div>
+            // <div className="actions_button">
+            //     <GridActionsCellItem
+            //         style={{
+            //             border: '1px solid'
+            //         }}
+            //         icon={<MoreIcon />}
+            //         label="More"
+            //         color="info"
+            //         // onClick={}
+            //     />
+            // </div>
         ]
     }
 ];
