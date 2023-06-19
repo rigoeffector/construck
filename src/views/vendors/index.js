@@ -87,7 +87,7 @@ export default function Vendors() {
             username: auth?.data?.username,
             login_token: auth?.data?.login_token,
             api_key: keys,
-            instance_id: thisState.deleteRow.uuid
+            instance_id: row.uuid
         };
 
         dispatch({type: DELETE_VENDOR_REQUEST, payload});
