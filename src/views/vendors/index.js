@@ -232,19 +232,15 @@ export default function Vendors() {
             <DashBoardLayoutForPage
                 title={'All Vendors Information'}
                 actionButton={<AddNewButton title={'Add new'} onClick={handleAddNewVendor} />}
-                contents={
-                    loading ? (
-                        <CircularProgress />
-                    ) : success && data ? (
-                        <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />
-                    ) : (
-                        message && <DaaDAlerts show={!success} message={message} variant={'error'} />
-                    )
-                }
+                contents={loading ? <CircularProgress /> : <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />}
             />
             {!loading && successCreate && <DaaDAlerts show={successCreate} message={'Vendor is created successful'} variant={'success'} />}
             {!updateLoading && updateSuccess && (
                 <DaaDAlerts show={updateSuccess} message={'Vendor is updated successful'} variant={'success'} />
+            )}
+
+            {!deleteLoading && deleteSuccess && (
+                <DaaDAlerts show={deleteSuccess} message={'Vendor is deleted successful'} variant={'success'} />
             )}
         </BodyContainer>
     );
