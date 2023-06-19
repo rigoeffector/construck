@@ -9,7 +9,6 @@ import {DaaDaModal} from '../../reusable/modal';
 import {columns} from './table-column';
 import {Box} from '@mui/material';
 import {DataTable} from '../../reusable/table';
-import {rows} from './table-column/row';
 import {useDispatch, useSelector} from 'react-redux';
 import {GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
 import {initialState} from './schema';
@@ -29,6 +28,16 @@ export const ProductDetailsPage = (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
         const payload = {
+            entity_name: 'product_category',
+            username: auth?.data?.username,
+            login_token: auth?.data?.login_token,
+            api_key: keys
+        };
+
+        dispatch({type: GET_PRODUCT_CATEGORIES_LIST_REQUEST, payload});
+    }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
+    useEffect(() => {
+        const payload = {
             entity_name: 'vendor',
             username: auth?.data?.username,
             login_token: auth?.data?.login_token,
@@ -37,16 +46,7 @@ export const ProductDetailsPage = (props) => {
 
         dispatch({type: GET_VENDORS_LIST_REQUEST, payload});
     }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
-    useEffect(() => {
-        const payload = {
-            entity_name: 'product',
-            username: auth?.data?.username,
-            login_token: auth?.data?.login_token,
-            api_key: keys
-        };
-        debugger;
-        dispatch({type: GET_PRODUCT_CATEGORIES_LIST_REQUEST, payload});
-    }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
+
     const [thisState, setThisState] = useState(initialState);
 
     const handleAddNewCategory = () => {
@@ -72,21 +72,16 @@ export const ProductDetailsPage = (props) => {
         }
     }, [success]);
     return (
-        
         <BodyContainer>
             <DashBoardLayoutForPage
                 title={'All Products Categories'}
                 actionButton={<AddNewButton title={'Add New Category'} onClick={handleAddNewCategory} />}
                 contents={
                     <Box sx={{width: '100%'}}>
-                        <DaaDaModal
-                            title={'Add New Category'}
-                            show={thisState.showAddNewCategoryModal}
-                            handleClose={handleClose}
-                        >
+                        <DaaDaModal title={'Add New Category'} show={thisState.showAddNewCategoryModal} handleClose={handleClose}>
                             <CreateProductCategoryForm />
                         </DaaDaModal>
-                        <DataTable rows={rows} columns={columns} />
+                        <DataTable rows={listCategories || []} columns={columns} />
                     </Box>
                 }
             />

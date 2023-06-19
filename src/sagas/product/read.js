@@ -11,7 +11,6 @@ import {
 } from '../../reducers/product/constant';
 import {productApi} from '../../api/product';
 
-
 export function* listProductRequestSaga(action) {
     try {
         yield put(loading(GET_PRODUCTS_LIST_LOADING, {loading: true}));
@@ -19,8 +18,6 @@ export function* listProductRequestSaga(action) {
         const response = yield call(productApi.products.list, {...payload});
         if (response && response.success) {
             yield put(success(GET_PRODUCTS_LIST_SUCCESS, response));
-            yield delay(2000);
-            yield put({type: GET_PRODUCTS_LIST_RESET});
         } else {
             yield put(error(GET_PRODUCTS_LIST_ERROR, response));
             yield delay(2000);

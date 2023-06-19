@@ -17,44 +17,32 @@ export const columns = [
         }
     },
     {
-        field: 'firstName',
+        field: 'name',
         headerName: 'Product name',
-        width: 150,
+        width: 250,
         editable: true
     },
+
     {
-        field: 'lastName',
-        headerName: 'Vendor Name',
-        width: 150,
-        editable: true
-    },
-    {
-        field: 'age',
+        field: 'quantity',
         headerName: 'Quantity',
         width: 100,
         editable: true
     },
-    
+
     {
-        field: 'price',
+        field: 'unit_price',
         headerName: 'Price',
         type: 'number',
-        width: 100,
+        width: 150,
         editable: true
     },
-    
-    {
-        field: 'isAvaible',
-        headerName: 'Available',
-        type: 'number',
-        width: 100,
-        editable: true
-    },
+
     {
         field: '',
         headerName: 'Actions',
         type: 'actions',
-        width: 260,
+        width: 300,
         getActions: (params) => [
             <div className="actions_button">
                 <GridActionsCellItem

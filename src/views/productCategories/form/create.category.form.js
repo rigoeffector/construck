@@ -36,7 +36,7 @@ const CreateProductCategoryForm = () => {
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -55,7 +55,7 @@ const CreateProductCategoryForm = () => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -66,6 +66,8 @@ const CreateProductCategoryForm = () => {
                                 id="description"
                                 name="description"
                                 label="Description"
+                                multiline={true}
+                                rows={4}
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
                                 error={formik.touched.description && Boolean(formik.errors.description)}

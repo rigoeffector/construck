@@ -3,18 +3,30 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {GridActionsCellItem} from '@mui/x-data-grid';
 import './style.css';
 export const columns = [
-    {field: 'id', headerName: 'ID', width: 30},
+ 
    
     {
         field: 'name',
         headerName: 'Category name',
-        width: 250,
+        width: 200,
+        editable: true
+    },
+    {
+        field: 'added_by',
+        headerName: 'Added By',
+        width: 150,
         editable: true
     },
     {
         field: 'description',
         headerName: 'Category Description',
         width: 350,
+        editable: true
+    },
+    {
+        field: 'added_on',
+        headerName: 'Created At',
+        width: 150,
         editable: true
     },
     

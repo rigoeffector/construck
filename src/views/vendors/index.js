@@ -236,7 +236,7 @@ export default function Vendors() {
                     loading ? (
                         <CircularProgress />
                     ) : success && data ? (
-                        <DataTable rows={data} columns={columns(handleEdit, handleDelete)} />
+                        <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />
                     ) : (
                         message && <DaaDAlerts show={!success} message={message} variant={'error'} />
                     )
