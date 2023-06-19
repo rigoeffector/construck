@@ -8,7 +8,6 @@ import Carousel from 'react-material-ui-carousel';
 //import Auth0Login from './Auth0Login';
 import FirebaseLogin from './FirebaseLogin';
 
-import logo from './../../../../assets/images/logo.svg';
 import AuthPattern from './../../../../assets/images/auth/auth-pattern.svg';
 import AuthBlue from './../../../../assets/images/auth/auth-blue.svg';
 import AuthPurple from './../../../../assets/images/auth/auth-purple.svg';
@@ -139,38 +138,38 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Item = (props) => {
-    return (
-        <Grid container direction="column" alignItems="center" spacing={3} textAlign="center">
-            <Grid item md={4} width={350}>
-                <Typography variant="h1">{props.item.title}</Typography>
-            </Grid>
-            <Grid item md={2} width={200}>
-                <Typography variant="subtitle2">{props.item.description}</Typography>
-            </Grid>
-        </Grid>
-    );
-};
+// const Item = (props) => {
+//     return (
+//         <Grid container direction="column" alignItems="center" spacing={3} textAlign="center">
+//             <Grid item md={4} width={350}>
+//                 <Typography variant="h1">{props.item.title}</Typography>
+//             </Grid>
+//             <Grid item md={2} width={200}>
+//                 <Typography variant="subtitle2">{props.item.description}</Typography>
+//             </Grid>
+//         </Grid>
+//     );
+// };
 
 const Login = () => {
     const classes = useStyles();
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const items = [
-        {
-            title: 'Components Based Design System',
-            description: 'Powerfull and easy to use multipurpose theme'
-        },
-        {
-            title: 'Components Based Design System',
-            description: 'Powerfull and easy to use multipurpose theme'
-        },
-        {
-            title: 'Components Based Design System',
-            description: 'Powerfull and easy to use multipurpose theme'
-        }
-    ];
+    // const items = [
+    //     {
+    //         title: 'Components Based Design System',
+    //         description: 'Powerfull and easy to use multipurpose theme'
+    //     },
+    //     {
+    //         title: 'Components Based Design System',
+    //         description: 'Powerfull and easy to use multipurpose theme'
+    //     },
+    //     {
+    //         title: 'Components Based Design System',
+    //         description: 'Powerfull and easy to use multipurpose theme'
+    //     }
+    // ];
 
     return (
         <Grid container justifyContent="space-between" alignItems="center" className={classes.root}>
@@ -188,9 +187,23 @@ const Login = () => {
                                     <Grid item>
                                         <Grid container direction="column" spacing={1}>
                                             <Grid item container direction="column" alignItems={matchDownSM && 'center'}>
+                                                <Grid item className={classes.icon}>
+                                                    <RouterLink to="#">
+                                                        <img
+                                                            src={'/assets/images/logo.jpeg'}
+                                                            alt="DaaDa"
+                                                            style={{
+                                                                height: '100%',
+                                                                width: '20%',
+
+                                                                margin: '24px 0px'
+                                                            }}
+                                                        />
+                                                    </RouterLink>
+                                                </Grid>
                                                 <Grid item>
                                                     <Typography
-                                                        color={theme.palette.purple.main}
+                                                        // color={theme.palette.purple.main}
                                                         gutterBottom
                                                         variant={matchDownSM ? 'h3' : 'h2'}
                                                     >
@@ -198,7 +211,15 @@ const Login = () => {
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item>
-                                                    <Typography color="textPrimary" gutterBottom variant={matchDownSM ? 'h4' : 'h3'}>
+                                                    <Typography
+                                                        color="textPrimary"
+                                                        gutterBottom
+                                                        variant={matchDownSM ? 'h4' : 'h3'}
+                                                        sx={{
+                                                            fontWeight: '200 !important',
+                                                            fontSize: '14px'
+                                                        }}
+                                                    >
                                                         Login in to your account
                                                     </Typography>
                                                 </Grid>
@@ -209,11 +230,6 @@ const Login = () => {
                                                 </Typography>
                                             </Grid> */}
                                         </Grid>
-                                    </Grid>
-                                    <Grid item className={classes.icon}>
-                                        <RouterLink to="#">
-                                            <img alt="Auth method" src={logo} width="100" />
-                                        </RouterLink>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -227,9 +243,9 @@ const Login = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid item container direction="column" alignItems="flex-end" xs={12}>
-                                    <Typography component={RouterLink} to="#" variant="subtitle1" className={classes.title}>
+                                    {/* <Typography component={RouterLink} to="#" variant="subtitle1" className={classes.title}>
                                         Don't have an account?
-                                    </Typography>
+                                    </Typography> */}
                                     {/* <Box mt={1} width='100%'>
                                     <Button
                                         disableElevation
@@ -288,9 +304,9 @@ const Login = () => {
                                             }
                                         }}
                                     >
-                                        {items.map((item, i) => (
+                                        {/* {items.map((item, i) => (
                                             <Item key={i} item={item} />
-                                        ))}
+                                        ))} */}
                                     </Carousel>
                                 </Box>
                             </Grid>

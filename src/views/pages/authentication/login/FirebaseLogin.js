@@ -29,6 +29,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Google from './../../../../assets/images/icons/social-google.svg';
 import {LOGIN_USER_REQUEST, LOGIN_USER_RESET} from '../../../../reducers/auth/constant';
 import DaaDAlerts from '../../../../reusable/alerts';
+import SubmitButton from '../../../../reusable/submit-button';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -135,7 +136,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
     };
     return (
         <React.Fragment>
-            <Grid container direction="column" justifyContent="center" spacing={2}>
+            {/* <Grid container direction="column" justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
                     <Button
                         disableElevation
@@ -170,7 +171,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                         </Typography>
                     </Box>
                 </Grid>
-            </Grid>
+            </Grid> */}
 
             <Formik
                 initialValues={{
@@ -262,7 +263,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                                 </FormHelperText>
                             )}
                         </FormControl>
-                        <Grid container alignItems="center" justifyContent="space-between">
+                        {/* <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item>
                                 <FormControlLabel
                                     control={
@@ -279,7 +280,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                             <Grid item>
                                 <Typography variant="subtitle1">Forgot Password?</Typography>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                         {errors.submit && (
                             <Box mt={3}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -287,17 +288,9 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                         )}
 
                         <Box mt={2}>
-                            <Button
-                                disableElevation
-                                disabled={isSubmitting || loading}
-                                fullWidth
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                                className={classes.login}
-                            >
-                                {loading ? <CircularProgress size={15} /> : 'Sign In'}
-                            </Button>
+                            <SubmitButton disabled={isSubmitting || loading} isLoading={loading}>
+                                {'Sign In'}
+                            </SubmitButton>
                         </Box>
                     </form>
                 )}
