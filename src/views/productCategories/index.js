@@ -7,15 +7,16 @@ import BodyContainer from '../../reusable/container';
 import AddNewButton from '../../reusable/actions-button/addnew';
 import {DaaDaModal} from '../../reusable/modal';
 import {columns} from './table-column';
-import {Box} from '@mui/material';
+import {Box, CircularProgress} from '@mui/material';
 import {DataTable} from '../../reusable/table';
 import {useDispatch, useSelector} from 'react-redux';
 import {GET_VENDORS_LIST_REQUEST} from '../../reducers/vendors/constant';
 import {initialState} from './schema';
 import DaaDAlerts from '../../reusable/alerts';
 import CreateProductCategoryForm from './form/create.category.form';
-import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
+import {DELETE_PRODUCT_CATEGORY_REQUEST, GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
 import EditProductCategoryForm from './form/edit.category.form';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
@@ -25,7 +26,8 @@ export const ProductDetailsPage = (props) => {
         listVendors: {data: listVendors, loading: listVendorsLoading},
         listProductCategories: {data: listCategories, loading: listCategoriesLoading},
         createProductCategory: {loading, success},
-        updateProductCategory: {loading: updateLoading, success: updateSuccess}
+        updateProductCategory: {loading: updateLoading, success: updateSuccess},
+        deleteProductCategory: {loading: deleteLoading, success: deleteSuccess}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -87,13 +89,44 @@ export const ProductDetailsPage = (props) => {
             showAlertConfirm: true
         }));
     };
+    const handleConfirmDelete = () => {
+        const {row} = thisState.deleteRow;
+        const payload = {
+            entity_name: 'product_category',
+            username: auth?.data?.username,
+            login_token: auth?.data?.login_token,
+            api_key: keys,
+            instance_id: row.uuid
+        };
+
+        dispatch({type: DELETE_PRODUCT_CATEGORY_REQUEST, payload});
+    };
     useEffect(() => {
-        if (success || updateSuccess) {
+        if (success || updateSuccess || deleteSuccess) {
             handleClose();
         }
-    }, [success, updateSuccess]);
+    }, [deleteSuccess, success, updateSuccess]);
     return (
         <BodyContainer>
+            <SweetAlert
+                warning
+                show={deleteSuccess ? false : thisState.showAlertConfirm}
+                showCancel
+                title={`Are you sure you want to delete this product category information ?`}
+                onConfirm={() => handleConfirmDelete()}
+                onCancel={() =>
+                    setThisState((prev) => ({
+                        ...prev,
+                        showAlertConfirm: false
+                    }))
+                }
+                focusCancelBtn
+                confirmBtnText={
+                    deleteLoading ? <CircularProgress style={{width: '24px', height: '24px', color: 'white', margin: '10px 0px'}} /> : 'Yes'
+                }
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="secondary"
+            />
             <DashBoardLayoutForPage
                 title={'All Products Categories'}
                 actionButton={<AddNewButton title={'Add New Category'} onClick={handleAddNewCategory} />}
@@ -112,6 +145,10 @@ export const ProductDetailsPage = (props) => {
             {!loading && success && <DaaDAlerts show={success} message={'Product category is created successful'} variant={'success'} />}
             {!updateLoading && updateSuccess && (
                 <DaaDAlerts show={updateSuccess} message={'Product category is updated successful'} variant={'success'} />
+            )}
+
+            {!deleteLoading && deleteSuccess && (
+                <DaaDAlerts show={deleteSuccess} message={'Product category is deleted successful'} variant={'success'} />
             )}
         </BodyContainer>
     );
