@@ -17,6 +17,7 @@ import CreateProductForm from './form/create.product.form';
 import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
 import {DELETE_PRODUCT_REQUEST, GET_PRODUCTS_LIST_REQUEST} from '../../reducers/product/constant';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import EditProductForm from './form/edit.product.form';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
@@ -27,6 +28,7 @@ export const Products = (props) => {
         listProducts: {data, loading: listProductsLoading},
         deleteProduct: {loading: deleteLoading, message, success: deleteSuccess},
         createProduct: {loading: createLoading, success: createSuccess},
+        updateProduct: {loading: updateLoading, success: updateSuccess},
         listProductCategories: {data: listCategories, loading: listCategoriesLoading}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
@@ -76,9 +78,12 @@ export const Products = (props) => {
         setThisState((prev) => ({
             ...prev,
             showAlertConfirm: false,
+            editClicked: false,
             showAddNewModal: false,
             showAddNewCategoryModal: false,
-            addCategoryClicked: false
+            addCategoryClicked: false,
+            editRow: {},
+            deleteRow: {}
         }));
     };
 
@@ -155,6 +160,9 @@ export const Products = (props) => {
                                 <CreateProductForm listVendors={listVendors} listCategories={listCategories} />
                             )}
                         </DaaDaModal>
+                        <DaaDaModal title={'Edit Product'} show={thisState.editClicked} handleClose={handleClose}>
+                            <EditProductForm productData={thisState.editRow} listVendors={listVendors} listCategories={listCategories} />
+                        </DaaDaModal>
                         {listProductsLoading ? (
                             <CircularProgress />
                         ) : (
@@ -168,6 +176,9 @@ export const Products = (props) => {
             )}
             {!deleteLoading && deleteSuccess && (
                 <DaaDAlerts show={deleteSuccess} message={'Product is deleted successful'} variant={'success'} />
+            )}
+            {!updateLoading && updateSuccess && (
+                <DaaDAlerts show={updateSuccess} message={'Product is updated successful'} variant={'success'} />
             )}
         </BodyContainer>
     );

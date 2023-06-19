@@ -17,7 +17,7 @@ export function* updateProductRequestSaga(action) {
     try {
         yield put(loading(UPDATE_PRODUCT_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(productApi.products.delete, {...payload});
+        const response = yield call(productApi.products.update, {...payload});
         if (response && response.success) {
             yield put(success(UPDATE_PRODUCT_SUCCESS, response));
             yield* listProductRequestSaga(action);
