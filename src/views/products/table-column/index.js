@@ -3,10 +3,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MoreIcon from '@mui/icons-material/More';
 import {GridActionsCellItem} from '@mui/x-data-grid';
 import './style.css';
-export const columns = [
-    {field: 'id', headerName: 'ID', width: 30},
+export const columns = (handleDelete, handleEdit) => [
     {
         field: 'image',
+        width: 80,
         headerName: 'Image',
         renderCell: (params) => {
             return (
@@ -19,23 +19,28 @@ export const columns = [
     {
         field: 'name',
         headerName: 'Product name',
-        width: 250,
-        editable: true
+        width: 200,
+       
     },
 
     {
         field: 'quantity',
         headerName: 'Quantity',
         width: 100,
-        editable: true
+       
     },
 
     {
         field: 'unit_price',
         headerName: 'Price',
-        type: 'number',
-        width: 150,
-        editable: true
+        width: 100,
+       
+    },
+    {
+        field: 'description',
+        headerName: 'Description',
+        width: 300,
+       
     },
 
     {
@@ -52,7 +57,7 @@ export const columns = [
                     icon={<EditIcon />}
                     label="Edit"
                     color="success"
-                    // onClick={}
+                    onClick={(params) => handleEdit(params)}
                 />
             </div>,
             <div className="actions_button">
@@ -63,7 +68,7 @@ export const columns = [
                     icon={<DeleteForeverIcon />}
                     label="Delete"
                     color="error"
-                    // onClick={}
+                    onClick={(params) => handleDelete(params)}
                 />
             </div>,
             <div className="actions_button">

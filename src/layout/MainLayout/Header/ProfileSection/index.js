@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {useSelector} from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -46,16 +47,16 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderRadius: '27px',
         transition: 'all .2s ease-in-out',
-        borderColor: theme.palette.primary.light,
-        backgroundColor: theme.palette.primary.light,
-        '&[aria-controls="menu-list-grow"], &:hover': {
-            borderColor: theme.palette.primary.main,
-            background: theme.palette.primary.main + '!important',
-            color: theme.palette.primary.light,
-            '& svg': {
-                stroke: theme.palette.primary.light
-            }
-        }
+        // borderColor: theme.palette.primary.light,
+        // backgroundColor: theme.palette.primary.light,
+        // '&[aria-controls="menu-list-grow"], &:hover': {
+        //     borderColor: theme.palette.primary.main,
+        //     background: theme.palette.primary.main + '!important',
+        //     color: theme.palette.primary.light,
+        //     '& svg': {
+        //         stroke: theme.palette.primary.light
+        //     }
+        // }
     },
     profileLabel: {
         lineHeight: 0,
@@ -143,6 +144,9 @@ const ProfileSection = () => {
     return (
         <React.Fragment>
             <Chip
+                sx={{
+                    background: '#b36b48!important'
+                }}
                 classes={{label: classes.profileLabel}}
                 className={classes.profileChip}
                 icon={
@@ -155,13 +159,13 @@ const ProfileSection = () => {
                         color="inherit"
                     />
                 }
-                label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
+                // label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
                 variant="outlined"
                 ref={anchorRef}
                 aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
-                color="primary"
+                // color="primary"
             />
             <Popper
                 placement="bottom-end"
@@ -195,7 +199,17 @@ const ProfileSection = () => {
                                                     display: 'block !important'
                                                 }}
                                             >
-                                                <Typography variant="h4">Welcome,</Typography>
+                                                <Typography
+                                                    variant="h4"
+                                                    sx={{
+                                                        fontSize: '30px',
+                                                        margin: '10px 0px',
+                                                        fontWeight: '300',
+                                                        color: '#b36a4a'
+                                                    }}
+                                                >
+                                                    Welcome,
+                                                </Typography>
                                                 <Typography
                                                     component="span"
                                                     variant="h4"
@@ -217,7 +231,11 @@ const ProfileSection = () => {
                                                     variant="h4"
                                                     className={classes.name}
                                                     sx={{
-                                                        display: 'block'
+                                                        display: 'block',
+                                                        fontSize: '12px',
+                                                        color: '#a3a3a3',
+                                                        margin: '10px 0px',
+                                                        fontStyle: 'italic'
                                                     }}
                                                 >
                                                     Last Login: {data?.last_login}

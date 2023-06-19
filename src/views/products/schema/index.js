@@ -15,7 +15,7 @@ export const validationSchema = yup.object({
         .string('Enter product name')
         .min(2, 'Product name should be of minimum 8 characters length')
         .required('Product name is required'),
-    price: yup.string('Enter product price').required('Product price is required'),
+        unit_price: yup.string('Enter product price').required('Product price is required'),
     quantity: yup.string('Enter product quantity').required('Product quantity is required'),
     category: yup.string('Choose product category').required('Product category is required'),
     vendor: yup.string('Choose product vendor').required('Product vendor is required'),

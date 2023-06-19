@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {Avatar, ButtonBase, Hidden, makeStyles} from '@material-ui/core';
 
@@ -54,14 +55,20 @@ const Header = (props) => {
                     </Avatar>
                 </ButtonBase>
             </div>
-            <SearchSection theme="light" />
+            {/* <SearchSection theme="light" /> */}
             <div className={classes.grow} />
             <div className={classes.grow} />
-            <Hidden smDown>
-                <Customization />
-            </Hidden>
+            <div
+                style={{
+                    display: 'none'
+                }}
+            >
+                <Hidden smDown>
+                    <Customization />
+                </Hidden>
+            </div>
 
-            <NotificationSection />
+            {/* <NotificationSection /> */}
             <ProfileSection />
             <Hidden smUp>
                 <MobileSection />

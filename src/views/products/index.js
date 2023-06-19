@@ -23,9 +23,9 @@ export const Products = (props) => {
     const {
         auth,
         listVendors: {data: listVendors, loading: listVendorsLoading},
-        listProducts: {data: listProducts, loading: listProductsLoading},
-        listProductCategories: {data: listCategories, loading: listCategoriesLoading},
-        createProductCategory: {loading, success}
+        listProducts: {data, loading: listProductsLoading},
+        createProduct: {loading: createLoading, success: createSuccess},
+        listProductCategories: {data: listCategories, loading: listCategoriesLoading}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ export const Products = (props) => {
     }, [auth?.data?.login_token, auth?.data?.username, dispatch]);
     useEffect(() => {
         const payload = {
-            entity_name: 'product',
+            entity_name: 'product_category',
             username: auth?.data?.username,
             login_token: auth?.data?.login_token,
             api_key: keys
@@ -79,8 +79,6 @@ export const Products = (props) => {
         }));
     };
 
-    const [value, setValue] = React.useState(0);
-
     const handleEdit = (row) => {
         setThisState((prev) => ({
             editRow: row.row,
@@ -97,10 +95,10 @@ export const Products = (props) => {
         }));
     };
     useEffect(() => {
-        if (success) {
+        if (createSuccess) {
             handleClose();
         }
-    }, [success]);
+    }, [createSuccess]);
     return (
         <BodyContainer>
             <DashBoardLayoutForPage
@@ -109,7 +107,7 @@ export const Products = (props) => {
                 contents={
                     <Box sx={{width: '100%'}}>
                         <DaaDaModal title={'Add New Product'} show={thisState.showAddNewModal} handleClose={handleClose}>
-                            {thisState.showAddNewModal && value === 1 && listVendorsLoading ? (
+                            {listVendorsLoading ? (
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -119,18 +117,20 @@ export const Products = (props) => {
                                     <CircularProgress />
                                 </Box>
                             ) : (
-                                <CreateProductForm listVendors={listVendors} />
+                                <CreateProductForm listVendors={listVendors} listCategories={listCategories} />
                             )}
                         </DaaDaModal>
                         {listProductsLoading ? (
                             <CircularProgress />
                         ) : (
-                            <DataTable rows={listProducts || []} columns={columns(handleEdit, handleDelete)} />
+                            <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />
                         )}
                     </Box>
                 }
             />
-            {!loading && success && <DaaDAlerts show={success} message={'Product category is created successful'} variant={'success'} />}
+            {!createLoading && createSuccess && (
+                <DaaDAlerts show={createSuccess} message={'Product  is created successful'} variant={'success'} />
+            )}
         </BodyContainer>
     );
 };

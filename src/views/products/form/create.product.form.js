@@ -10,10 +10,19 @@ import {useDropzone} from 'react-dropzone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {img, thumb, thumbInner, thumbsContainer, validationSchema} from '../schema';
 import SubmitButton from '../../../reusable/submit-button';
+import {useDispatch, useSelector} from 'react-redux';
+import {keys} from '../../vendors';
+import {CREATE_PRODUCT_REQUEST} from '../../../reducers/product/constant';
+import DaaDAlerts from '../../../reusable/alerts';
 const CreateProductForm = (props) => {
-    const {listVendors}= props;
-    const [files, setFiles] = useState([]);
+    const dispatch = useDispatch();
 
+    const {listVendors, listCategories} = props;
+    const [files, setFiles] = useState([]);
+    const {
+        auth,
+        createProduct: {loading, message, success}
+    } = useSelector((state) => state);
     useEffect(() => {
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
@@ -52,7 +61,7 @@ const CreateProductForm = (props) => {
     const formik = useFormik({
         initialValues: {
             name: '',
-            price: '',
+            unit_price: '',
             quantity: '',
             category: '',
             description: '',
@@ -61,10 +70,19 @@ const CreateProductForm = (props) => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+            const payload = {
+                entity_name: 'product',
+                username: auth?.data?.username,
+                login_token: auth?.data?.login_token,
+                api_key: keys,
+                details: {
+                    ...values
+                }
+            };
+            dispatch({type: CREATE_PRODUCT_REQUEST, payload});
         }
     });
-  
+
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
@@ -96,13 +114,13 @@ const CreateProductForm = (props) => {
                             <TextField
                                 fullWidth
                                 id="price"
-                                name="price"
+                                name="unit_price"
                                 label="Price"
                                 type="number"
-                                value={formik.values.price}
+                                value={formik.values.unit_price}
                                 onChange={formik.handleChange}
-                                error={formik.touched.price && Boolean(formik.errors.price)}
-                                helperText={formik.touched.price && formik.errors.price}
+                                error={formik.touched.unit_price && Boolean(formik.errors.unit_price)}
+                                helperText={formik.touched.unit_price && formik.errors.unit_price}
                             />
                         </Box>
                     </Grid>
@@ -124,9 +142,11 @@ const CreateProductForm = (props) => {
                                     error={formik.touched.category && Boolean(formik.errors.category)}
                                     helperText={formik.touched.category && formik.errors.category}
                                 >
-                                    <MenuItem value={10}>Fruits</MenuItem>
-                                    <MenuItem value={20}>Drinks</MenuItem>
-                                    <MenuItem value={30}>Meal</MenuItem>
+                                    {listCategories.map((category) => (
+                                        <MenuItem key={category.id} value={category.id}>
+                                            {category.name}
+                                        </MenuItem>
+                                    ))}
                                 </TextField>
                             </FormControl>
                         </Box>
@@ -150,25 +170,8 @@ const CreateProductForm = (props) => {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Box
-                            sx={{
-                                margin: '4px 0px'
-                            }}
-                        >
-                            <TextField
-                                fullWidth
-                                id="description"
-                                name="description"
-                                label="Description"
-                                value={formik.values.description}
-                                onChange={formik.handleChange}
-                                error={formik.touched.description && Boolean(formik.errors.description)}
-                                helperText={formik.touched.description && formik.errors.description}
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6}>
+
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -187,14 +190,13 @@ const CreateProductForm = (props) => {
                                 helperText={formik.touched.vendor && formik.errors.vendor}
                             >
                                 {listVendors.map((vendor) => (
-                                        <MenuItem key={vendor?.id} value={vendor?.id}>
-                                            {vendor?.name}
-                                        </MenuItem>
-                                    ))}
+                                    <MenuItem key={vendor?.id} value={vendor?.id}>
+                                        {vendor?.name}
+                                    </MenuItem>
+                                ))}
                             </TextField>
                         </Box>
                     </Grid>
-
                     <Grid
                         item
                         sx={12}
@@ -222,9 +224,30 @@ const CreateProductForm = (props) => {
                             <aside style={thumbsContainer}>{thumbs}</aside>
                         </Box>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                margin: '0px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="description"
+                                name="description"
+                                label="Description"
+                                multiline={true}
+                                rows={2}
+                                value={formik.values.description}
+                                onChange={formik.handleChange}
+                                error={formik.touched.description && Boolean(formik.errors.description)}
+                                helperText={formik.touched.description && formik.errors.description}
+                            />
+                        </Box>
+                    </Grid>
                 </Grid>
 
-                <SubmitButton isLoading={false}>Save</SubmitButton>
+                <SubmitButton isLoading={loading}>Save</SubmitButton>
+                {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
             </form>
         </div>
     );
