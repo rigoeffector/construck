@@ -63,16 +63,17 @@ const CreateProductForm = (props) => {
             </div>
         </div>
     ));
+    const initialValues = {
+        name: '',
+        unit_price: '',
+        quantity: '',
+        category: '',
+        description: '',
+        images: '',
+        vendor: ''
+    };
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            unit_price: '',
-            quantity: '',
-            category: '',
-            description: '',
-            images: '',
-            vendor: ''
-        },
+        initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
@@ -288,7 +289,7 @@ const CreateProductForm = (props) => {
                             marginTop: '2rem'
                         }}
                         variant="outlined"
-                        disabled={Object.keys(imageUrls).length < 1}
+                        disabled={files.length < 1}
                         onClick={handleUploadProductImages}
                     >
                         {loadingUpload ? 'Uploading.....' : 'Upload All Images'}

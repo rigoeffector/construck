@@ -96,14 +96,15 @@ export default function Vendors() {
 
         dispatch({type: DELETE_VENDOR_REQUEST, payload});
     };
+    const initialValues = {
+        name: '',
+        address: '',
+        email: '',
+        contact_phone: ''
+    };
 
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            address: '',
-            email: '',
-            contact_phone: ''
-        },
+        initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
@@ -235,7 +236,7 @@ export default function Vendors() {
             </DaaDaModal>
             <DashBoardLayoutForPage
                 title={'All Vendors Information'}
-                actionButton={<AddNewButton title={'Add New Vedndor'} onClick={handleAddNewVendor} />}
+                actionButton={<AddNewButton title={'Add New Vendor'} onClick={handleAddNewVendor} />}
                 contents={
                     loading ? (
                         <CircularProgress />

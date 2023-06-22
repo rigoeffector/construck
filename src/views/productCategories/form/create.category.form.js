@@ -10,15 +10,16 @@ import DaaDAlerts from '../../../reusable/alerts';
 
 const CreateProductCategoryForm = () => {
     const dispatch = useDispatch();
+    const initialValues = {
+        name: '',
+        description: ''
+    };
     const {
         auth,
         createProductCategory: {loading, success, message}
     } = useSelector((state) => state);
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            description: ''
-        },
+        initialValues: initialValues,
         validationSchema: validationCategorySchema,
         onSubmit: (values) => {
             const payload = {
