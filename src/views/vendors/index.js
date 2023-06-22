@@ -20,7 +20,11 @@ import TextField from '@material-ui/core/TextField';
 import SubmitButton from '../../reusable/submit-button';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import UpdateVendorForm from './form/update.form';
+import DaaDaEmptyDada from '../../reusable/empty-data';
+import {isEmpty} from 'lodash';
+
 export const keys = process.env.REACT_APP_ADDAX_API_KEY;
+
 export default function Vendors() {
     const [thisState, setThisState] = useState(initialState);
 
@@ -231,8 +235,16 @@ export default function Vendors() {
             </DaaDaModal>
             <DashBoardLayoutForPage
                 title={'All Vendors Information'}
-                actionButton={<AddNewButton title={'Add new'} onClick={handleAddNewVendor} />}
-                contents={loading ? <CircularProgress /> : <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />}
+                actionButton={<AddNewButton title={'Add New Vedndor'} onClick={handleAddNewVendor} />}
+                contents={
+                    loading ? (
+                        <CircularProgress />
+                    ) : isEmpty(data) ? (
+                        <DaaDaEmptyDada message={'No Vendor Found Please Click Add New Vendor'} />
+                    ) : (
+                        <DataTable rows={data || []} columns={columns(handleEdit, handleDelete)} />
+                    )
+                }
             />
             {!loading && successCreate && <DaaDAlerts show={successCreate} message={'Vendor is created successful'} variant={'success'} />}
             {!updateLoading && updateSuccess && (

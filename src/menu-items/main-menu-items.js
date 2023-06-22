@@ -56,13 +56,13 @@ import {
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics,
-    IconUserOff:IconUserOff,
+    IconUserOff: IconUserOff,
     IconChartArcs: IconChartArcs,
     IconClipboardList: IconClipboardList,
     IconChartInfographic: IconChartInfographic,
-    IconTruckDelivery:IconTruckDelivery,
+    IconTruckDelivery: IconTruckDelivery,
     IconForms: IconForms,
-    IconTransferIn:IconTransferIn,
+    IconTransferIn: IconTransferIn,
     IconReceipt2: IconReceipt2,
     IconPencil: IconPencil,
     IconPalette: IconPalette,
@@ -84,7 +84,7 @@ const icons = {
     IconBorderRadius: IconBorderRadius,
     IconBrandGravatar: IconBrandGravatar,
     IconShape: IconShape,
-    IconBrandProducthunt:IconBrandProducthunt,
+    IconBrandProducthunt: IconBrandProducthunt,
     IconUserCheck: IconUserCheck,
     IconId: IconId,
     IconLayoutList: IconLayoutList,
@@ -121,6 +121,14 @@ const menuItems = {
                 //     breadcrumbs: false
                 // },
                 {
+                    id: 'dash-vendors',
+                    title: <FormattedMessage id="Vendors" />,
+                    type: 'item',
+                    url: '/dashboard/vendors',
+                    icon: icons['IconUserOff'],
+                    breadcrumbs: false
+                },
+                {
                     id: 'dash-product-categories',
                     title: <FormattedMessage id="Product Categories" />,
                     type: 'item',
@@ -135,7 +143,7 @@ const menuItems = {
                     url: '/dashboard/products',
                     icon: icons['IconBrandProducthunt'],
                     breadcrumbs: false
-                },
+                }
                 // {
                 //     id: 'dash-transactions',
                 //     title: <FormattedMessage id="Transactions" />,
@@ -160,14 +168,7 @@ const menuItems = {
                 //     icon: icons['IconPictureInPicture'],
                 //     breadcrumbs: false
                 // },
-                {
-                    id: 'dash-vendors',
-                    title: <FormattedMessage id="Vendors" />,
-                    type: 'item',
-                    url: '/dashboard/vendors',
-                    icon: icons['IconUserOff'],
-                    breadcrumbs: false
-                },
+
                 // {
                 //     id: 'dash-settings',
                 //     title: <FormattedMessage id="Settings" />,

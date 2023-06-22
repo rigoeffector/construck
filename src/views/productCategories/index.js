@@ -17,6 +17,8 @@ import CreateProductCategoryForm from './form/create.category.form';
 import {DELETE_PRODUCT_CATEGORY_REQUEST, GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/categories/constant';
 import EditProductCategoryForm from './form/edit.category.form';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import DaaDaEmptyDada from '../../reusable/empty-data';
+import {isEmpty} from 'lodash';
 
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
@@ -138,7 +140,11 @@ export const ProductDetailsPage = (props) => {
                         <DaaDaModal title={'Edit Category'} show={thisState.editClicked} handleClose={handleClose}>
                             <EditProductCategoryForm categoryData={thisState.editRow} />
                         </DaaDaModal>
-                        <DataTable rows={listCategories || []} columns={columns(handleEdit, handleDelete)} />
+                        {isEmpty(listCategories) ? (
+                            <DaaDaEmptyDada message={'No Category Found Please Click Add New Category'} />
+                        ) : (
+                            <DataTable rows={listCategories} columns={columns(handleEdit, handleDelete)} />
+                        )}
                     </Box>
                 }
             />
