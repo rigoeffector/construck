@@ -4,7 +4,7 @@ export const ACCOUNT_INITIALISE = 'ACCOUNT_INITIALISE';
 export const FIREBASE_STATE_CHANGED = 'FIREBASE_STATE_CHANGED';
 export const SET_MENU = 'SET_MENU';
 
-// Action for Combine Reducer
+
 export const MENU_OPEN = '@customization/MENU_OPEN';
 export const MENU_TYPE = '@customization/MENU_TYPE';
 export const THEME_LOCALE = '@customization/THEME_LOCALE';
