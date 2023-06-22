@@ -1,11 +1,11 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import {CircularProgress} from '@mui/material';
-const SubmitButton = ({children, isLoading}) => {
+const SubmitButton = ({children, isLoading, disabled}) => {
     return (
         <div>
             <Button
-                disabled={isLoading}
+                disabled={disabled}
                 variant="contained"
                 type="submit"
                 style={{

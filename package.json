@@ -20,6 +20,7 @@
         "axios": "^1.4.0",
         "clsx": "^1.1.1",
         "date-fns": "^2.21.1",
+        "firebase": "^9.22.2",
         "formik": "^2.2.9",
         "framer-motion": "^3.10.6",
         "jss-rtl": "^0.3.0",
@@ -31,6 +32,7 @@
         "react-bootstrap-sweetalert": "^5.2.0",
         "react-dom": "^17.0.2",
         "react-dropzone": "^14.2.3",
+        "react-dropzone-uploader": "^2.11.0",
         "react-intl": "^5.14.0",
         "react-material-ui-carousel": "^2.2.4",
         "react-perfect-scrollbar": "^1.5.8",
@@ -47,6 +49,7 @@
         "stylis-plugin-rtl": "^2.0.2",
         "sweetalert": "^2.1.2",
         "use-debounce": "^9.0.4",
+        "uuid": "^9.0.0",
         "yup": "^0.32.11"
     },
     "scripts": {

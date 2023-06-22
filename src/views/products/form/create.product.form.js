@@ -1,6 +1,7 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
-import {Box, Grid, TextField} from '@mui/material';
+import {Box, Button, Grid, TextField} from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import {useFormik} from 'formik';
 import IconButton from '@mui/material/IconButton';
@@ -14,11 +15,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import {keys} from '../../vendors';
 import {CREATE_PRODUCT_REQUEST} from '../../../reducers/product/constant';
 import DaaDAlerts from '../../../reusable/alerts';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import {v4} from 'uuid';
+import {storage} from '../../../firebase';
 const CreateProductForm = (props) => {
     const dispatch = useDispatch();
-
+    const [imageUrls, setImageUrls] = useState({});
     const {listVendors, listCategories} = props;
     const [files, setFiles] = useState([]);
+    const [loadingUpload, setLoadingUpload] = useState(false);
     const {
         auth,
         createProduct: {loading, message, success}
@@ -27,7 +32,7 @@ const CreateProductForm = (props) => {
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
     const {getRootProps, getInputProps} = useDropzone({
-        maxFiles: 10,
+        maxFiles: 5,
         accept: {
             'image/png': ['.png'],
             'image/jpg': ['.jpg'],
@@ -76,12 +81,35 @@ const CreateProductForm = (props) => {
                 login_token: auth?.data?.login_token,
                 api_key: keys,
                 details: {
-                    ...values
+                    ...values,
+                    ...imageUrls
                 }
             };
             dispatch({type: CREATE_PRODUCT_REQUEST, payload});
+            setImageUrls({});
         }
     });
+
+    const handleUploadProductImages = async () => {
+        setLoadingUpload(true);
+        const urls = {};
+        await Promise.all(
+            files.map((image, i) => {
+                const imageRef = ref(storage, `products/${image.path + v4()}`);
+                uploadBytes(imageRef, image, 'data_url').then(async (data) => {
+                    if (data) {
+                        const downLoadURL = await getDownloadURL(imageRef);
+
+                        urls[`image_url_` + (i + 1)] = downLoadURL;
+                        setTimeout(() => {
+                            setLoadingUpload(false);
+                            setImageUrls(urls);
+                        }, 2000);
+                    }
+                });
+            })
+        );
+    };
 
     return (
         <div>
@@ -245,8 +273,28 @@ const CreateProductForm = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <SubmitButton isLoading={loading || Object.keys(imageUrls).length > 0} disabled={loading || loadingUpload}>
+                        Save
+                    </SubmitButton>
 
-                <SubmitButton isLoading={loading}>Save</SubmitButton>
+                    <Button
+                        sx={{
+                            marginTop: '2rem'
+                        }}
+                        variant="outlined"
+                        disabled={Object.keys(imageUrls).length < 1}
+                        onClick={handleUploadProductImages}
+                    >
+                        {loadingUpload ? 'Uploading.....' : 'Upload All Images'}
+                    </Button>
+                </Box>
+
                 {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
             </form>
         </div>

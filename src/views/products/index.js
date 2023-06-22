@@ -18,7 +18,8 @@ import {GET_PRODUCT_CATEGORIES_LIST_REQUEST} from '../../reducers/product/catego
 import {DELETE_PRODUCT_REQUEST, GET_PRODUCTS_LIST_REQUEST} from '../../reducers/product/constant';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditProductForm from './form/edit.product.form';
-
+import DaaDaEmptyDada from '../../reusable/empty-data';
+import {isEmpty} from 'lodash';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const Products = (props) => {
@@ -143,7 +144,13 @@ export const Products = (props) => {
             />
             <DashBoardLayoutForPage
                 title={'All Products'}
-                actionButton={<AddNewButton title={'Add New Product'} onClick={handleAddNewProduct} />}
+                actionButton={
+                    <AddNewButton
+                        disabled={listVendorsLoading || listCategoriesLoading}
+                        title={'Add New Product'}
+                        onClick={handleAddNewProduct}
+                    />
+                }
                 contents={
                     <Box sx={{width: '100%'}}>
                         <DaaDaModal title={'Add New Product'} show={thisState.showAddNewModal} handleClose={handleClose}>
@@ -165,6 +172,8 @@ export const Products = (props) => {
                         </DaaDaModal>
                         {listProductsLoading ? (
                             <CircularProgress />
+                        ) : isEmpty(data) ? (
+                            <DaaDaEmptyDada message={'No Products Added, Please Click Add New Product '} />
                         ) : (
                             <DataTable rows={data || []} columns={columns(handleDelete, handleEdit)} />
                         )}

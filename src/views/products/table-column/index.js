@@ -12,7 +12,7 @@ export const columns = (handleDelete, handleEdit) => [
         renderCell: (params) => {
             return (
                 <div>
-                    <img src={'/assets/images/users/meat.png'} alt="" id="product_img" />
+                    <img src={params.row.image_url_1} alt="" id="product_img" />
                 </div>
             );
         }
@@ -20,28 +20,24 @@ export const columns = (handleDelete, handleEdit) => [
     {
         field: 'name',
         headerName: 'Product name',
-        width: 200,
-       
+        width: 200
     },
 
     {
         field: 'quantity',
         headerName: 'Quantity',
-        width: 100,
-       
+        width: 100
     },
 
     {
         field: 'unit_price',
         headerName: 'Price',
-        width: 100,
-       
+        width: 100
     },
     {
         field: 'description',
         headerName: 'Description',
-        width: 300,
-       
+        width: 300
     },
 
     {
@@ -71,7 +67,7 @@ export const columns = (handleDelete, handleEdit) => [
                     color="error"
                     onClick={() => handleDelete(params)}
                 />
-            </div>,
+            </div>
             // <div className="actions_button">
             //     <GridActionsCellItem
             //         style={{
