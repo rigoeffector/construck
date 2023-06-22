@@ -102,8 +102,8 @@ const CreateProductForm = (props) => {
                         const downLoadURL = await getDownloadURL(imageRef);
 
                         urls[`image_url_` + (i + 1)] = downLoadURL;
+                        setLoadingUpload(false);
                         setTimeout(() => {
-                            setLoadingUpload(false);
                             setImageUrls(urls);
                         }, 2000);
                     }
@@ -280,20 +280,23 @@ const CreateProductForm = (props) => {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <SubmitButton isLoading={loading || Object.keys(imageUrls).length > 0} disabled={loading || loadingUpload}>
+                    <SubmitButton isLoading={loading} disabled={loading}>
                         Save
                     </SubmitButton>
-
-                    <Button
-                        sx={{
-                            marginTop: '2rem'
-                        }}
-                        variant="outlined"
-                        disabled={files.length < 1}
-                        onClick={handleUploadProductImages}
-                    >
-                        {loadingUpload ? 'Uploading.....' : 'Upload All Images'}
-                    </Button>
+                    {Object.keys(imageUrls).length > 0 ? (
+                        ''
+                    ) : (
+                        <Button
+                            sx={{
+                                marginTop: '2rem'
+                            }}
+                            variant="outlined"
+                            disabled={files.length < 1}
+                            onClick={handleUploadProductImages}
+                        >
+                            {loadingUpload ? 'Uploading.....' : 'Upload All Images'}
+                        </Button>
+                    )}
                 </Box>
 
                 {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
