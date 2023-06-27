@@ -26,7 +26,7 @@ const EditProductForm = (props) => {
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
     const {getRootProps, getInputProps} = useDropzone({
-        maxFiles: 10,
+        maxFiles: 5,
         accept: {
             'image/png': ['.png'],
             'image/jpg': ['.jpg'],
@@ -216,7 +216,7 @@ const EditProductForm = (props) => {
                             <div {...getRootProps({className: 'dropzone'})}>
                                 <input {...getInputProps()} />
                                 <p>Drag and drop some images files here, or click to select files </p>
-                                <em>(10 files are the maximum number of files you can drop here)</em>
+                                <em>(5 files are the maximum number of files you can drop here)</em>
                                 <IconButton aria-label="delete">
                                     <AddCircleOutlineIcon />
                                 </IconButton>

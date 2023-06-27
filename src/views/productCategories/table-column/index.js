@@ -4,6 +4,18 @@ import {GridActionsCellItem} from '@mui/x-data-grid';
 import './style.css';
 export const columns = (handleEdit, handleDelete) => [
     {
+        field: 'image',
+        width: 80,
+        headerName: 'Image',
+        renderCell: (params) => {
+            return (
+                <div>
+                    <img src={params.row.icon} alt="" id="product_img" />
+                </div>
+            );
+        }
+    },
+    {
         field: 'name',
         headerName: 'Category name',
         width: 200,
@@ -18,7 +30,7 @@ export const columns = (handleEdit, handleDelete) => [
     {
         field: 'description',
         headerName: 'Category Description',
-        width: 350,
+        width: 320,
         editable: true
     },
     {

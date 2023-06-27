@@ -20,9 +20,10 @@ import {v4} from 'uuid';
 import {storage} from '../../../firebase';
 const CreateProductForm = (props) => {
     const dispatch = useDispatch();
-    const [imageUrls, setImageUrls] = useState({});
+
     const {listVendors, listCategories} = props;
     const [files, setFiles] = useState([]);
+    const [imageUrls, setImageUrls] = useState({});
     const [loadingUpload, setLoadingUpload] = useState(false);
     const {
         auth,
@@ -102,8 +103,9 @@ const CreateProductForm = (props) => {
                         const downLoadURL = await getDownloadURL(imageRef);
 
                         urls[`image_url_` + (i + 1)] = downLoadURL;
-                        setLoadingUpload(false);
+
                         setTimeout(() => {
+                            setLoadingUpload(false);
                             setImageUrls(urls);
                         }, 2000);
                     }
@@ -245,7 +247,7 @@ const CreateProductForm = (props) => {
                             <div {...getRootProps({className: 'dropzone'})}>
                                 <input {...getInputProps()} />
                                 <p>Drag and drop some images files here, or click to select files </p>
-                                <em>(10 files are the maximum number of files you can drop here)</em>
+                                <em>(5 files are the maximum number of files you can drop here)</em>
                                 <IconButton aria-label="delete">
                                     <AddCircleOutlineIcon />
                                 </IconButton>
@@ -280,7 +282,7 @@ const CreateProductForm = (props) => {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <SubmitButton isLoading={loading} disabled={loading}>
+                    <SubmitButton isLoading={loading} disabled={Object.keys(imageUrls).length < 1}>
                         Save
                     </SubmitButton>
                     {Object.keys(imageUrls).length > 0 ? (
