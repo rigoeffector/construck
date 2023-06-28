@@ -190,7 +190,7 @@ const Login = () => {
                                                 <Grid item className={classes.icon}>
                                                     <RouterLink to="#">
                                                         <img
-                                                            src={'/assets/images/logo.jpeg'}
+                                                            src={'/assets/images/logo.png'}
                                                             alt="DaaDa"
                                                             style={{
                                                                 height: '100%',

@@ -9,7 +9,7 @@ const LogoSection = () => {
         <React.Fragment>
             <Link component={RouterLink} to={config.defaultPath}>
                 <img
-                    src={'/assets/images/logo.jpeg'}
+                    src={'/assets/images/logo.png'}
                     alt="DaaDa"
                     style={{
                         height: '100%',
