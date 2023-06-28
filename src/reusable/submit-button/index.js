@@ -9,7 +9,7 @@ const SubmitButton = ({children, isLoading, disabled}) => {
                 variant="contained"
                 type="submit"
                 style={{
-                    background: '#795548',
+                    background: '#058441',
                     marginTop: '2rem'
                 }}
             >

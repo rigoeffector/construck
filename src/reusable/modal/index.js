@@ -62,7 +62,7 @@ export const DaaDaModal = ({title, show, handleClose, children}) => {
                     onClose={handleClose}
                     style={{
                         fontSize: '15px',
-                        color: '#795548',
+                        color: '#058441',
                         position: 'relative',
                         bottom: '10px'
                     }}

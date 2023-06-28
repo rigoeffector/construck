@@ -145,7 +145,7 @@ const ProfileSection = () => {
         <React.Fragment>
             <Chip
                 sx={{
-                    background: '#b36b48!important'
+                    background: '#058441!important'
                 }}
                 classes={{label: classes.profileLabel}}
                 className={classes.profileChip}
@@ -204,8 +204,8 @@ const ProfileSection = () => {
                                                     sx={{
                                                         fontSize: '30px',
                                                         margin: '10px 0px',
-                                                        fontWeight: '300',
-                                                        color: '#b36a4a'
+                                                        fontWeight: '700',
+                                                        color: '#058441'
                                                     }}
                                                 >
                                                     Welcome,

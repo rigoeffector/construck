@@ -203,11 +203,11 @@ const Login = () => {
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography
-                                                        // color={theme.palette.purple.main}
+                                                        color={'#058441'}
                                                         gutterBottom
                                                         variant={matchDownSM ? 'h3' : 'h2'}
                                                     >
-                                                        Hi, Welcome Back
+                                                        Welcome To DaaDa
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item>
