@@ -101,8 +101,8 @@ const NavItem = (props) => {
             />
             {item.chip && (
                 <Chip
-                    color={item.chip.color}
-                    variant={item.chip.variant}
+                    // color={item.chip.color}
+                    // variant={item.chip.variant}
                     size={item.chip.size}
                     label={item.chip.label}
                     avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}

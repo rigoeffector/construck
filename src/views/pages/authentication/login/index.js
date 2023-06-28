@@ -207,7 +207,7 @@ const Login = () => {
                                                         gutterBottom
                                                         variant={matchDownSM ? 'h3' : 'h2'}
                                                     >
-                                                        Welcome To DaaDa
+                                                        Welcome To Daada
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item>
