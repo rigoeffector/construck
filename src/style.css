@@ -8,7 +8,7 @@ img#product_img {
 }
 .sweet-alert a.btn.btn-lg.btn-secondary {
     background: #e7e7e7;
-    color: #635d5d;
+    color: #058441;
     text-decoration: none;
     height: 46px;
     width: 100px;
@@ -17,13 +17,13 @@ img#product_img {
     font-weight: 700;
 }
 .sweet-alert a.btn.btn-lg.btn-danger {
-    background: #6c412c;
+    background: #058441;
     width: 100px;
     border-radius: 8px;
 }
 .sweet-alert a.btn.btn-lg.btn-danger {
     HEIGHT: 46PX;
-    color: wheat;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     line-height: 46px;
     font-weight: 700;
