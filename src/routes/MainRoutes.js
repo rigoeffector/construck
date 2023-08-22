@@ -7,15 +7,9 @@ import MainLayout from './../layout/MainLayout';
 import ProtectedRoute from './ProtectedRoute';
 
 const DashboardDefault = lazy(() => import('../views/dashboard/Default'));
-const ProductsPage = lazy(() => import('../views/products'));
-const ProductsCategoryPage = lazy(() => import('../views/productCategories/index'));
-const ProductDetailsPage = lazy(() => import('../views/productDetails'));
-const DeliveryTrackingPage = lazy(() => import('../views/deliveryTracking'));
-const OrderCheckoutPage = lazy(() => import('../views/orderCheckout'));
-const TransactionsPage = lazy(() => import('../views/transactions'));
+const AssetsPage = lazy(() => import('../views/assets'));
+const InvoicesPage = lazy(() => import('../views/invoices/index'));
 const SettingsPage = lazy(() => import('../views/settings'));
-const UsersListPage = lazy(() => import('../views/users'));
-const Vendors = lazy(() => import('../views/vendors'));
 
 const MainRoutes = () => {
     const location = useLocation();
@@ -25,30 +19,20 @@ const MainRoutes = () => {
             path={[
                 // '/user/login',
                 '/dashboard',
-                '/dashboard/products',
-                '/dashboard/products-categories',
-                '/dashboard/product-details',
-                '/dashboard/delivery-tracking',
-                '/dashboard/transactions',
-                '/dashboard/checkout',
+                '/dashboard/assets',
+                '/dashboard/invoices',
                 '/dashboard/settings',
-                '/dashboard/users',
-                '/dashboard/vendors'
+              
             ]}
         >
             <MainLayout showBreadcrumb={true}>
                 <Switch location={location} key={location.pathname}>
                     {/* <Route path="/user/login" component={FirebaseLogin} /> */}
-                    <ProtectedRoute path="/dashboard/home" component={DashboardDefault} />
-                    <ProtectedRoute path="/dashboard/products" component={ProductsPage} />
-                    <ProtectedRoute path="/dashboard/products-categories" component={ProductsCategoryPage} />
-                    <ProtectedRoute path="/dashboard/product-details" component={ProductDetailsPage} />
-                    <ProtectedRoute path="/dashboard/delivery-tracking" component={DeliveryTrackingPage} />
-                    <ProtectedRoute path="/dashboard/transactions" component={TransactionsPage} />
+                    <ProtectedRoute path="/dashboard/overview" component={DashboardDefault} />
+                    <ProtectedRoute path="/dashboard/assets" component={AssetsPage} />
+                    <ProtectedRoute path="/dashboard/invoices" component={InvoicesPage} />
                     <ProtectedRoute path="/dashboard/settings" component={SettingsPage} />
-                    <ProtectedRoute path="/dashboard/checkout" component={OrderCheckoutPage} />
-                    <ProtectedRoute path="/dashboard/users" component={UsersListPage} />
-                    <ProtectedRoute path="/dashboard/vendors" component={Vendors} />
+                    
                 </Switch>
             </MainLayout>
         </Route>

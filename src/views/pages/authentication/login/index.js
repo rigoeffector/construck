@@ -1,14 +1,11 @@
 import React from 'react';
 import {Link as RouterLink} from 'react-router-dom';
-import {Box, Card, CardContent, Divider, Grid, Hidden, makeStyles, Typography, useMediaQuery, useTheme} from '@material-ui/core';
-
-import Carousel from 'react-material-ui-carousel';
+import {Card, CardContent, Grid, makeStyles, Typography, useMediaQuery, useTheme} from '@material-ui/core';
 
 //import JWTLogin from './JWTLogin';
 //import Auth0Login from './Auth0Login';
 import FirebaseLogin from './FirebaseLogin';
 
-import AuthPattern from './../../../../assets/images/auth/auth-pattern.svg';
 import AuthBlue from './../../../../assets/images/auth/auth-blue.svg';
 import AuthPurple from './../../../../assets/images/auth/auth-purple.svg';
 import AuthBlueCard from './../../../../assets/images/auth/auth-blue-card.svg';
@@ -173,7 +170,7 @@ const Login = () => {
 
     return (
         <Grid container justifyContent="space-between" alignItems="center" className={classes.root}>
-            <Grid item container justifyContent="center" md={7}>
+            <Grid item container justifyContent="center" md={12}>
                 <Card className={classes.card}>
                     <CardContent className={classes.content}>
                         <Grid container direction="column" spacing={2} justifyContent="center">
@@ -190,7 +187,7 @@ const Login = () => {
                                                 <Grid item className={classes.icon}>
                                                     <RouterLink to="#">
                                                         <img
-                                                            src={'/assets/images/logo.png'}
+                                                            src={'/assets/images/waving-hand.png'}
                                                             alt="DaaDa"
                                                             style={{
                                                                 height: '100%',
@@ -202,25 +199,21 @@ const Login = () => {
                                                     </RouterLink>
                                                 </Grid>
                                                 <Grid item>
-                                                    <Typography
-                                                        color={'#058441'}
-                                                        gutterBottom
-                                                        variant={matchDownSM ? 'h3' : 'h2'}
-                                                    >
-                                                        Welcome To Daada
+                                                    <Typography color={'#292731'} gutterBottom variant={matchDownSM ? 'h2' : 'h1'}>
+                                                        Welcome back!
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography
                                                         color="textPrimary"
                                                         gutterBottom
-                                                        variant={matchDownSM ? 'h4' : 'h3'}
+                                                        variant={matchDownSM ? 'h3' : 'h4'}
                                                         sx={{
-                                                            fontWeight: '200 !important',
-                                                            fontSize: '14px'
+                                                            fontWeight: '400 !important',
+                                                            fontSize: '16px'
                                                         }}
                                                     >
-                                                        Login in to your account
+                                                        Please login to access your account.
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
@@ -238,9 +231,7 @@ const Login = () => {
                                 {/* <Auth0Login /> */}
                                 <FirebaseLogin />
                             </Grid>
-                            <Grid item xs={12}>
-                                <Divider />
-                            </Grid>
+
                             <Grid item xs={12}>
                                 <Grid item container direction="column" alignItems="flex-end" xs={12}>
                                     {/* <Typography component={RouterLink} to="#" variant="subtitle1" className={classes.title}>
@@ -264,56 +255,6 @@ const Login = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Hidden mdDown>
-                <Grid item md={5} sx={{alignSelf: 'stretch'}}>
-                    <Box
-                        component="span"
-                        sx={{
-                            display: 'flex',
-                            maxWidth: 770,
-                            minHeight: '100%',
-                            height: '100vh',
-                            bgcolor: '#fff',
-                            backgroundImage: `url(${AuthPattern})`,
-                            position: 'relative',
-                            backgroundPosition: '0 0',
-                            overflow: 'hidden',
-                            margin: '0 0 0 auto'
-                        }}
-                    >
-                        <Grid item container direction="column" justifyContent="flex-end">
-                            <Grid item>
-                                <span className={classes.authBlue}></span>
-                                <span className={classes.authPurpleCard}></span>
-                            </Grid>
-                            <Grid item>
-                                <Box p={10}>
-                                    <Carousel
-                                        animation="slide"
-                                        navButtonsAlwaysInvisible
-                                        autoPlay={false}
-                                        indicatorIconButtonProps={{
-                                            className: classes.indicator
-                                        }}
-                                        activeIndicatorIconButtonProps={{
-                                            className: classes.activeIndicator
-                                        }}
-                                        indicatorContainerProps={{
-                                            style: {
-                                                marginTop: '32px'
-                                            }
-                                        }}
-                                    >
-                                        {/* {items.map((item, i) => (
-                                            <Item key={i} item={item} />
-                                        ))} */}
-                                    </Carousel>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Grid>
-            </Hidden>
         </Grid>
     );
 };

@@ -50,11 +50,13 @@ import {
     IconTools,
     IconTypography,
     IconUser,
-    IconUserCheck
+    IconUserCheck,
+    IconCreditCard
 } from '@tabler/icons';
 
 const icons = {
     IconDashboard: IconDashboard,
+    IconCreditCard,
     IconDeviceAnalytics,
     IconUserOff: IconUserOff,
     IconChartArcs: IconChartArcs,
@@ -109,180 +111,52 @@ const menuItems = {
     items: [
         {
             id: 'dashboard',
-            // title: <FormattedMessage id="dashboard" />,
+            // title: <FormattedMessage id="pages" />,
+            // caption: <FormattedMessage id="pages-caption" />,
             type: 'group',
             children: [
-                // {
-                //     id: 'dash-default',
-                //     title: <FormattedMessage id="Dashboard" />,
-                //     type: 'item',
-                //     url: '/dashboard',
-                //     icon: icons['IconMenu'],
-                //     breadcrumbs: false
-                // },
                 {
-                    id: 'dash-vendors',
-                    title: <FormattedMessage id="Vendors" />,
-                    type: 'item',
-                    url: '/dashboard/vendors',
-                    icon: icons['IconUserOff'],
-                    breadcrumbs: false
-                },
-                {
-                    id: 'dash-product-categories',
-                    title: <FormattedMessage id="Product Categories" />,
-                    type: 'item',
-                    url: '/dashboard/products-categories',
-                    icon: icons['IconBug'],
-                    breadcrumbs: false
-                },
-                {
-                    id: 'dash-products',
-                    title: <FormattedMessage id="Products" />,
-                    type: 'item',
-                    url: '/dashboard/products',
-                    icon: icons['IconBrandProducthunt'],
-                    breadcrumbs: false
+                    id: 'Assets',
+                    title: <FormattedMessage id="Assets" />,
+                    type: 'collapse',
+                    icon: icons['IconCreditCard'],
+                    children: [
+                        {
+                            id: 'dash-vendors',
+                            title: <FormattedMessage id="Overview" />,
+                            type: 'item',
+                            url: '/dashboard/overview',
+                            icon: '',
+                            breadcrumbs: false
+                        },
+                        {
+                            id: 'assets',
+                            title: <FormattedMessage id="Assets List" />,
+                            type: 'item',
+                            url: '/dashboard/assets',
+                            // icon: icons['IconBug'],
+                            breadcrumbs: false
+                        },
+                        {
+                            id: 'invoices',
+                            title: <FormattedMessage id="Invoices" />,
+                            type: 'item',
+                            url: '/dashboard/invoices',
+                            // icon: icons['IconBrandProducthunt'],
+                            breadcrumbs: false
+                        },
+                        {
+                            id: 'Settings',
+                            title: <FormattedMessage id="Settings" />,
+                            type: 'item',
+                            url: '/dashboard/settings',
+                            // icon: icons['IconBrandProducthunt'],
+                            breadcrumbs: false
+                        }
+                    ]
                 }
-                // {
-                //     id: 'dash-transactions',
-                //     title: <FormattedMessage id="Transactions" />,
-                //     type: 'item',
-                //     url: '/dashboard/transactions',
-                //     icon: icons['IconTransferIn'],
-                //     breadcrumbs: false
-                // },
-                // {
-                //     id: 'dash-delivery',
-                //     title: <FormattedMessage id="Delivery Track" />,
-                //     type: 'item',
-                //     url: '/dashboard/delivery-tracking',
-                //     icon: icons['IconTruckDelivery'],
-                //     breadcrumbs: false
-                // },
-                // {
-                //     id: 'dash-users',
-                //     title: <FormattedMessage id="Customers" />,
-                //     type: 'item',
-                //     url: '/dashboard/users',
-                //     icon: icons['IconPictureInPicture'],
-                //     breadcrumbs: false
-                // },
-
-                // {
-                //     id: 'dash-settings',
-                //     title: <FormattedMessage id="Settings" />,
-                //     type: 'item',
-                //     url: '/dashboard/settings',
-                //     icon: icons['IconBrandGravatar'],
-                //     breadcrumbs: false
-                // }
             ]
         }
-
-        // {
-        //     id: 'pages',
-        //     title: <FormattedMessage id="pages" />,
-        //     caption: <FormattedMessage id="pages-caption" />,
-        //     type: 'group',
-        //     children: [
-        //         {
-        //             id: 'authentication',
-        //             title: <FormattedMessage id="authentication" />,
-        //             type: 'collapse',
-        //             icon: icons['IconKey'],
-        //             children: [
-
-        //                         {
-        //                             id: 'login3',
-        //                             title: <FormattedMessage id="login" />,
-        //                             type: 'item',
-        //                             url: '/pages/login/login3',
-        //                             target: true
-        //                         },
-        //                         {
-        //                             id: 'register3',
-        //                             title: <FormattedMessage id="register" />,
-        //                             type: 'item',
-        //                             url: '/pages/register/register3',
-        //                             target: true
-        //                         }
-
-        //             ]
-        //         },
-
-        //     ]
-        // },
-        // {
-        //     id: 'utilities',
-        //     title: <FormattedMessage id="utilities" />,
-        //     type: 'group',
-        //     children: [
-        //         {
-        //             id: 'util-typography',
-        //             title: <FormattedMessage id="typography" />,
-        //             type: 'item',
-        //             url: '/utils/util-typography',
-        //             icon: icons['IconTypography']
-        //         },
-        //         {
-        //             id: 'color',
-        //             title: <FormattedMessage id="color" />,
-        //             type: 'item',
-        //             url: '/utils/util-color',
-        //             icon: icons['IconPalette']
-        //         },
-        //         {
-        //             id: 'shadow',
-        //             title: <FormattedMessage id="shadow" />,
-        //             type: 'item',
-        //             url: '/utils/util-shadow',
-        //             icon: icons['IconShadow']
-        //         },
-        //         {
-        //             id: 'icons',
-        //             title: <FormattedMessage id="icons" />,
-        //             type: 'collapse',
-        //             icon: icons['IconPencil'],
-        //             children: [
-        //                 {
-        //                     id: 'util-tabler-icons',
-        //                     title: <FormattedMessage id="tabler-icons" />,
-        //                     type: 'item',
-        //                     url: '/icons/tabler-icons'
-        //                 },
-        //                 {
-        //                     id: 'util-material-icons',
-        //                     title: <FormattedMessage id="material-icons" />,
-        //                     type: 'item',
-        //                     url: '/icons/material-icons'
-        //                 }
-        //             ]
-        //         }
-        //     ]
-        // },
-        // {
-        //     id: 'sample-docs-roadmap',
-        //     type: 'group',
-        //     children: [
-        //         {
-        //             id: 'sample-page',
-        //             title: <FormattedMessage id="sample-page" />,
-        //             type: 'item',
-        //             url: '/sample-page',
-        //             icon: icons['IconBrandChrome']
-        //         },
-        //         {
-        //             id: 'documentation',
-        //             title: <FormattedMessage id="documentation" />,
-        //             type: 'item',
-        //             url: '#',
-        //             icon: icons['IconHelp'],
-        //             target: true,
-        //             external: true
-        //         }
-        //     ]
-        // }
     ]
 };
 

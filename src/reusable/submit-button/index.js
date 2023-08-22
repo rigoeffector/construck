@@ -9,8 +9,16 @@ const SubmitButton = ({children, isLoading, disabled}) => {
                 variant="contained"
                 type="submit"
                 style={{
-                    background: '#058441',
-                    marginTop: '2rem'
+                    background: '#1090CB',
+                    marginTop: '2rem',
+                    width: '100%',
+                    display: 'flex',
+                    height: '54px',
+                    padding: '2px 0px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexShrink: '0',
+                    borderRadius: '8px'
                 }}
             >
                 {isLoading ? (

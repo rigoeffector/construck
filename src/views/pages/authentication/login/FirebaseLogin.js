@@ -25,7 +25,7 @@ import {
 import useScriptRef from '../../../../hooks/useScriptRef';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import history from '../../../../history';
 import Google from './../../../../assets/images/icons/social-google.svg';
 import {LOGIN_USER_REQUEST, LOGIN_USER_RESET} from '../../../../reducers/auth/constant';
 import DaaDAlerts from '../../../../reusable/alerts';
@@ -136,47 +136,10 @@ const FirebaseLogin = (props, {className, ...rest}) => {
     };
     return (
         <React.Fragment>
-            {/* <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <Button
-                        disableElevation
-                        fullWidth={true}
-                        className={classes.redButton}
-                        onClick={googleHandler}
-                        size="large"
-                        variant="contained"
-                    >
-                        <img src={Google} alt="google" width="20px" className={classes.loginIcon} /> Sign in with Google
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box alignItems="center" display="flex">
-                        <Divider className={classes.signDivider} orientation="horizontal" />
-                        <Button
-                            variant="outlined"
-                            className={classes.signText}
-                            sx={{borderRadius: customization.borderRadius + 'px'}}
-                            disableRipple
-                            disabled
-                        >
-                            OR
-                        </Button>
-                        <Divider className={classes.signDivider} orientation="horizontal" />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} container alignItems="center" justifyContent="center">
-                    <Box mb={2}>
-                        <Typography variant="subtitle1" className={classes.title}>
-                            Sign in with Email address
-                        </Typography>
-                    </Box>
-                </Grid>
-            </Grid> */}
-
             <Formik
                 initialValues={{
-                    username: 'admin@daada.app',
-                    password: '!Daada123',
+                    username: 'angela@daada.app',
+                    password: '!angela123',
                     api_key: ''
                 }}
                 validationSchema={Yup.object().shape({
@@ -184,12 +147,14 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values) => {
-                    const keys = process.env.REACT_APP_ADDAX_API_KEY;
-                    const payload = {
-                        ...values,
-                        api_key: keys
-                    };
-                    dispatch({type: LOGIN_USER_REQUEST, payload});
+                    // const keys = process.env.REACT_APP_ADDAX_API_KEY;
+                    // const payload = {
+                    //     ...values,
+                    //     api_key: keys
+                    // };
+                    // dispatch({type: LOGIN_USER_REQUEST, payload});
+                    history.push('/daada/dashboard/overview');
+                    window.location.reload();
                 }}
             >
                 {({errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values}) => (
@@ -263,24 +228,7 @@ const FirebaseLogin = (props, {className, ...rest}) => {
                                 </FormHelperText>
                             )}
                         </FormControl>
-                        {/* <Grid container alignItems="center" justifyContent="space-between">
-                            <Grid item>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={checked}
-                                            onChange={(event) => setChecked(event.target.checked)}
-                                            name="checked"
-                                            color="primary"
-                                        />
-                                    }
-                                    label={<React.Fragment>Keep me logged in</React.Fragment>}
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="subtitle1">Forgot Password?</Typography>
-                            </Grid>
-                        </Grid> */}
+
                         {errors.submit && (
                             <Box mt={3}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>

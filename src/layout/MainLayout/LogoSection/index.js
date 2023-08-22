@@ -13,7 +13,7 @@ const LogoSection = () => {
                     alt="DaaDa"
                     style={{
                         height: '100%',
-                        width: '30%'
+                        width: '80%'
                     }}
                 />
             </Link>

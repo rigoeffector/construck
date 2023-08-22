@@ -2,7 +2,7 @@
 import React from 'react';
 import {Avatar, ButtonBase, Hidden, makeStyles} from '@material-ui/core';
 
-import {IconMenu2} from '@tabler/icons';
+import {IconChevronsLeft} from '@tabler/icons';
 
 import LogoSection from '../LogoSection';
 import SearchSection from './SearchSection';
@@ -49,9 +49,18 @@ const Header = (props) => {
                     <LogoSection />
                     <div className={classes.grow} />
                 </Hidden>
-                <ButtonBase sx={{borderRadius: '12px'}}>
+                <ButtonBase
+                    sx={{
+                        position: 'absolute',
+                        top: '75%',
+                        left: '16%',
+                        borderRadius: '50%',
+                        border: '1px solid #ddd',
+                        color: '#000000'
+                    }}
+                >
                     <Avatar variant="rounded" className={classes.headerAvtar} onClick={handleLeftDrawerToggle}>
-                        <IconMenu2 stroke={1.5} size="1.3rem" />
+                        <IconChevronsLeft stroke={1.5} size="1.3rem" />
                     </Avatar>
                 </ButtonBase>
             </div>
