@@ -144,9 +144,9 @@ const ProfileSection = () => {
     return (
         <React.Fragment>
             <Chip
-                sx={{
-                    background: '#058441!important'
-                }}
+                // sx={{
+                //     background: '#058441!important'
+                // }}
                 classes={{label: classes.profileLabel}}
                 className={classes.profileChip}
                 icon={
@@ -187,7 +187,9 @@ const ProfileSection = () => {
             >
                 {({TransitionProps, placement}) => (
                     <Fade {...TransitionProps}>
-                        <Paper>
+                        <Paper sx={{
+                                width: '235px'
+                        }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <Card elevation={16}>
                                     <CardContent className={classes.cardContent}>
@@ -200,46 +202,38 @@ const ProfileSection = () => {
                                                 }}
                                             >
                                                 <Typography
-                                                    variant="h4"
+                                                    variant="h5"
                                                     sx={{
-                                                        fontSize: '30px',
-                                                        margin: '10px 0px',
-                                                        fontWeight: '700',
-                                                        color: '#058441'
+                                                        fontSize: '18px',
+                                                        margin: '3px 0px',
+                                                        fontWeight: '500',
+                                                        color: '#6B7A99'
                                                     }}
                                                 >
-                                                    Welcome,
+                                                    Angela Karenzi
                                                 </Typography>
                                                 <Typography
                                                     component="span"
                                                     variant="h4"
                                                     className={classes.name}
                                                     sx={{
-                                                        fontSize: '18px',
-                                                        fontWeight: '700',
-                                                        margin: '13px 0px'
+                                                        fontSize: '14px',
+                                                        fontWeight: '400',
+                                                        color: '#6B7A99'
+                                                        
                                                     }}
                                                 >
-                                                    {data?.username}
+                                                angela@gmail.com
+                                                    {/* {data?.username} */}
                                                     <Grid item>
-                                                        <Typography variant="subtitle2">{data?.role}</Typography>
+                                                        <Typography variant="subtitle2"  sx={{
+                                                        marginBottom:'10px'
+                                                        
+                                                    }}>Administrator</Typography>
                                                     </Grid>
                                                 </Typography>
 
-                                                <Typography
-                                                    component="span"
-                                                    variant="h4"
-                                                    className={classes.name}
-                                                    sx={{
-                                                        display: 'block',
-                                                        fontSize: '12px',
-                                                        color: '#a3a3a3',
-                                                        margin: '10px 0px',
-                                                        fontStyle: 'italic'
-                                                    }}
-                                                >
-                                                    Last Login: {data?.last_login}
-                                                </Typography>
+                                               
                                             </Grid>
                                         </Grid>
 

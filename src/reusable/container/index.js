@@ -8,7 +8,8 @@ const BodyContainer = ({children}) => {
                 padding: '20px',
                 borderRadius: '10px',
                 width: '100%',
-                background: 'white'
+                background: 'white',
+                paddingTop: '55px'
             }}
         >
             {children}

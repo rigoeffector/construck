@@ -1,0 +1,26 @@
+.midas-stat-card-container {
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: #465674;
+  }
+  
+  .midas-stat-card-container p {
+    font-family: 'Nunito Sans', 'Helvetica', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+  }
+  
+  .midas-stat-card-container span {
+  }
+  

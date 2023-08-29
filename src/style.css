@@ -6,6 +6,9 @@ img#product_img {
     line-height: 30px !important;
     font-weight: 200 !important;
 }
+main#wrapper_main {
+    background: #EDEFF3;
+}
 .sweet-alert a.btn.btn-lg.btn-secondary {
     background: #e7e7e7;
     color: #058441;

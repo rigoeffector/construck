@@ -114,7 +114,7 @@ const NavCollapse = (props) => {
                 onClick={handleClick}
                 style={{paddingLeft: level * 23 + 'px'}}
             >
-                {/* <ListItemIcon className={menuIconClass}>{menuIcon}</ListItemIcon> */}
+                <ListItemIcon className={menuIconClass}>{menuIcon}</ListItemIcon>
                 <ListItemText
                     primary={
                         <Typography variant={selected === menu.id ? 'h5' : 'body1'} color="inherit" className={classes.listItemTypography}>

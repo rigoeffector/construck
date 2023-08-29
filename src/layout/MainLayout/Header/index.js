@@ -59,9 +59,9 @@ const Header = (props) => {
                         color: '#000000'
                     }}
                 >
-                    <Avatar variant="rounded" className={classes.headerAvtar} onClick={handleLeftDrawerToggle}>
+                    {/* <Avatar variant="rounded" className={classes.headerAvtar} onClick={handleLeftDrawerToggle}>
                         <IconChevronsLeft stroke={1.5} size="1.3rem" />
-                    </Avatar>
+                    </Avatar> */}
                 </ButtonBase>
             </div>
             {/* <SearchSection theme="light" /> */}

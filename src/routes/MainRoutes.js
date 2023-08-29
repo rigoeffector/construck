@@ -9,7 +9,8 @@ import ProtectedRoute from './ProtectedRoute';
 const DashboardDefault = lazy(() => import('../views/dashboard/Default'));
 const AssetsPage = lazy(() => import('../views/assets'));
 const InvoicesPage = lazy(() => import('../views/invoices/index'));
-const SettingsPage = lazy(() => import('../views/settings'));
+const Drivers = lazy(() => import('../views/drivers'));
+const AllAssetsRequests = lazy(() => import('../views/allrequests'));
 
 const MainRoutes = () => {
     const location = useLocation();
@@ -20,8 +21,9 @@ const MainRoutes = () => {
                 // '/user/login',
                 '/dashboard',
                 '/dashboard/assets',
+                '/dashboard/requests',
                 '/dashboard/invoices',
-                '/dashboard/settings',
+                '/dashboard/drivers',
               
             ]}
         >
@@ -30,8 +32,9 @@ const MainRoutes = () => {
                     {/* <Route path="/user/login" component={FirebaseLogin} /> */}
                     <ProtectedRoute path="/dashboard/overview" component={DashboardDefault} />
                     <ProtectedRoute path="/dashboard/assets" component={AssetsPage} />
+                    <ProtectedRoute path="/dashboard/requests" component={AllAssetsRequests} />
                     <ProtectedRoute path="/dashboard/invoices" component={InvoicesPage} />
-                    <ProtectedRoute path="/dashboard/settings" component={SettingsPage} />
+                    <ProtectedRoute path="/dashboard/drivers" component={Drivers} />
                     
                 </Switch>
             </MainLayout>

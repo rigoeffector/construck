@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
         // backgroundColor: theme.palette.background.default
     },
     appBarWidth: {
-        transition: theme.transitions.create('width'),
-        backgroundColor: theme.palette.background.default
+        transition: theme.transitions.create('width')
+        // backgroundColor: theme.palette.background.default
     },
     content: {
         ...theme.typography.mainContent,
@@ -89,6 +89,10 @@ const MainLayout = ({children, showBreadcrumb = true}) => {
             </AppBar>
             <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
             <main
+                id="wrapper_main"
+                style={{
+                    background: '#EDEFF3 !important'
+                }}
                 className={clsx([
                     classes.content,
                     {

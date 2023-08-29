@@ -84,7 +84,7 @@ const NavItem = (props) => {
             style={{paddingLeft: level * 23 + 'px'}}
             {...listItemProps}
         >
-            {/* <ListItemIcon className={itemIconClass}>{itemIcon}</ListItemIcon> */}
+            <ListItemIcon className={itemIconClass}>{itemIcon}</ListItemIcon>
             <ListItemText
                 primary={
                     <Typography variant={customization.isOpen === item.id ? 'h5' : 'body1'} color="inherit">

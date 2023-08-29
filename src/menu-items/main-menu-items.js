@@ -138,6 +138,14 @@ const menuItems = {
                             breadcrumbs: false
                         },
                         {
+                            id: 'requests',
+                            title: <FormattedMessage id="All requests" />,
+                            type: 'item',
+                            url: '/dashboard/requests',
+                            // icon: icons['IconBrandProducthunt'],
+                            breadcrumbs: false
+                        },
+                        {
                             id: 'invoices',
                             title: <FormattedMessage id="Invoices" />,
                             type: 'item',
@@ -146,10 +154,10 @@ const menuItems = {
                             breadcrumbs: false
                         },
                         {
-                            id: 'Settings',
-                            title: <FormattedMessage id="Settings" />,
+                            id: 'drivers',
+                            title: <FormattedMessage id="List of drivers" />,
                             type: 'item',
-                            url: '/dashboard/settings',
+                            url: '/dashboard/drivers',
                             // icon: icons['IconBrandProducthunt'],
                             breadcrumbs: false
                         }
