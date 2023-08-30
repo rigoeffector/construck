@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PageContainer from '../../reusable/breadcrumbs';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -10,8 +10,11 @@ import DataTable from '../../reusable/table';
 import {columns} from './table-column';
 import {Button, Grid} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import ConstruckModal from '../../reusable/modal';
+import CreateNewDriverForm from './form/create.driver';
 
 const Drivers = () => {
+    const [showNewModal, setShowNewModal] = useState(false);
     const data = [
         {
             id: '1',
@@ -57,8 +60,19 @@ const Drivers = () => {
             status: 'Unavailable'
         }
     ];
+
+    const handleShowAddNewModel = () => {
+        setShowNewModal(true);
+    };
+
+    const handleClose = () => {
+        setShowNewModal(false);
+    };
     return (
         <PageContainer pageHeading="List of Drivers">
+        <ConstruckModal title="Add driver" show={showNewModal} handleClose={handleClose}>
+                <CreateNewDriverForm />
+            </ConstruckModal>
             <Grid
                 container
                 direction="row"
@@ -71,6 +85,7 @@ const Drivers = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
+                    onClick={handleShowAddNewModel}
                     sx={{
                         borderRadius: '8px',
                         background: '#1090CB'

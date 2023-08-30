@@ -20,6 +20,10 @@ import AddIcon from '@mui/icons-material/Add';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import {Columns} from './table-column/external';
+import CreateExternalAssetForm from './form/create.external';
+import ConstruckModal from '../../reusable/modal';
+import AssignExternalAssetForm from './form/assign.external';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const ProductsExternal = (props) => {
@@ -34,7 +38,12 @@ export const ProductsExternal = (props) => {
     } = useSelector((state) => state);
     const dispatch = useDispatch();
 
+    const [showNewModal, setShowNewModal] = useState(false);
     const [thisState, setThisState] = useState(initialState);
+    const [showAssignModel, setShowAssignModal] = useState(false);
+    const [showMoreInfo, setShowMoreInfo] = useState(false);
+    const [showDeleteModel, setShowDeleteModel] = useState(false);
+    const [showArchiveModel, setShowArchiveModel] = useState(false);
 
     const handleAddNewProduct = () => {
         setThisState((prev) => ({
@@ -46,6 +55,12 @@ export const ProductsExternal = (props) => {
     };
 
     const handleClose = () => {
+        setShowNewModal(false);
+        setShowAssignModal(false);
+        setShowDeleteModel(false);
+        setShowMoreInfo(false);
+        setShowArchiveModel(false);
+
         setThisState((prev) => ({
             ...prev,
             showAlertConfirm: false,
@@ -71,70 +86,37 @@ export const ProductsExternal = (props) => {
             id: '1',
             name: 'Computer Laptop',
             category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
+            assignedTo: 'Angela UWACU',
+            duration: '4 months',
+            description:'Loading Truck',
+            status: 'Available'
         },
         {
             id: '2',
-
-            name: 'Mouse',
+            name: 'Computer Laptop',
             category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
+            assignedTo: 'Angela UWACU',
+            duration: '4 months',
+            description:'Loading Truck',
+            status: 'Maintenance'
         },
         {
             id: '3',
-
-            name: 'Cables Phone',
+            name: 'Computer Laptop',
             category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
+            assignedTo: 'Angela UWACU',
+            duration: '4 months',
+            description:'Loading Truck',
+            status: 'Unavailable'
         },
         {
             id: '4',
-
-            name: 'Car',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '5',
-
             name: 'Computer Laptop',
             category: 'Dump Truck',
-            requestedBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '6',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '7',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
+            assignedTo: 'Angela UWACU',
+            duration: '4 months',
+            description:'Loading Truck',
+            status: 'Available'
         }
     ];
     const [value, setValue] = React.useState(0);
@@ -142,22 +124,52 @@ export const ProductsExternal = (props) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const handleShowAddNew = () => {
+        setShowNewModal(true);
+    };
+    const handleShowAssignNew = () => {
+        setShowAssignModal(true);
+    };
+
+    const handleViewMore = () => {
+        setShowMoreInfo(true);
+    };
+
+    const handleArchive = () => {
+        setShowArchiveModel(true);
+    };
+
+    const handleEdit = () => {
+        console.log('Edit');
+    };
+
+    const handleDelete = () => {
+        setShowDeleteModel(true);
+    };
     return (
         <Box>
+         <ConstruckModal title="Add external asset" show={showNewModal} handleClose={handleClose}>
+                <CreateExternalAssetForm />
+            </ConstruckModal>
+            <ConstruckModal title="Assign  external asset" show={showAssignModel} handleClose={handleClose}>
+                <AssignExternalAssetForm />
+            </ConstruckModal>
             <Grid container direction="row" justifyContent="flex-end" alignItems="center">
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
+                    onClick={handleShowAddNew}
                     sx={{
                         borderRadius: '8px',
                         background: '#1090CB'
                     }}
-              >
-                 Add  external asset
+                >
+                    Add external asset
                 </Button>
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
+                    onClick={handleShowAssignNew}
                     sx={{
                         borderRadius: '8px',
                         margin: '0px 15px',
@@ -180,7 +192,11 @@ export const ProductsExternal = (props) => {
             </Grid>
 
             <BodyContainer>
-                <DashBoardLayoutForPage title={''} actionButton={''} contents={''} />
+                <DashBoardLayoutForPage
+                    title={''}
+                    actionButton={''}
+                    contents={<DataTable rows={data} enabledFilters={false} columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)} />}
+                />
             </BodyContainer>
         </Box>
     );

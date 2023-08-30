@@ -6,7 +6,7 @@ import MoreIcon from '@mui/icons-material/More';
 import {GridActionsCellItem} from '@mui/x-data-grid';
 import '../style.css';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {Button} from '@mui/material';
+import {Button, Chip} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
@@ -36,20 +36,57 @@ export const Columns = (handleViewMore,
         },
 
         {
-            field: 'requestedBy',
+            field: 'description',
             headerName: 'Description ',
             flex: 4
         },
-
         {
-            field: 'to',
+            field: 'duration',
+            headerName: 'Duration',
+            width: 100,
+        },
+
+        
+        {
+            field: 'status',
             headerName: 'Status',
-            width: 100
+            width: 150,
+            renderCell: (params) =>
+            params.row.status === 'Available' ? (
+                <Chip
+                    label={params.row.status}
+                    color="primary"
+                    sx={{
+                        width: '100px !important',
+                        textAlign: 'center'
+                    }}
+                />
+            ) : params.row.status === 'Unavailable' ? (
+                <Chip
+                    label={params.row.status}
+                    color="success"
+                    sx={{
+                        width: '100px !important',
+                        textAlign: 'center'
+                    }}
+                />
+            ) : params.row.status === 'Maintenance' ? (
+                <Chip
+                    label={params.row.status}
+                    color="warning"
+                    sx={{
+                        width: '100px !important',
+                        textAlign: 'center'
+                    }}
+                />
+            ) : (
+                <Chip label={params.row.status} />
+            )
         },
         {
-            field: 'purpose',
-            headerName: 'Assigned To',
-            flex: 4
+            field: 'assignedTo',
+            headerName: 'Assigned To ',
+            width: 100
         },
 
         {

@@ -1,6 +1,5 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {alpha} from '@material-ui/core/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import InputBase from '@mui/material/InputBase';

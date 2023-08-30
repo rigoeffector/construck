@@ -8,8 +8,7 @@ import {Box, Grid, withStyles} from '@material-ui/core';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Stack } from '@mui/material';
-
+import {Stack} from '@mui/material';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -84,6 +83,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         actions = [],
         identifier,
         checkboxSelection = true,
+        enabledFilters = true,
         showQuickSearchToolbar = true
     } = props;
     const [pageSize, setPageSize] = React.useState(20);
@@ -114,7 +114,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
     };
     function QuickSearchToolbar() {
         return (
-            <Stack id='filter_wrapper'>
+            <Stack id="filter_wrapper" sx={!enabledFilters ? {marginBottom: '30px'} : {}}>
                 <Box
                     sx={{
                         p: 4,
@@ -131,7 +131,17 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                         }
                     />
                 </Box>
-                <Box id="filter_astest">
+
+                <Box
+                    id="filter_astest"
+                    sx={
+                        !enabledFilters
+                            ? {
+                                  display: 'none'
+                              }
+                            : {}
+                    }
+                >
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
@@ -207,6 +217,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                 }}
                 disableColumnSelector
                 disableDensitySelector
+                enabledFilters={enabledFilters}
                 columns={columns}
                 rows={rows}
                 checkboxSelection={checkboxSelection}

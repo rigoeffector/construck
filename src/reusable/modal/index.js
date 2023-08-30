@@ -46,7 +46,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired
 };
 
-export const DaaDaModal = ({title, show, handleClose, children}) => {
+export const ConstruckModal = ({title, show, handleClose, children}) => {
     return (
         <div>
             <BootstrapDialog
@@ -62,7 +62,7 @@ export const DaaDaModal = ({title, show, handleClose, children}) => {
                     onClose={handleClose}
                     style={{
                         fontSize: '15px',
-                        color: '#058441',
+                        color: '#000',
                         position: 'relative',
                         bottom: '10px'
                     }}
@@ -74,4 +74,4 @@ export const DaaDaModal = ({title, show, handleClose, children}) => {
         </div>
     );
 };
-export default DaaDaModal;
+export default ConstruckModal;

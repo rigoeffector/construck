@@ -25,7 +25,7 @@ const StyledDateTextField = styled(TextField)({
     padding: '10px', // You can adjust the padding as needed
   },
   });
-const CreateAssetForm = (props) => {
+const CreateExternalAssetForm = (props) => {
     const dispatch = useDispatch();
 
     const {listVendors, listCategories} = props;
@@ -92,11 +92,49 @@ const CreateAssetForm = (props) => {
                                 fullWidth
                                 id="name"
                                 name="name"
-                                label="Asset Name"
+                                label="Customer Name"
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
                                 helperText={formik.touched.name && formik.errors.name}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="customerId"
+                                name="customerId"
+                                label="Customer Id"
+                                type="text"
+                                value={formik.values.customerId}
+                                onChange={formik.handleChange}
+                                error={formik.touched.customerId && Boolean(formik.errors.customerId)}
+                                helperText={formik.touched.customerId && formik.errors.customerId}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="assetName"
+                                name="assetName"
+                                label="Asset Name"
+                                type="text"
+                                value={formik.values.assetName}
+                                onChange={formik.handleChange}
+                                error={formik.touched.assetName && Boolean(formik.errors.assetName)}
+                                helperText={formik.touched.assetName && formik.errors.assetName}
                             />
                         </Box>
                     </Grid>
@@ -127,7 +165,7 @@ const CreateAssetForm = (props) => {
                         >
                             <TextField
                                 fullWidth
-                                id="plate"
+                                id="palteNumber"
                                 name="plate"
                                 label="Plate Number"
                                 type="text"
@@ -162,31 +200,7 @@ const CreateAssetForm = (props) => {
                             </FormControl>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Box
-                            sx={{
-                                margin: '4px 0px'
-                            }}
-                        >
-                            <FormControl fullWidth>
-                                <TextField
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="Status"
-                                    name="status"
-                                    select
-                                    value={formik.values.status}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.status && Boolean(formik.errors.status)}
-                                    helperText={formik.touched.status && formik.errors.status}
-                                >
-                                    <MenuItem value="1">Availabale </MenuItem>
-                                    <MenuItem value="2">Unavailable </MenuItem>
-                                </TextField>
-                            </FormControl>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -204,13 +218,12 @@ const CreateAssetForm = (props) => {
                                     error={formik.touched.category && Boolean(formik.errors.category)}
                                     helperText={formik.touched.category && formik.errors.category}
                                 >
-                                    <MenuItem value="1">Trailer Truck</MenuItem>
-                                    <MenuItem value="2">Dump Truck</MenuItem>
+                                    <MenuItem value="1">Availabale </MenuItem>
+                                    <MenuItem value="2">Unavailable </MenuItem>
                                 </TextField>
                             </FormControl>
                         </Box>
                     </Grid>
-
                     <Grid item xs={6}>
                         <Box
                             sx={{
@@ -229,12 +242,14 @@ const CreateAssetForm = (props) => {
                                     error={formik.touched.condition && Boolean(formik.errors.condition)}
                                     helperText={formik.touched.condition && formik.errors.condition}
                                 >
-                                    <MenuItem value="1">New</MenuItem>
-                                    <MenuItem value="2">Used</MenuItem>
+                                    <MenuItem value="1">New Truck</MenuItem>
+                                    <MenuItem value="2">Old Truck</MenuItem>
                                 </TextField>
                             </FormControl>
                         </Box>
                     </Grid>
+
+                   
                     <Grid item xs={6}>
                         <Box
                             sx={{
@@ -261,7 +276,7 @@ const CreateAssetForm = (props) => {
                             </FormControl>
                         </Box>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -274,6 +289,25 @@ const CreateAssetForm = (props) => {
         shrink: true,
       }}
     />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="duration"
+                                name="duration"
+                                label="Duration"
+                                type="text"
+                                value={formik.values.duration}
+                                onChange={formik.handleChange}
+                                error={formik.touched.duration && Boolean(formik.errors.duration)}
+                                helperText={formik.touched.duration && formik.errors.duration}
+                            />
                         </Box>
                     </Grid>
                 </Grid>
@@ -295,4 +329,4 @@ const CreateAssetForm = (props) => {
     );
 };
 
-export default CreateAssetForm;
+export default CreateExternalAssetForm;
