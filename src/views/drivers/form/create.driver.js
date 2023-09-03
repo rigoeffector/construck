@@ -18,6 +18,7 @@ import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {v4} from 'uuid';
 import {storage} from '../../../firebase';
 import {styled} from '@mui/system';
+import { CREATE_DRIVER_REQUEST } from '../../../reducers/drivers/constant';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -28,47 +29,28 @@ const StyledDateTextField = styled(TextField)({
 const CreateNewDriverForm = (props) => {
     const dispatch = useDispatch();
 
-    const {listVendors, listCategories} = props;
-    const [files, setFiles] = useState([]);
-    const [imageUrls, setImageUrls] = useState({});
-    const [loadingUpload, setLoadingUpload] = useState(false);
     const {
         auth,
-        createProduct: {loading, message, success}
+        createDriver: {loading, message, error}
     } = useSelector((state) => state);
-    useEffect(() => {
-        return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-    }, [files]);
-    const [selectedDate, setSelectedDate] = useState(null);
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
 
     const initialValues = {
-        plate: '',
-        name: '',
-        category: '',
-        status: '',
-        description: '',
-        model: '',
-        condition: ''
+        driverStatus: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: ''
     };
     const formik = useFormik({
         initialValues: initialValues,
-        validationSchema: validationSchema,
+        // validationSchema: validationSchema,
         onSubmit: (values) => {
-            // const payload = {
-            //     entity_name: 'product',
-            //     username: auth?.data?.username,
-            //     login_token: auth?.data?.login_token,
-            //     api_key: keys,
-            //     details: {
-            //         ...values,
-            //         ...imageUrls
-            //     }
-            // };
-            // dispatch({type: CREATE_INTERNAL_ASSET_REQUEST, payload});
+            const payload = {
+                driverStatus: 'AVAILABLE',
+                firstName: values.firstName,
+                lastName: values.lastName,
+                phoneNumber: values.phoneNumber
+            };
+            dispatch({type: CREATE_DRIVER_REQUEST, payload});
             // setImageUrls({});
         }
     });
@@ -85,13 +67,13 @@ const CreateNewDriverForm = (props) => {
                         >
                             <TextField
                                 fullWidth
-                                id="driverName"
-                                name="driverName"
-                                label="Driver Name"
-                                value={formik.values.driverName}
+                                id="firstName"
+                                name="firstName"
+                                label="First Name"
+                                value={formik.values.firstName}
                                 onChange={formik.handleChange}
-                                error={formik.touched.driverName && Boolean(formik.errors.driverName)}
-                                helperText={formik.touched.driverName && formik.errors.driverName}
+                                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                                helperText={formik.touched.firstName && formik.errors.firstName}
                             />
                         </Box>
                     </Grid>
@@ -103,17 +85,17 @@ const CreateNewDriverForm = (props) => {
                         >
                             <TextField
                                 fullWidth
-                                id="driverId"
-                                name="driverId"
-                                label="Driver Id"
-                                value={formik.values.driverId}
+                                id="lastName"
+                                name="lastName"
+                                label="Last Name"
+                                value={formik.values.lastName}
                                 onChange={formik.handleChange}
-                                error={formik.touched.driverId && Boolean(formik.errors.driverId)}
-                                helperText={formik.touched.driverId && formik.errors.driverId}
+                                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                                helperText={formik.touched.lastName && formik.errors.lastName}
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -121,17 +103,17 @@ const CreateNewDriverForm = (props) => {
                         >
                             <TextField
                                 fullWidth
-                                id="phone"
-                                name="phone"
+                                id="phoneNumber"
+                                name="phoneNumber"
                                 label="Phone Number"
-                                value={formik.values.phone}
+                                value={formik.values.phoneNumber}
                                 onChange={formik.handleChange}
-                                error={formik.touched.phone && Boolean(formik.errors.phone)}
-                                helperText={formik.touched.phone && formik.errors.phone}
+                                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -155,7 +137,7 @@ const CreateNewDriverForm = (props) => {
                                 </TextField>
                             </FormControl>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 <Box
                     sx={{
@@ -163,12 +145,12 @@ const CreateNewDriverForm = (props) => {
                         justifyContent: 'flex-end'
                     }}
                 >
-                    <SubmitButton isLoading={loading} disabled={''}>
+                    <SubmitButton isLoading={loading} disabled={loading}>
                         Save
                     </SubmitButton>
                 </Box>
 
-                {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
+                {error && <DaaDAlerts show={error} message={error} variant={'error'} />}
             </form>
         </div>
     );

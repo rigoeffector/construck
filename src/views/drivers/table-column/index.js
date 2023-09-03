@@ -10,32 +10,31 @@ export const columns = (handleAssignAsset) => [
     {
         field: 'name',
         headerName: 'Driver Name',
-        flex: 3
+        flex: 3,
+        renderCell: (params) => `${params.row.firstName} ${params.row.lastName}`
     },
 
-    {
-        field: 'idNumber',
-        headerName: 'Driver Number',
-        flex: 4
-    },
-
-    
+    // {
+    //     field: 'idNumber',
+    //     headerName: 'Driver Number',
+    //     flex: 4
+    // },
 
     {
-        field: 'phone',
+        field: 'phoneNumber',
         headerName: 'Phone',
         flex: 4
     },
 
     {
-        field: 'status',
+        field: 'driverStatus',
         headerName: 'Status',
         flex: 4,
 
         renderCell: (params) =>
-            params.row.status === 'Available' ? (
+            params.row.driverStatus === 'AVAILABLE' ? (
                 <Chip
-                    label={params.row.status}
+                    label={params.row.driverStatus}
                     color="success"
                     sx={{
                         width: '100px !important',
@@ -43,7 +42,20 @@ export const columns = (handleAssignAsset) => [
                     }}
                 />
             ) : (
-                <Chip label={params.row.status} color="warning" />
+                <Chip label={params.row.driverStatus} color="warning" />
             )
-    }
+    },
+    // {
+    //     field: '',
+    //     headerName: 'Actions',
+    //     type: 'actions',
+    //     flex: 4,
+    //     getActions: (params) => [
+    //         <div className="actions_button">
+    //             <Button color="red" variant="outlined">
+    //                 Delete
+    //             </Button>
+    //         </div>
+    //     ]
+    // }
 ];

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PageContainer from '../../reusable/breadcrumbs';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,58 +8,30 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
 import DataTable from '../../reusable/table';
 import {columns} from './table-column';
-import {Button, Grid} from '@mui/material';
+import {Button, CircularProgress, Grid} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ConstruckModal from '../../reusable/modal';
 import CreateNewDriverForm from './form/create.driver';
+import {useDispatch, useSelector} from 'react-redux';
+import {GET_DRIVERS_LIST_REQUEST} from '../../reducers/drivers/constant';
 
 const Drivers = () => {
     const [showNewModal, setShowNewModal] = useState(false);
-    const data = [
-        {
-            id: '1',
-            name: 'Wesley Gross',
-            idNumber: '112443434309',
-            phone: '07889898999',
-            status: 'Unavailable'
-        },
-        {
-            id: '2',
-            name: 'Wesley MUTONI ',
-            idNumber: '112443434ADSD309',
-            phone: '07889598999',
-            status: 'Available'
-        },
-        {
-            id: '3',
-            name: 'CYUSA Ange ',
-            idNumber: '11244343234ADSD309',
-            phone: '07889500999',
-            status: 'Available'
-        },
-        {
-            id: '4',
-            name: 'NKUSO Deny ',
-            idNumber: '112443OOP34ADSD309',
-            phone: '078895019',
-            status: 'Available'
-        },
-        {
-            id: '5',
-            name: 'NMMBOKO Martine ',
-            idNumber: '11244343234ADSD309',
-            phone: '07889503999',
-            status: 'Available'
-        },
+    const {
+        createDriver: {success: createSuccess},
 
-        {
-            id: '6',
-            name: 'John De  Ange ',
-            idNumber: '11244Q43234ADSD309',
-            phone: '07839500999',
-            status: 'Unavailable'
-        }
-    ];
+        listDrivers: {data: listDrivers, loading: listDriversLoading},
+
+        deleteDriver: {success: deleteSuccess}
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({
+            type: GET_DRIVERS_LIST_REQUEST
+        });
+    }, [dispatch]);
+    ;
 
     const handleShowAddNewModel = () => {
         setShowNewModal(true);
@@ -68,9 +40,15 @@ const Drivers = () => {
     const handleClose = () => {
         setShowNewModal(false);
     };
+
+    useEffect(() => {
+        if (createSuccess || deleteSuccess) {
+            handleClose();
+        }
+    }, [createSuccess, deleteSuccess])
     return (
         <PageContainer pageHeading="List of Drivers">
-        <ConstruckModal title="Add driver" show={showNewModal} handleClose={handleClose}>
+            <ConstruckModal title="Add driver" show={showNewModal} handleClose={handleClose}>
                 <CreateNewDriverForm />
             </ConstruckModal>
             <Grid
@@ -106,7 +84,16 @@ const Drivers = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            <DataTable showQuickSearchToolbar={false} checkboxSelection={false} rows={data} columns={columns()} />
+                            {listDriversLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                <DataTable
+                                    showQuickSearchToolbar={false}
+                                    checkboxSelection={false}
+                                    rows={listDrivers}
+                                    columns={columns()}
+                                />
+                            )}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>

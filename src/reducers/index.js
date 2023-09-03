@@ -12,6 +12,10 @@ import createExternalAssetReducer from './product/external/create';
 import deleteEternalAssetReducer from './product/external/delete';
 import readExternalAssetsListReducer from './product/external/read';
 import updateExternalAssetStatusReducer from './product/external/update.status';
+import updateDriverReducer from './drivers/update';
+import createDriverReducer from './drivers/create';
+import deleteDriverReducer from './drivers/delete';
+import getDriversListReducer from './drivers/read';
 
 const rootReducer = combineReducers({
     customization: customizationReducer,
@@ -25,7 +29,11 @@ const rootReducer = combineReducers({
     createExternalAsset: createExternalAssetReducer,
     deleteExternalAsset: deleteEternalAssetReducer,
     listExternalAllAssets: readExternalAssetsListReducer,
-    updateExternalAssetStatus: updateExternalAssetStatusReducer
+    updateExternalAssetStatus: updateExternalAssetStatusReducer,
+    updateDriver: updateDriverReducer,
+    createDriver: createDriverReducer,
+    deleteDriver: deleteDriverReducer,
+    listDrivers: getDriversListReducer
 });
 
 export default rootReducer;

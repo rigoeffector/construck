@@ -1,8 +1,8 @@
 import {
-    GET_VENDORS_LIST_ERROR,
-    GET_VENDORS_LIST_LOADING,
-    GET_VENDORS_LIST_SUCCESS,
-    GET_VENDORS_LIST_RESET,
+    GET_DRIVERS_LIST_ERROR,
+    GET_DRIVERS_LIST_LOADING,
+    GET_DRIVERS_LIST_SUCCESS,
+    GET_DRIVERS_LIST_RESET,
 } from './constant';
 
 const initialState = {
@@ -13,26 +13,26 @@ const initialState = {
     message: null
 };
 
-const getVendorsListReducer = (state = initialState, action) => {
+const getDriversListReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case GET_VENDORS_LIST_LOADING:
+        case GET_DRIVERS_LIST_LOADING:
             return {...state, loading: payload.loading};
-        case GET_VENDORS_LIST_SUCCESS:
+        case GET_DRIVERS_LIST_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
-                data: payload.result
+                data: payload.data
             };
-        case GET_VENDORS_LIST_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case GET_VENDORS_LIST_RESET:
+        case GET_DRIVERS_LIST_ERROR:
+            return {...state, loading: false, error: payload.error, message: payload.message};
+        case GET_DRIVERS_LIST_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default getVendorsListReducer;
+export default getDriversListReducer;

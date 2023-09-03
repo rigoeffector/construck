@@ -3,9 +3,9 @@ import request from '../request';
 
 export const vendorsApi = {
     vendors: {
-        list: (data) => request('POST', `entity/read/data`, data, true),
-        create: (data) => request('POST', `entity/save`, data, true),
-        update: (data) => request('POST', `entity/instance/update`, data, true),
-        delete: (data) => request('POST', `entity/instance/delete`, data, true)
+        list: (data) => request('GET', `api/v1/asset-mgmt/drivers/all`, data, true),
+        create: (data) => request('POST', `api/v1/asset-mgmt/drivers`, data, true),
+        // update: (data) => request('POST', `entity/instance/update`, data, true),
+        delete: (data) => request('DELETE', `api/v1/asset-mgmt/drivers/`, data, true)
     }
 };

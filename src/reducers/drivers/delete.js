@@ -1,4 +1,4 @@
-import {DELETE_VENDOR_ERROR, DELETE_VENDOR_LOADING, DELETE_VENDOR_SUCCESS, DELETE_VENDOR_RESET} from './constant';
+import {DELETE_DRIVER_ERROR, DELETE_DRIVER_LOADING, DELETE_DRIVER_SUCCESS, DELETE_DRIVER_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -8,27 +8,27 @@ const initialState = {
     message: null
 };
 
-const deleteVendorReducer = (state = initialState, action) => {
+const deleteDriverReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case DELETE_VENDOR_LOADING:
+        case DELETE_DRIVER_LOADING:
             return {...state, loading: payload.loading};
-        case DELETE_VENDOR_SUCCESS:
+        case DELETE_DRIVER_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
-                data: payload.result,
+                data: payload.data,
                 message: payload.message
             };
-        case DELETE_VENDOR_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case DELETE_VENDOR_RESET:
+        case DELETE_DRIVER_ERROR:
+            return {...state, loading: false, error: payload.error, message: payload.message};
+        case DELETE_DRIVER_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default deleteVendorReducer;
+export default deleteDriverReducer;

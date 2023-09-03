@@ -1,4 +1,4 @@
-import {CREATE_VENDOR_ERROR, CREATE_VENDOR_LOADING, CREATE_VENDOR_SUCCESS, CREATE_VENDOR_RESET} from './constant';
+import {CREATE_DRIVER_ERROR, CREATE_DRIVER_LOADING, CREATE_DRIVER_SUCCESS, CREATE_DRIVER_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -8,27 +8,27 @@ const initialState = {
     message: null
 };
 
-const createVendorReducer = (state = initialState, action) => {
+const createDriverReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case CREATE_VENDOR_LOADING:
+        case CREATE_DRIVER_LOADING:
             return {...state, loading: payload.loading};
-        case CREATE_VENDOR_SUCCESS:
+        case CREATE_DRIVER_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
-                data: payload.result,
+                data: payload.data,
                 message: payload.message
             };
-        case CREATE_VENDOR_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case CREATE_VENDOR_RESET:
+        case CREATE_DRIVER_ERROR:
+            return {...state, loading: false, error: payload.error, message: payload.message};
+        case CREATE_DRIVER_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default createVendorReducer;
+export default createDriverReducer;
