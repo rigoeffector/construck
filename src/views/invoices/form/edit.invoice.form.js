@@ -7,7 +7,7 @@ import {thumbsContainer, validationCategorySchema} from '../schema';
 import SubmitButton from '../../../reusable/submit-button';
 import {Box, Button, Grid, IconButton, TextField} from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
-import {UPDATE_PRODUCT_CATEGORY_REQUEST} from '../../../reducers/product/categories/constant';
+import {UPDATE_INTERNAL_ASSET_STATUS_CATEGORY_REQUEST} from '../../../reducers/product/categories/constant';
 import DaaDAlerts from '../../../reusable/alerts';
 import {img, thumb, thumbInner} from '../../assets/schema';
 import {useDropzone} from 'react-dropzone';
@@ -42,7 +42,7 @@ const EditProductCategoryForm = (props) => {
             //     details: {...values, ...imageUrls}
             // };
 
-            // dispatch({type: UPDATE_PRODUCT_CATEGORY_REQUEST, payload});
+            // dispatch({type: UPDATE_INTERNAL_ASSET_STATUS_CATEGORY_REQUEST, payload});
             // setImageUrls({});
         }
     });

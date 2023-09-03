@@ -8,20 +8,33 @@ export const initialState = {
     editClicked: false,
     showEditForm: false,
     deleteRow: {},
-    showAlertConfirm: false
+    showAlertConfirm: false,
+    moreInfo: {}
 };
+
 export const validationSchema = yup.object({
-    name: yup
-        .string('Enter product name')
+    assetName: yup
+        .string('Enter asset name')
         .min(2, 'Product name should be of minimum 8 characters length')
-        .required('Product name is required'),
-        unit_price: yup.string('Enter product price').required('Product price is required'),
-    quantity: yup.string('Enter product quantity').required('Product quantity is required'),
-    category: yup.string('Choose product category').required('Product category is required'),
-    vendor: yup.string('Choose product vendor').required('Product vendor is required'),
-    description: yup.string('Enter product description').required('Product description is required')
+        .required('Asset name is required').nullable(),
+    plateNumber: yup.string('Enter plate number').required('Plate number is required').nullable(),
+    quantity: yup.string('Enter product quantity').required('Product quantity is required').nullable(),
+    condition: yup.string('Choose condition').required('Condition is required').nullable(),
+    category: yup.string('Choose product category').required('Product category is required').nullable(),
+    // manufacturedDate: yup.date().required('Manufactured date is required'),
+    make: yup.string('Enter model name').required('Model name is required').nullable(),
+    description: yup.string('Enter product description').required('Product description is required').nullable(),
     // images: yup.string('Choose product images').required('Product images are required')
 });
+
+
+                
+               
+                
+               
+               
+                
+                
 
 export const validationCategorySchema = yup.object({
     name: yup

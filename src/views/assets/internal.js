@@ -2,65 +2,76 @@
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable jsx-a11y/alt-text */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import DashBoardLayoutForPage from '../../reusable/dashboard-layouts';
 import BodyContainer from '../../reusable/container';
-import {Columns, columns} from './table-column';
-import {Box, Grid} from '@mui/material';
+import {Columns} from './table-column';
+import {Box, CircularProgress, Grid} from '@mui/material';
 import {DataTable} from '../../reusable/table';
 import {useDispatch, useSelector} from 'react-redux';
 import {initialState} from './schema';
 import Button from '@mui/material/Button';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import PageContainer from '../../reusable/breadcrumbs';
 import AddIcon from '@mui/icons-material/Add';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import ProductsExternal from './external';
 import ConstruckModal from '../../reusable/modal';
 import CreateAssetForm from './form/create.asset.form';
 import AssignInternalAssetForm from './form/assign.internal';
-import SubmitButton from '../../reusable/submit-button';
+import {
+    DELETE_INTERNAL_ASSET_REQUEST,
+    GET_INTERNAL_ASSETS_LIST_REQUEST,
+    UPDATE_INTERNAL_ASSET_STATUS_REQUEST
+} from '../../reducers/product/constant';
+import moment from 'moment';
+import DaaDAlerts from '../../reusable/alerts';
+import EditInternalAssetForm from './form/edit.internal.asset.form';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const ProductsInternal = (props) => {
     const {
-        // auth,
-        // listVendors: {data: listVendors, loading: listVendorsLoading},
-        // listProducts: {data, loading: listProductsLoading},
-        // deleteProduct: {loading: deleteLoading, message, success: deleteSuccess},
-        // createProduct: {loading: createLoading, success: createSuccess},
-        // updateProduct: {loading: updateLoading, success: updateSuccess},
-        // listProductCategories: {data: listCategories, loading: listCategoriesLoading}
+        auth,
+        createInternalAsset: {success: createInternalAssetSuccess},
+        listInternalAllAssets: {data: listInternalAllAssets, loading: listInternalAllAssetsLoading},
+        deleteInternalAsset: {loading: deleteLoading, message: deleteMessage, success: deleteSuccess},
+        updateInternalAssetStatus: {
+            loading: updateStatusLoading,
+            success: updateStatusSuccess,
+            message: updateStatusMessage,
+            error: updateStatusError
+        }
     } = useSelector((state) => state);
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({
+            type: GET_INTERNAL_ASSETS_LIST_REQUEST,
+            payload: {
+                status: '',
+                name: ''
+            }
+        });
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (createInternalAssetSuccess || deleteSuccess || updateStatusSuccess) {
+            handleClose();
+        }
+    }, [createInternalAssetSuccess, deleteSuccess, updateStatusSuccess]);
     const [showNewModal, setShowNewModal] = useState(false);
     const [thisState, setThisState] = useState(initialState);
     const [showAssignModel, setShowAssignModal] = useState(false);
     const [showMoreInfo, setShowMoreInfo] = useState(false);
     const [showDeleteModel, setShowDeleteModel] = useState(false);
     const [showArchiveModel, setShowArchiveModel] = useState(false);
-
-    const handleAddNewProduct = () => {
-        setThisState((prev) => ({
-            ...prev,
-            showAddNewModal: true,
-            addCategoryClicked: false,
-            showAddNewCategoryModal: false
-        }));
-    };
-
+    const [showEditInternalModal, setShowEditInternalModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState('Assign asset');
+    const [selectionModel, setSelectionModel] = useState({});
     const handleClose = () => {
         setShowNewModal(false);
         setShowAssignModal(false);
         setShowDeleteModel(false);
         setShowMoreInfo(false);
         setShowArchiveModel(false);
-
+        setShowEditInternalModal(false);
         setThisState((prev) => ({
             ...prev,
             showAlertConfirm: false,
@@ -73,90 +84,6 @@ export const ProductsInternal = (props) => {
         }));
     };
 
-    const handleAssignAsset = (row) => {
-        setThisState((prev) => ({
-            editRow: row.row,
-            editClicked: true,
-            showEditForm: true
-        }));
-    };
-
-    const data = [
-        {
-            id: '1',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '2',
-
-            name: 'Mouse',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '3',
-
-            name: 'Cables Phone',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '4',
-
-            name: 'Car',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '5',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestedBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '6',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '7',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        }
-    ];
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
     const handleShowAddNew = () => {
         setShowNewModal(true);
     };
@@ -164,28 +91,58 @@ export const ProductsInternal = (props) => {
         setShowAssignModal(true);
     };
 
-    const handleViewMore = () => {
+    const handleViewMore = (data) => {
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
         setShowMoreInfo(true);
     };
 
-    const handleArchive = () => {
+    const handleArchive = (data) => {
         setShowArchiveModel(true);
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
     };
 
-    const handleEdit = () => {
-        console.log('Edit');
+    const handleArchiveConfirm = () => {
+        const payload = {
+            status: 'ARCHIVED',
+            id: thisState.moreInfo.id
+        };
+        dispatch({type: UPDATE_INTERNAL_ASSET_STATUS_REQUEST, payload});
     };
 
-    const handleDelete = () => {
+    const handleEdit = (data) => {
+        setShowEditInternalModal(true);
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
+    };
+
+    const handleDelete = (data) => {
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
         setShowDeleteModel(true);
     };
 
+    const handleDeleteConfirm = () => {
+        const payload = {
+            id: thisState.moreInfo.id
+        };
+        dispatch({type: DELETE_INTERNAL_ASSET_REQUEST, payload});
+    };
     return (
         <Box>
             <ConstruckModal title="Add asset" show={showNewModal} handleClose={handleClose}>
                 <CreateAssetForm />
             </ConstruckModal>
-            <ConstruckModal title="Assign asset" show={showAssignModel} handleClose={handleClose}>
+            <ConstruckModal title={modalTitle} show={showAssignModel} handleClose={handleClose}>
                 <AssignInternalAssetForm />
             </ConstruckModal>
             <ConstruckModal title="Delete asset" show={showDeleteModel} handleClose={handleClose}>
@@ -201,7 +158,7 @@ export const ProductsInternal = (props) => {
                             color: '#282546'
                         }}
                     >
-                        Truck (RAD 123 S)
+                        {`${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
                     </span>
                 </Typography>
                 <Box
@@ -218,7 +175,7 @@ export const ProductsInternal = (props) => {
                             margin: '0px 10px',
                             borderRadius: '8px',
                             background: '#EDEFF2',
-                            color:  '#64748A !important',
+                            color: '#64748A !important',
                             fontWeight: '500'
                         }}
                     >
@@ -226,26 +183,33 @@ export const ProductsInternal = (props) => {
                     </Button>
 
                     <Button
-                        onClick={handleClose}
+                        onClick={handleDeleteConfirm}
                         variant="contained"
                         sx={{
                             borderRadius: '8px',
                             background: '#1090CB',
                             color: '#FFF',
                             fontWeight: '500'
-
-
                         }}
                     >
-                        Confirm
+                        {deleteLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
                     </Button>
                 </Box>
             </ConstruckModal>
             <ConstruckModal title="Archive asset" show={showArchiveModel} handleClose={handleClose}>
                 <Typography
-                   sx={{
+                    sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'center',
                         alignItems: 'center',
                         margin: '30px 0px'
                     }}
@@ -257,7 +221,7 @@ export const ProductsInternal = (props) => {
                             color: '#282546'
                         }}
                     >
-                        Truck (RAD 123 S)
+                        {` ${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
                     </span>
                 </Typography>
                 <Box
@@ -274,7 +238,7 @@ export const ProductsInternal = (props) => {
                             margin: '0px 10px',
                             borderRadius: '8px',
                             background: '#EDEFF2',
-                            color:  '#64748A !important',
+                            color: '#64748A !important',
                             fontWeight: '500'
                         }}
                     >
@@ -282,18 +246,25 @@ export const ProductsInternal = (props) => {
                     </Button>
 
                     <Button
-                        onClick={handleClose}
+                        onClick={handleArchiveConfirm}
                         variant="contained"
                         sx={{
                             borderRadius: '8px',
                             background: '#1090CB',
                             color: '#FFF',
                             fontWeight: '500'
-
-
                         }}
                     >
-                        Confirm
+                        {updateStatusLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
                     </Button>
                 </Box>
             </ConstruckModal>
@@ -334,11 +305,30 @@ export const ProductsInternal = (props) => {
                 </Button>
             </Grid>
 
+            {/* EDIT MODALS  */}
+            <ConstruckModal title="Edit asset" show={showEditInternalModal} handleClose={handleClose}>
+                <EditInternalAssetForm assetData={thisState.moreInfo} />
+            </ConstruckModal>
             <BodyContainer>
+                {createInternalAssetSuccess && (
+                    <DaaDAlerts show={createInternalAssetSuccess} message={'Asset created successful'} variant={'success'} />
+                )}
+                {updateStatusSuccess && (
+                    <DaaDAlerts show={updateStatusSuccess} message={'Asset Status is updated successful'} variant={'success'} />
+                )}
+
                 <DashBoardLayoutForPage
                     title={''}
                     actionButton={''}
-                    contents={<DataTable rows={data} columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)} />}
+                    contents={
+                        <DataTable
+                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)}
+                            rows={listInternalAllAssets || []}
+                            rowsPerPageOptions={['5', '10', '15', '30', '100']}
+                            selectionModel={selectionModel}
+                            loader={listInternalAllAssetsLoading}
+                        />
+                    }
                 />
             </BodyContainer>
 
@@ -361,7 +351,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                Truck
+                                {thisState.moreInfo?.assetName}
                             </Typography>
                         </Box>
                     </Grid>
@@ -381,28 +371,36 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                Caterpillar
+                                {thisState.moreInfo?.make}
                             </Typography>
                         </Box>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
+                                display: 'block',
+
                                 borderBottom: '1px solid #ddd',
                                 padding: '20px 0px'
                             }}
                         >
-                            <Typography>Description </Typography>
+                            <Box
+                                item
+                                xs={12}
+                                sx={{
+                                    margin: '20px 0px'
+                                }}
+                            >
+                                <Typography>Description </Typography>
+                            </Box>
                             <Typography
                                 sx={{
                                     fontWeight: '700',
                                     color: '#494577'
                                 }}
                             >
-                                Long Truck
+                                {thisState.moreInfo?.description}
                             </Typography>
                         </Box>
                     </Grid>
@@ -422,7 +420,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                2011
+                                {moment(thisState.moreInfo?.manufacturedDate).format('DD/MM/YYYY')}
                             </Typography>
                         </Box>
                     </Grid>
@@ -442,7 +440,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                RAD 456 A
+                                {thisState.moreInfo?.plateNumber}
                             </Typography>
                         </Box>
                     </Grid>
@@ -462,7 +460,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                Angela UWASE
+                                {thisState.moreInfo?.assignedTo}
                             </Typography>
                         </Box>
                     </Grid>
@@ -482,7 +480,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                Trailer Truck
+                                {thisState.moreInfo?.category}
                             </Typography>
                         </Box>
                     </Grid>
@@ -491,7 +489,7 @@ export const ProductsInternal = (props) => {
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                borderBottom: '1px solid #ddd',
+                                // borderBottom: '1px solid #ddd',
                                 padding: '20px 0px'
                             }}
                         >
@@ -502,11 +500,11 @@ export const ProductsInternal = (props) => {
                                     color: 'green'
                                 }}
                             >
-                                Available
+                                {thisState.moreInfo?.assetStatus}
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Box
                             sx={{
                                 display: 'flex',
@@ -522,7 +520,7 @@ export const ProductsInternal = (props) => {
                                     color: '#494577'
                                 }}
                             >
-                                New
+                                {thisState.moreInfo?.condition}
                             </Typography>
                         </Box>
                     </Grid>

@@ -12,7 +12,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {img, thumb, thumbInner, thumbsContainer, validationSchema} from '../schema';
 import SubmitButton from '../../../reusable/submit-button';
 import {useDispatch, useSelector} from 'react-redux';
-import {CREATE_PRODUCT_REQUEST} from '../../../reducers/product/constant';
+import {CREATE_INTERNAL_ASSET_REQUEST} from '../../../reducers/product/constant';
 import DaaDAlerts from '../../../reusable/alerts';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {v4} from 'uuid';
@@ -71,7 +71,7 @@ const AssignExternalAssetForm = (props) => {
             //         ...imageUrls
             //     }
             // };
-            // dispatch({type: CREATE_PRODUCT_REQUEST, payload});
+            // dispatch({type: CREATE_INTERNAL_ASSET_REQUEST, payload});
             // setImageUrls({});
         }
     });

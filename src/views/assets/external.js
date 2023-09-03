@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 /* eslint-disable jsx-a11y/alt-text */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import DashBoardLayoutForPage from '../../reusable/dashboard-layouts';
 import BodyContainer from '../../reusable/container';
 import {columns} from './table-column';
@@ -24,19 +24,30 @@ import {Columns} from './table-column/external';
 import CreateExternalAssetForm from './form/create.external';
 import ConstruckModal from '../../reusable/modal';
 import AssignExternalAssetForm from './form/assign.external';
+import {GET_EXTERNAL_ASSETS_LIST_REQUEST} from '../../reducers/product/external/constant';
+import DaaDAlerts from '../../reusable/alerts';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const ProductsExternal = (props) => {
-    const {
-        // auth,
-        // listVendors: {data: listVendors, loading: listVendorsLoading},
-        // listProducts: {data, loading: listProductsLoading},
-        // deleteProduct: {loading: deleteLoading, message, success: deleteSuccess},
-        // createProduct: {loading: createLoading, success: createSuccess},
-        // updateProduct: {loading: updateLoading, success: updateSuccess},
-        // listProductCategories: {data: listCategories, loading: listCategoriesLoading}
-    } = useSelector((state) => state);
     const dispatch = useDispatch();
+    const {
+        auth,
+        createExternalAsset: {success: createExternalAssetSuccess},
+        listExternalAllAssets: {data: listExternalAllAssets, loading: listExternalAllAssetsLoading},
+        deleteExternalAsset: {loading: deleteLoading, message: deleteMessage, success: deleteSuccess},
+        updateExternalAssetStatus: {
+            loading: updateStatusLoading,
+            success: updateStatusSuccess,
+            message: updateStatusMessage,
+            error: updateStatusError
+        }
+    } = useSelector((state) => state);
+
+    useEffect(() => {
+        dispatch({
+            type: GET_EXTERNAL_ASSETS_LIST_REQUEST
+        });
+    }, [dispatch]);
 
     const [showNewModal, setShowNewModal] = useState(false);
     const [thisState, setThisState] = useState(initialState);
@@ -81,44 +92,6 @@ export const ProductsExternal = (props) => {
         }));
     };
 
-    const data = [
-        {
-            id: '1',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            assignedTo: 'Angela UWACU',
-            duration: '4 months',
-            description:'Loading Truck',
-            status: 'Available'
-        },
-        {
-            id: '2',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            assignedTo: 'Angela UWACU',
-            duration: '4 months',
-            description:'Loading Truck',
-            status: 'Maintenance'
-        },
-        {
-            id: '3',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            assignedTo: 'Angela UWACU',
-            duration: '4 months',
-            description:'Loading Truck',
-            status: 'Unavailable'
-        },
-        {
-            id: '4',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            assignedTo: 'Angela UWACU',
-            duration: '4 months',
-            description:'Loading Truck',
-            status: 'Available'
-        }
-    ];
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -148,7 +121,7 @@ export const ProductsExternal = (props) => {
     };
     return (
         <Box>
-         <ConstruckModal title="Add external asset" show={showNewModal} handleClose={handleClose}>
+            <ConstruckModal title="Add external asset" show={showNewModal} handleClose={handleClose}>
                 <CreateExternalAssetForm />
             </ConstruckModal>
             <ConstruckModal title="Assign  external asset" show={showAssignModel} handleClose={handleClose}>
@@ -192,10 +165,20 @@ export const ProductsExternal = (props) => {
             </Grid>
 
             <BodyContainer>
+            {createExternalAssetSuccess && (
+                    <DaaDAlerts show={createExternalAssetSuccess} message={'External Asset is created successful'} variant={'success'} />
+                )}
                 <DashBoardLayoutForPage
                     title={''}
                     actionButton={''}
-                    contents={<DataTable rows={data} enabledFilters={false} columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)} />}
+                    contents={
+                        <DataTable
+                            rows={listExternalAllAssets || []}
+                            loader={listExternalAllAssetsLoading}
+                            enabledFilters={false}
+                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)}
+                        />
+                    }
                 />
             </BodyContainer>
         </Box>

@@ -13,7 +13,7 @@ const SubmitButton = ({children, isLoading, disabled}) => {
                     marginTop: '2rem',
                     width: '100%',
                     display: 'flex',
-                    height: '54px',
+                    height: '45px',
                     padding: '2px 0px',
                     justifyContent: 'center',
                     alignItems: 'center',

@@ -1,4 +1,4 @@
-import {DELETE_PRODUCT_ERROR, DELETE_PRODUCT_LOADING, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_RESET} from './constant';
+import {DELETE_INTERNAL_ASSET_ERROR, DELETE_INTERNAL_ASSET_LOADING, DELETE_INTERNAL_ASSET_SUCCESS, DELETE_INTERNAL_ASSET_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -8,27 +8,27 @@ const initialState = {
     message: null
 };
 
-const deleteProductReducer = (state = initialState, action) => {
+const deleteInternalAssetReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case DELETE_PRODUCT_LOADING:
+        case DELETE_INTERNAL_ASSET_LOADING:
             return {...state, loading: payload.loading};
-        case DELETE_PRODUCT_SUCCESS:
+        case DELETE_INTERNAL_ASSET_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
-                data: payload.result,
+                data: payload.data,
                 message: payload.message
             };
-        case DELETE_PRODUCT_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case DELETE_PRODUCT_RESET:
+        case DELETE_INTERNAL_ASSET_ERROR:
+            return {...state, loading: false, error: payload.error, message: payload.message};
+        case DELETE_INTERNAL_ASSET_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default deleteProductReducer;
+export default deleteInternalAssetReducer;

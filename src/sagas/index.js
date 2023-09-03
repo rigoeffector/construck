@@ -1,32 +1,26 @@
 import {all, fork} from 'redux-saga/effects';
 import {watchLoginData} from './auth';
-import {watchVendorsListData} from './vendors/read';
-import {watchVendorCreateData} from './vendors/create';
-import {watchProductCreateData} from './product/create';
-import {watchVendorDeleteData} from './vendors/delete';
-import {watchVendorUpdateData} from './vendors/update';
-import {watchProductCreateCategoryData} from './product/categories/create';
-import {watchProductListCategoryData} from './product/categories/read';
-import {watchProductDeleteCategoryData} from './product/categories/delete';
-import {watchProductUpdateCategoryData} from './product/categories/update';
-import {watchProductDeleteData} from './product/delete';
-import { watchProductListData } from './product/read';
-import { watchProductUpdateData } from './product/update';
+import {watchRequestedAssetsData} from './product/view.requested.assets';
+import {watchInternalAssetsListData} from './product/read';
+import {watchCreateInternalAssetData} from './product/create';
+import {watchDeleteInternalAssetData} from './product/delete';
+import {watchUpdateInternalAssetStatusData} from './product/update.internal.asset.status';
+import {watchCreateExternalAssetData} from './product/external/create';
+import { watchDeleteExternalAssetData } from './product/external/delete';
+import { watchExternalAssetsListData } from './product/external/read';
+import { watchUpdateExternalAssetStatusData } from './product/external/update.internal.asset.status';
 
 export default function* rootSaga() {
     yield all([
         fork(watchLoginData),
-        fork(watchVendorsListData),
-        fork(watchVendorCreateData),
-        fork(watchVendorDeleteData),
-        fork(watchVendorUpdateData),
-        fork(watchProductCreateData),
-        fork(watchProductDeleteData),
-        fork(watchProductUpdateData),
-        fork(watchProductListData),
-        fork(watchProductCreateCategoryData),
-        fork(watchProductListCategoryData),
-        fork(watchProductDeleteCategoryData),
-        fork(watchProductUpdateCategoryData)
+        fork(watchRequestedAssetsData),
+        fork(watchInternalAssetsListData),
+        fork(watchCreateInternalAssetData),
+        fork(watchDeleteInternalAssetData),
+        fork(watchUpdateInternalAssetStatusData),
+        fork(watchCreateExternalAssetData),
+        fork(watchExternalAssetsListData),
+        fork(watchDeleteExternalAssetData),
+        fork(watchUpdateExternalAssetStatusData)
     ]);
 }

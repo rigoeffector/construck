@@ -1,4 +1,4 @@
-import {UPDATE_PRODUCT_ERROR, UPDATE_PRODUCT_LOADING, UPDATE_PRODUCT_SUCCESS, UPDATE_PRODUCT_RESET} from './constant';
+import {UPDATE_INTERNAL_ASSET_STATUS_ERROR, UPDATE_INTERNAL_ASSET_STATUS_LOADING, UPDATE_INTERNAL_ASSET_STATUS_SUCCESS, UPDATE_INTERNAL_ASSET_STATUS_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -11,9 +11,9 @@ const initialState = {
 const updateProductReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case UPDATE_PRODUCT_LOADING:
+        case UPDATE_INTERNAL_ASSET_STATUS_LOADING:
             return {...state, loading: payload.loading};
-        case UPDATE_PRODUCT_SUCCESS:
+        case UPDATE_INTERNAL_ASSET_STATUS_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -22,9 +22,9 @@ const updateProductReducer = (state = initialState, action) => {
                 data: payload.result,
                 message: payload.message
             };
-        case UPDATE_PRODUCT_ERROR:
+        case UPDATE_INTERNAL_ASSET_STATUS_ERROR:
             return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case UPDATE_PRODUCT_RESET:
+        case UPDATE_INTERNAL_ASSET_STATUS_RESET:
             return initialState;
         default:
             return state;

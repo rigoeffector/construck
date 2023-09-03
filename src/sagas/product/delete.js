@@ -3,39 +3,45 @@ import {call, delay, put, takeLatest} from 'redux-saga/effects';
 import {error, loading, success} from '../../actions/common';
 
 import {
-    DELETE_PRODUCT_LOADING,
-    DELETE_PRODUCT_ERROR,
-    DELETE_PRODUCT_RESET,
-    DELETE_PRODUCT_REQUEST,
-    DELETE_PRODUCT_SUCCESS
+    DELETE_INTERNAL_ASSET_LOADING,
+    DELETE_INTERNAL_ASSET_ERROR,
+    DELETE_INTERNAL_ASSET_RESET,
+    DELETE_INTERNAL_ASSET_REQUEST,
+    DELETE_INTERNAL_ASSET_SUCCESS,
+    GET_INTERNAL_ASSETS_LIST_REQUEST
 } from '../../reducers/product/constant';
 import {productApi} from '../../api/product';
-import {listProductRequestSaga} from './read';
+import {listInternalAssetsRequestSaga} from './read';
 
-
-export function* deleteProductRequestSaga(action) {
+export function* deleteInternalAssetRequestSaga(action) {
     try {
-        yield put(loading(DELETE_PRODUCT_LOADING, {loading: true}));
+        yield put(loading(DELETE_INTERNAL_ASSET_LOADING, {loading: true}));
         const {payload} = action;
         const response = yield call(productApi.products.delete, {...payload});
-        if (response && response.success) {
-            yield put(success(DELETE_PRODUCT_SUCCESS, response));
-            yield* listProductRequestSaga(action);
+        if (response && response.status === 202) {
+            yield put(success(DELETE_INTERNAL_ASSET_SUCCESS, response));
+            yield* listInternalAssetsRequestSaga({
+                type: GET_INTERNAL_ASSETS_LIST_REQUEST,
+                payload: {
+                    name: '',
+                    status: ''
+                }
+            });
 
             yield delay(2000);
-            yield put({type: DELETE_PRODUCT_RESET});
+            yield put({type: DELETE_INTERNAL_ASSET_RESET});
         } else {
-            yield put(error(DELETE_PRODUCT_ERROR, response));
+            yield put(error(DELETE_INTERNAL_ASSET_ERROR, response));
             yield delay(2000);
-            yield put({type: DELETE_PRODUCT_RESET});
+            yield put({type: DELETE_INTERNAL_ASSET_RESET});
         }
     } catch (err) {
-        yield put(error(DELETE_PRODUCT_ERROR, err));
+        yield put(error(DELETE_INTERNAL_ASSET_ERROR, err));
         yield delay(2000);
-        yield put({type: DELETE_PRODUCT_RESET});
+        yield put({type: DELETE_INTERNAL_ASSET_RESET});
     }
 }
 
-export function* watchProductDeleteData() {
-    yield takeLatest(DELETE_PRODUCT_REQUEST, deleteProductRequestSaga);
+export function* watchDeleteInternalAssetData() {
+    yield takeLatest(DELETE_INTERNAL_ASSET_REQUEST, deleteInternalAssetRequestSaga);
 }

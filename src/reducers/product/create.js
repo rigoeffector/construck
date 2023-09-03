@@ -1,4 +1,4 @@
-import {CREATE_PRODUCT_ERROR, CREATE_PRODUCT_LOADING, CREATE_PRODUCT_SUCCESS, CREATE_PRODUCT_RESET} from './constant';
+import {CREATE_INTERNAL_ASSET_ERROR, CREATE_INTERNAL_ASSET_LOADING, CREATE_INTERNAL_ASSET_SUCCESS, CREATE_INTERNAL_ASSET_RESET} from './constant';
 
 const initialState = {
     loading: false,
@@ -8,27 +8,27 @@ const initialState = {
     message: null
 };
 
-const createProductReducer = (state = initialState, action) => {
+const createInternalAssetReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case CREATE_PRODUCT_LOADING:
+        case CREATE_INTERNAL_ASSET_LOADING:
             return {...state, loading: payload.loading};
-        case CREATE_PRODUCT_SUCCESS:
+        case CREATE_INTERNAL_ASSET_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
                 data: payload.result,
                 message: payload.message
             };
-        case CREATE_PRODUCT_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
-        case CREATE_PRODUCT_RESET:
+        case CREATE_INTERNAL_ASSET_ERROR:
+            return {...state, loading: false, error: payload.error, message: payload.message};
+        case CREATE_INTERNAL_ASSET_RESET:
             return initialState;
         default:
             return state;
     }
 };
 
-export default createProductReducer;
+export default createInternalAssetReducer;

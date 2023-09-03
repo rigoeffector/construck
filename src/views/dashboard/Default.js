@@ -1,35 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Grid} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 import {gridSpacing} from '../../store/constant';
-import EarningCard from '../../ui-component/cards/EarningCard';
-import TotalChartCard from '../../ui-component/cards/TotalChartCard';
-import TotalIncomePatternCard from '../../ui-component/cards/TotalIncomePatternCard';
-import TotalIncomeCard from '../../ui-component/cards/TotalIncomeCard';
-import ChartCard from '../../ui-component/cards/ChartCard';
-import PopularCard from '../../ui-component/cards/PopularCard';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import MoreIcon from '@mui/icons-material/More';
-import {GridActionsCellItem} from '@mui/x-data-grid';
 import ConstructDataTable from '../../reusable/datatable/index';
 import PageContainer from '../../reusable/breadcrumbs';
-import {Button} from '@mui/material';
+import {Button, CircularProgress} from '@mui/material';
 import AssetsSummaryCardsView from './summary';
-import LinearChart from './lineChart';
 import DoughnutChart from './donout';
 import LineBarComboChart from './lineChart';
+import ConstruckModal from '../../reusable/modal';
+import AssignInternalAssetForm from '../assets/form/assign.internal';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
+import {useDispatch, useSelector} from 'react-redux';
+import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
+import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
 const Dashboard = () => {
+    const {
+        auth,
+        listRequestedAssets: {data: listAssets, loading: listAssetsLoading}
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    const [showAssignModal, setShowAssignModal] = useState(false);
+    const [allRequests, setAllRequests] = useState([]);
+    useEffect(() => {
+        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
+    }, [dispatch]);
+    useEffect(() => {
+        if (listAssets && !listAssetsLoading) {
+            setAllRequests(formatRequestedAssetsInfo(listAssets));
+        }
+    }, [listAssets, listAssetsLoading]);
+
     const columns = [
         {
-            selector: 'name',
+            selector: 'assetName',
             name: 'Asset Name'
             // width: 200
         },
 
         {
-            selector: 'category',
+            selector: 'assetCategory',
             name: 'Category'
             // width: 100
         },
@@ -71,7 +84,7 @@ const Dashboard = () => {
                             fontWeight: '600',
                             lineHeight: 'normal'
                         }}
-                        // onClick={() => handleAssignAsset(params)}
+                        onClick={() => handleAssign(params)}
                     >
                         Assign
                     </Button>
@@ -151,8 +164,19 @@ const Dashboard = () => {
             purpose: 'Real Construction Edit CAD Design'
         }
     ];
+
+    const handleAssign = () => {
+        setShowAssignModal(true);
+    };
+    const handleClose = () => {
+        setShowAssignModal(false);
+    };
+
     return (
         <PageContainer pageHeading="Overview">
+            <ConstruckModal show={showAssignModal} title={'Assign Asset'} handleClose={handleClose}>
+                <AssignInternalAssetForm />
+            </ConstruckModal>
             <Grid container spacing={gridSpacing}>
                 <Grid
                     item
@@ -175,13 +199,16 @@ const Dashboard = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <ConstructDataTable
-                        title="Assets request list"
-                        enabledSearch={true}
-                        // enableFilters={true}
-                        data={data}
-                        columns={columns}
-                    />
+                    {listAssetsLoading ? <CircularProgress/>: (
+                        <ConstructDataTable
+                            title="Assets request list"
+                            enabledSearch={true}
+                            // enableFilters={true}
+                            loading={listAssetsLoading}
+                            data={(!listAssetsLoading && allRequests?.data) || []}
+                            columns={columns}
+                        />
+                    )}
                 </Grid>
             </Grid>
         </PageContainer>

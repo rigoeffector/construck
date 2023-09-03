@@ -18,12 +18,17 @@
     background-color: #f9fafb;
   }
   div#search_table_v2 {
-    position: absolute;
-    top: -15.5%;
-    /* left: -27%; */
     width: 100%;
+    align-items: flex-end;
+    align-self: flex-start;
     display: flex;
-    justify-content: flex-start;
+    margin-left: 40px;
+    /* position: absolute; */
+    /* top: -15.5%; */
+    /* left: -27%; */
+    /* width: 100%;
+    display: flex;
+    justify-content: flex-start; */
 }
   .MuiFormControl-root.MuiTextField-root.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter {
     border: 1px solid var(--border-color);
@@ -77,11 +82,17 @@
     border-radius: 8px;
     padding: 10px;
 }
+div#filter_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: inherit !important;
+  margin-bottom: 30px;
+}
 div#filter_astest {
-  transform: translate(38%, -130%);
+  /* transform: translate(38%, -130%);
   position: absolute;
   width: 50%;
-  left: 50%;
+  left: 50%; */
 }
 div#search_table_v2 .MuiInputBase-root.MuiInput-root.MuiInput-underline::before {
     display: none !important;

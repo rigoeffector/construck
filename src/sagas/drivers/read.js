@@ -8,7 +8,7 @@ import {
     GET_VENDORS_LIST_RESET,
     GET_VENDORS_LIST_REQUEST,
     GET_VENDORS_LIST_SUCCESS
-} from '../../reducers/vendors/constant';
+} from '../../reducers/drivers/constant';
 import {vendorsApi} from '../../api/vendors';
 
 export function* listVendorsRequestSaga(action) {

@@ -1,5 +1,5 @@
 const config = {
-    basename: '/daada',
+    basename: '/',
     defaultPath: '/login',
     fontFamily: `'Roboto', sans-serif`,
     borderRadius: 12,

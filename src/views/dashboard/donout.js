@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import Chart from 'chart.js';
-import {Paper} from '@mui/material';
+import {Box, Paper, Typography} from '@mui/material';
+import YearPicker from './filter.linearchart';
 
 const DoughnutChart = () => {
     const chartRef = useRef(null);
@@ -27,17 +28,44 @@ const DoughnutChart = () => {
     }, []);
 
     return (
-        <Paper
-            className="py-4 px-2"
+        <Box
             sx={{
-                height: '325px',
+                background: 'white',
                 padding: '10px',
-                display: 'flex',
-                alignItems: 'center'
+                borderRadius: '15px'
             }}
         >
-            <canvas ref={chartRef} />
-        </Paper>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}
+            >
+                <Typography 
+                    sx={{
+                        fontSize: '14px !important',
+                        fontWeight: '700',
+                        color: '#4d5e80',
+                        marginLeft: '27px'
+                    }}
+                >
+                    Available VS Assigned Assets
+                </Typography>
+                <YearPicker />
+            </Box>
+            <Paper
+                className="py-4 px-2"
+                sx={{
+                    height: '325px',
+                    padding: '10px',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}
+            >
+                <canvas ref={chartRef} />
+            </Paper>
+        </Box>
     );
 };
 

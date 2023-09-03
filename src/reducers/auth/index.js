@@ -17,12 +17,13 @@ const loginUserReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                success: payload.success,
+                success: true,
                 error: null,
-                data: payload.result
+                data: payload.data,
+                message: payload.data
             };
         case LOGIN_USER_ERROR:
-            return {...state, loading: false, error: payload.error, message: payload.error_message};
+            return {...state, loading: false, success: false, error: payload.error, message: payload.message};
         case LOGIN_USER_RESET:
             return initialState;
         default:

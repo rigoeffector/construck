@@ -5,7 +5,7 @@ import history from '../history';
 const determineUrl = (endpoint) => {
   const coreServerUrl = process.env.REACT_APP_MAIN_API_URL;
   let url = endpoint;
-  if (url.split('/')[0] !== '') url = `/${endpoint}`;
+  if (url.split('/')[0] !== '') url = `${endpoint}`;
   return coreServerUrl + url;
 };
 

@@ -8,7 +8,7 @@ import {Box, Grid, withStyles} from '@material-ui/core';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import {Stack} from '@mui/material';
+import {CircularProgress, Stack} from '@mui/material';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -82,11 +82,12 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         allowFilters,
         actions = [],
         identifier,
+        loader,
         checkboxSelection = true,
         enabledFilters = true,
         showQuickSearchToolbar = true
     } = props;
-    const [pageSize, setPageSize] = React.useState(20);
+    const [pageSize, setPageSize] = React.useState(5);
     // const [selectedValue, setSelectedValue] = React.useState('');
     const styles = {
         filterInput: {
@@ -116,10 +117,12 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         return (
             <Stack id="filter_wrapper" sx={!enabledFilters ? {marginBottom: '30px'} : {}}>
                 <Box
-                    sx={{
-                        p: 4,
-                        pb: 0
-                    }}
+                    sx={
+                        {
+                            // p: 4,
+                            // pb: 0
+                        }
+                    }
                     id={identifier ? identifier : 'search_table_v2'}
                 >
                     <GridToolbarQuickFilter
@@ -146,9 +149,9 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                         disablePortal
                         id="combo-box-demo"
                         options={[
-                            {label: 'The Shawshank Redemption', year: 1994},
-                            {label: 'The Godfather', year: 1972},
-                            {label: 'The Godfather: Part II', year: 1974}
+                            {label: 'Available', value: 'AVAILABLE'},
+                            {label: 'UnAvailable', value: 'UNAVAILABLE'},
+                            {label: 'Assigned', value: 'ASSIGNED'}
                         ]}
                         sx={{width: 300}}
                         renderInput={(params) => <TextField {...params} label="Status" />}
@@ -159,7 +162,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
     }
 
     return (
-        <div className={idName} style={{width: '100%'}}>
+        <><div className={idName} style={{ width: '100%' }}>
             {selectionModel?.length > 0 &&
                 dropdownFilterItems &&
                 actions.map((action, actionIdx) => (
@@ -191,9 +194,9 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                     }
                 }}
                 // slots={{ toolbar: GridToolbar }}
-                loading={loading}
+                loading={loader}
                 showQuickSearchToolbar={showQuickSearchToolbar}
-                components={{Toolbar: showQuickSearchToolbar && QuickSearchToolbar}}
+                components={{ Toolbar: showQuickSearchToolbar && QuickSearchToolbar }}
                 componentsProps={{
                     toolbar: {
                         className: idName,
@@ -206,7 +209,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                         }
                     }
                 }}
-                slots={{toolbar: GridToolbar}}
+                slots={{ toolbar: GridToolbar }}
                 slotProps={{
                     filterPanel: {
                         filterFormProps: {
@@ -219,7 +222,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                 disableDensitySelector
                 enabledFilters={enabledFilters}
                 columns={columns}
-                rows={rows}
+                rows={rows || []}
                 checkboxSelection={checkboxSelection}
                 disableSelectionOnClick={true}
                 onSelectionModelChange={onSelectionModelChange}
@@ -229,9 +232,9 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                 onRowSelected={onRowSelected}
                 autoHeight
                 id={Math.random()}
-                pageSize={pageSize}
-                onPageSizeChange={(newPage) => setPageSize(newPage)}
                 pagination
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                 rowsPerPageOptions={rowsPerPageOptions}
                 getRowId={(r) => r.id}
                 density={'standard'}
@@ -243,9 +246,8 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                             quickFilterLogicOperator: GridLinkOperator.Or
                         }
                     }
-                }}
-            />
-        </div>
+                }} />
+        </div></>
     );
 }
 export default DataTable;

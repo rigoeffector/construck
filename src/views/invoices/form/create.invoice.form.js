@@ -41,7 +41,7 @@ const CreateProductCategoryForm = () => {
             //     details: {...values, ...imageUrls}
             // };
 
-            // dispatch({type: CREATE_PRODUCT_CATEGORY_REQUEST, payload});
+            // dispatch({type: CREATE_INTERNAL_ASSET_CATEGORY_REQUEST, payload});
             // setImageUrls({});
         }
     });

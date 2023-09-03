@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {useSelector} from 'react-redux';
+import history from '../../../../history';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
     Avatar,
@@ -107,12 +109,13 @@ const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
     const [selectedIndex] = React.useState(1);
-
+   
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const handleLogout = async () => {
         try {
             localStorage.clear();
+            history.push('/')
             // FIX ME
             window.location.reload();
         } catch (err) {
@@ -210,7 +213,7 @@ const ProfileSection = () => {
                                                         color: '#6B7A99'
                                                     }}
                                                 >
-                                                    Angela Karenzi
+                                                    {`${data?.USER?.firstName} ${data?.USER?.lastName}`}
                                                 </Typography>
                                                 <Typography
                                                     component="span"
@@ -223,13 +226,13 @@ const ProfileSection = () => {
                                                         
                                                     }}
                                                 >
-                                                angela@gmail.com
+                                                {data?.USER?.username}
                                                     {/* {data?.username} */}
                                                     <Grid item>
                                                         <Typography variant="subtitle2"  sx={{
                                                         marginBottom:'10px'
                                                         
-                                                    }}>Administrator</Typography>
+                                                    }}> {data?.USER?.role}</Typography>
                                                     </Grid>
                                                 </Typography>
 

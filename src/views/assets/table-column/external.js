@@ -1,34 +1,61 @@
 /* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import MoreIcon from '@mui/icons-material/More';
-import {GridActionsCellItem} from '@mui/x-data-grid';
 import '../style.css';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {Button, Chip} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-export const Columns = (handleViewMore,
-    handleEdit,
-    handleArchive,handleDelete) => {
+import {Chip} from '@mui/material';
+
+export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete) => {
+    const [selectedRowData, setSelectedRowData] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const handleClick = (event, params) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setSelectedRowData(params.row); // Set the selected row data
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleMenuItemClick = (menuItem) => {
+        debugger;
+        if (menuItem === 'View More' && selectedRowData) {
+            // Handle "View More" action with selectedRowData
+            handleViewMore(selectedRowData);
+        } else if (menuItem === 'Edit Asset' && selectedRowData) {
+            // Handle "Edit Asset" action with selectedRowData
+            handleEdit(selectedRowData);
+        } else if (menuItem === 'Mark Delete' && selectedRowData) {
+            // Handle "Mark Delete" action with selectedRowData
+            handleDelete(selectedRowData);
+        } else if (menuItem === 'Archive' && selectedRowData) {
+            // Handle "Archive" action with selectedRowData
+            handleArchive(selectedRowData);
+        }
         setAnchorEl(null);
     };
 
     return [
         {
-            field: 'name',
-            headerName: 'Asset Name',
+            field: 'customerName',
+            headerName: 'Customer Name',
             flex: 3
         },
-
+        {
+            field: 'customerId',
+            headerName: 'Customer ID',
+            flex: 4
+        },
+        {
+            field: 'assetName',
+            headerName: 'Asset Name',
+            flex: 4
+        },
         {
             field: 'category',
             headerName: 'Category',
@@ -36,59 +63,32 @@ export const Columns = (handleViewMore,
         },
 
         {
-            field: 'description',
-            headerName: 'Description ',
-            flex: 4
-        },
-        {
-            field: 'duration',
-            headerName: 'Duration',
-            width: 100,
-        },
-
-        
-        {
-            field: 'status',
+            field: 'assetStatus',
             headerName: 'Status',
-            width: 150,
+            width: 100,
             renderCell: (params) =>
-            params.row.status === 'Available' ? (
-                <Chip
-                    label={params.row.status}
-                    color="primary"
-                    sx={{
-                        width: '100px !important',
-                        textAlign: 'center'
-                    }}
-                />
-            ) : params.row.status === 'Unavailable' ? (
-                <Chip
-                    label={params.row.status}
-                    color="success"
-                    sx={{
-                        width: '100px !important',
-                        textAlign: 'center'
-                    }}
-                />
-            ) : params.row.status === 'Maintenance' ? (
-                <Chip
-                    label={params.row.status}
-                    color="warning"
-                    sx={{
-                        width: '100px !important',
-                        textAlign: 'center'
-                    }}
-                />
-            ) : (
-                <Chip label={params.row.status} />
-            )
+                params.row.assetStatus === 'AVAILABLE' ? (
+                    <Chip
+                        label={params.row.assetStatus}
+                        color="success"
+                        sx={{
+                            width: '100px !important',
+                            textAlign: 'center'
+                        }}
+                    />
+                ) : params.row.assetStatus === 'ASSIGNED' ? (
+                    <Chip
+                        label={params.row.assetStatus}
+                        color="warning"
+                        sx={{
+                            width: '100px !important',
+                            textAlign: 'center'
+                        }}
+                    />
+                ) : (
+                    <Chip label={params.row.assetStatus} color="error" />
+                )
         },
-        {
-            field: 'assignedTo',
-            headerName: 'Assigned To ',
-            width: 100
-        },
-
         {
             field: '',
             headerName: 'Action',
@@ -96,31 +96,42 @@ export const Columns = (handleViewMore,
             getActions: (params) => [
                 <div className="actions_button">
                     <MoreVertIcon
-                        id="fade-button"
-                        aria-controls={open ? 'fade-menu' : undefined}
+                        id={`menu-${params.row.id}`} // Use a unique ID for each menu
+                        aria-controls={`menu-${params.row.id}`}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                        onClick={(event) => handleClick(event, params)}
                     ></MoreVertIcon>
                     <Menu
-                        id="fade-menu"
+                        id={`menu-${params.row.id}`} // Use the same ID as above
                         MenuListProps={{
-                            'aria-labelledby': 'fade-button'
+                            'aria-labelledby': `menu-${params.row.id}`
                         }}
                         anchorEl={anchorEl}
-                        open={open}
+                        open={Boolean(anchorEl)}
                         onClose={handleClose}
                         TransitionComponent={Fade}
                     >
-                        <MenuItem onClick={()=>handleViewMore(params)}>View More</MenuItem>
-                        <MenuItem onClick={()=>handleEdit(params)}>Edit Asset</MenuItem>
-                        <MenuItem onClick={()=>handleDelete(params)} sx={{
-                            color: 'red'
-                        }}>Mark Delete</MenuItem>
-                        <MenuItem onClick={()=>handleArchive(params)}>Archive</MenuItem>
+                        <MenuItem onClick={() => handleMenuItemClick('View More')}>View More</MenuItem>
+                        <MenuItem onClick={() => handleMenuItemClick('Edit Asset')} disabled={params.row.assetStatus === 'ARCHIVED'}>
+                            Edit Asset
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Mark Delete')}
+                            sx={{
+                                color: 'red'
+                            }}
+                        >
+                            Mark Delete
+                        </MenuItem>
+                        <MenuItem onClick={() => handleMenuItemClick('Archive')} disabled={params.row.assetStatus === 'ARCHIVED'}>
+                            Archive
+                        </MenuItem>
                     </Menu>
                 </div>
             ]
         }
     ];
 };
+
+export default Columns;

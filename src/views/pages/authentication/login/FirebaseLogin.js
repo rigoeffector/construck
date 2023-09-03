@@ -138,23 +138,19 @@ const FirebaseLogin = (props, {className, ...rest}) => {
         <React.Fragment>
             <Formik
                 initialValues={{
-                    username: 'angela@daada.app',
-                    password: '!angela123',
-                    api_key: ''
+                    username: 'ivan@gmail.com',
+                    password: 'password'
                 }}
                 validationSchema={Yup.object().shape({
                     username: Yup.string().email('Must be a valid username').max(255).required('Username is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values) => {
-                    // const keys = process.env.REACT_APP_ADDAX_API_KEY;
-                    // const payload = {
-                    //     ...values,
-                    //     api_key: keys
-                    // };
-                    // dispatch({type: LOGIN_USER_REQUEST, payload});
-                    history.push('/daada/dashboard/overview');
-                    window.location.reload();
+                    const payload = {
+                        ...values
+                    };
+                    dispatch({type: LOGIN_USER_REQUEST, payload});
+                    // window.location.reload();
                 }}
             >
                 {({errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values}) => (

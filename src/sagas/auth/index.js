@@ -12,14 +12,14 @@ export function* loginRequestSaga(action) {
         yield put(loading(LOGIN_USER_LOADING, {loading: true}));
         const {payload} = action;
         const response = yield call(loginApi.auth.login, {...payload});
-        if (response && response.success) {
-            const ctx = buildContext(response.result || {});
+        if (response && response.status === 201) {
+            const ctx = buildContext(response.data || {});
 
             saveState('ctx', ctx);
             yield put(success('CONTEXT', ctx));
             yield put(success(LOGIN_USER_SUCCESS, response));
             // history.push('/daada/dashboard/home');
-            history.push('/daada/dashboard/products');
+            history.push('/dashboard/overview');
             yield delay(1000);
             window.location.reload();
         } else {
@@ -35,14 +35,11 @@ export function* loginRequestSaga(action) {
 }
 function buildContext(data) {
     return {
-        is_verified: data && data.is_verified,
-        last_login: data && data.last_login,
-        login_token: data && data.login_token,
-        role: data && data.role,
-        status: data && data.status,
-        type: data && data.type,
-        username: data && data.username,
-        uuid: data && data.uuid
+        firstName: data && data.USER?.firstName,
+        lastName: data && data.USER?.lastName,
+        token: data && data.JWT_TOKEN,
+        role: data && data.USER?.role,
+        username: data && data.USER?.username,
     };
 }
 export function* watchLoginData() {
