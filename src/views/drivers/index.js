@@ -31,7 +31,6 @@ const Drivers = () => {
             type: GET_DRIVERS_LIST_REQUEST
         });
     }, [dispatch]);
-    ;
 
     const handleShowAddNewModel = () => {
         setShowNewModal(true);
@@ -45,7 +44,7 @@ const Drivers = () => {
         if (createSuccess || deleteSuccess) {
             handleClose();
         }
-    }, [createSuccess, deleteSuccess])
+    }, [createSuccess, deleteSuccess]);
     return (
         <PageContainer pageHeading="List of Drivers">
             <ConstruckModal title="Add driver" show={showNewModal} handleClose={handleClose}>

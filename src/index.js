@@ -11,6 +11,7 @@ import './assets/scss/style.scss';
 import * as serviceWorker from './serviceWorker';
 import storeConfig from './store/store.dev';
 // import store from './store';
+import './index.css';
 const store = storeConfig();
 ReactDOM.render(
     <Provider store={store}>

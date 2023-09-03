@@ -5,6 +5,7 @@ import NavMotion from '../layout/NavMotion';
 
 
 const AuthLogin = lazy(() => import('../views/pages/authentication/login'));
+const Login = lazy(() => import('../views/pages/authentication/login/mainlogin'));
 
 const LoginRoutes = () => {
     const location = useLocation();
@@ -15,7 +16,8 @@ const LoginRoutes = () => {
                 <Switch location={location} key={location.pathname}>
                     <NavMotion>
 
-                            <Route path="/login" component={AuthLogin} />
+                            <Route exact  path="/login" component={AuthLogin} />
+                            <Route path="/login/auth" component={Login} />
 
                     </NavMotion>
                 </Switch>

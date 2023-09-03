@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PageContainer from '../../reusable/breadcrumbs';
 import DataTable from '../../reusable/table';
 import {columns} from './table-column';
@@ -9,6 +9,9 @@ import DateRange from '../../reusable/daterange';
 import {addDays, differenceInDays} from 'date-fns';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import {useDispatch, useSelector} from 'react-redux';
+import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
+import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
 
 const statusList = ['Completed', 'Assigned', 'Pending'];
 const initialState = {
@@ -21,85 +24,15 @@ const AllAssetsRequests = () => {
     const [thisState, setThisState] = useState(initialState);
     const [distance, setDistance] = useState(6);
     const [anchorEl, setAnchorEl] = useState(false);
-
-    const data = [
-        {
-            id: '1',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela Den',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'MBODO Defv',
-            status: 'Completed'
-        },
-        {
-            id: '2',
-
-            name: 'Mouse',
-            category: 'Truck',
-            requestBy: 'Tuse NGANJI',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Doe Johne',
-            status: 'Assigned'
-        },
-        {
-            id: '3',
-
-            name: 'Cables Phone',
-            category: 'Dump',
-            requestBy: 'Aline UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Rgi Wacu',
-            status: 'Pending'
-        },
-        {
-            id: '4',
-
-            name: 'Car',
-            category: 'Truck',
-            requestBy: 'Carine MWIZA',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Olga NSHUTI',
-            status: 'Completed'
-        },
-        {
-            id: '5',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestedBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'MANZ Emmy',
-            status: 'Pending'
-        },
-        {
-            id: '6',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Devotha Ruth',
-            status: 'Assigned'
-        },
-        {
-            id: '7',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'KALSA Emmy',
-            status: 'Completed'
-        }
-    ];
+    const {
+        
+        listRequestedAssets: {data: listAssets, loading: listAssetsLoading}
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    const [allRequests, setAllRequests] = useState([]);
+    useEffect(() => {
+        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
+    }, [dispatch]);
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -134,6 +67,12 @@ const AllAssetsRequests = () => {
             handleClose();
         }
     };
+
+    useEffect(() => {
+        if (listAssets && !listAssetsLoading) {
+            setAllRequests(formatRequestedAssetsInfo(listAssets));
+        }
+    }, [listAssets, listAssetsLoading]);
     return (
         <PageContainer pageHeading="All requests">
             <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
@@ -201,7 +140,13 @@ const AllAssetsRequests = () => {
                     alignItems: 'center'
                 }}
             >
-                <DataTable showQuickSearchToolbar={false} checkboxSelection={false} rows={data} columns={columns()} />
+                <DataTable
+                    loader={listAssetsLoading}
+                    showQuickSearchToolbar={false}
+                    checkboxSelection={false}
+                    rows={allRequests || []}
+                    columns={columns}
+                />
             </Paper>
         </PageContainer>
     );
