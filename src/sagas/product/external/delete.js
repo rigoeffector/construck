@@ -19,7 +19,7 @@ export function* deleteExternalAssetRequestSaga(action) {
         yield put(loading(DELETE_EXTERNAL_ASSET_LOADING, {loading: true}));
         const {payload} = action;
         const response = yield call(productApi.externalAssets.delete, {...payload});
-        if (response && response.status === 201) {
+        if (response && response.status === 202) {
             yield put(success(DELETE_EXTERNAL_ASSET_SUCCESS, response));
             yield* listExternallAssetsRequestSaga({
                 type: GET_EXTERNAL_ASSETS_LIST_REQUEST
