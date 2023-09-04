@@ -17,6 +17,7 @@ import {v4} from 'uuid';
 import IconButton from '@mui/material/IconButton';
 import {styled} from '@mui/system';
 import {CREATE_INVOICE_REQUEST} from '../../../reducers/invoice/constant';
+import moment from 'moment';
 
 const StyledDateTextField = styled(TextField)({
     width: '100%',
@@ -41,12 +42,12 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
     } = useSelector((state) => state);
     const formik = useFormik({
         initialValues: initialValues,
-        validationSchema: validationCategorySchema,
+        // validationSchema: validationCategorySchema,
         onSubmit: (values) => {
             const payload = {
                 clientRequestId: moreInfo?.id,
                 invoiceNumber: values.invoiceNumber,
-                dueDate: values.dueDate,
+                dueDate: moment(values.dueDate).format('YYYY-MM-DD'),
                 description: values.description,
                 amount: values.amount,
                 taxAmount: values.taxAmount
@@ -71,7 +72,7 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
                                 id="name"
                                 name="name"
                                 label="Name"
-                                value={formik.values.name}
+                                value={moreInfo.requestedBy}
                                 onChange={formik.handleChange}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
                                 helperText={formik.touched.name && formik.errors.name}
@@ -104,12 +105,12 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
                         >
                             <StyledDateTextField
                                 label="Due Date"
-                                name="to"
+                                name="dueDate"
                                 type="date"
-                                value={formik.values.to}
+                                value={formik.values.dueDate}
                                 onChange={formik.handleChange}
-                                error={formik.touched.to && Boolean(formik.errors.to)}
-                                helperText={formik.touched.to && formik.errors.to}
+                                error={formik.touched.dueDate && Boolean(formik.errors.dueDate)}
+                                helperText={formik.touched.to && formik.errors.dueDate}
                                 InputLabelProps={{
                                     shrink: true
                                 }}
@@ -145,12 +146,30 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
                             <TextField
                                 fullWidth
                                 id="amount"
-                                name="Amount"
+                                name="amount"
                                 label="Amount (RWF)"
-                                value={formik.values.Amount}
+                                value={formik.values.amount}
                                 onChange={formik.handleChange}
-                                error={formik.touched.Amount && Boolean(formik.errors.Amount)}
-                                helperText={formik.touched.Amount && formik.errors.Amount}
+                                error={formik.touched.amount && Boolean(formik.errors.amount)}
+                                helperText={formik.touched.amount && formik.errors.amount}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="taxAmount"
+                                name="taxAmount"
+                                label="Tax Amount (RWF)"
+                                value={formik.values.taxAmount}
+                                onChange={formik.handleChange}
+                                error={formik.touched.taxAmount && Boolean(formik.errors.taxAmount)}
+                                helperText={formik.touched.taxAmount && formik.errors.taxAmount}
                             />
                         </Box>
                     </Grid>

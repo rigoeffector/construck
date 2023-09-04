@@ -18,6 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
 import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
 import CreateAssetInvoiceForm from '../invoices/form/create.invoice.form';
+import moment from 'moment';
 const Dashboard = () => {
     const {
         auth,
@@ -69,7 +70,29 @@ const Dashboard = () => {
             name: 'Purpose'
             // width: 200
         },
-
+        {
+            selector: 'amount',
+            name: 'Invoice Amount'
+            // width: 200
+        },
+        {
+            selector: 'dueDate',
+            name: 'Invoice Due Date',
+            cell: (params) => moment(params.row.dueDate).format('YYYY-MM-DD')
+            // width: 200
+        },
+        {
+            selector: 'invoiceNumber',
+            name: 'Invoice Number',
+          
+            // width: 200
+        },
+        {
+            selector: 'invoiceStatus',
+            name: 'Invoice Status',
+          
+            // width: 200
+        },
         {
             selector: '',
             name: 'Action',
@@ -95,6 +118,11 @@ const Dashboard = () => {
         }
     ];
 
+
+   
+   
+  
+    
    
     const handleAssign = (data) => {
         setShowAssignModal(true);

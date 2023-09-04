@@ -295,7 +295,7 @@ export const ProductsExternal = (props) => {
                 >
                     Add external asset
                 </Button>
-                <Button
+                {/* <Button
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={handleShowAssignNew}
@@ -306,8 +306,8 @@ export const ProductsExternal = (props) => {
                     }}
                 >
                     Assign external asset
-                </Button>
-                <Button
+                </Button> */}
+                {/* <Button
                     variant="outlined"
                     endIcon={<SystemUpdateAltIcon />}
                     sx={{
@@ -317,7 +317,7 @@ export const ProductsExternal = (props) => {
                     }}
                 >
                     Bulk import
-                </Button>
+                </Button> */}
             </Grid>
 
             <BodyContainer>

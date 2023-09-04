@@ -95,77 +95,7 @@ export const Products = (props) => {
         }));
     };
 
-    const data = [
-        {
-            id: '1',
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '2',
-
-            name: 'Mouse',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '3',
-
-            name: 'Cables Phone',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '4',
-
-            name: 'Car',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '5',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestedBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '6',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        },
-        {
-            id: '7',
-
-            name: 'Computer Laptop',
-            category: 'Dump Truck',
-            requestBy: 'Angela UWACU',
-            from: '2023/09/12',
-            to: '2025/09/23',
-            purpose: 'Real Construction Edit CAD Design'
-        }
-    ];
+  
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {

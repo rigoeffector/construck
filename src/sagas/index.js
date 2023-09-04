@@ -15,6 +15,9 @@ import { watchDriverDeleteData } from './drivers/delete';
 import { watchCompanyRequestAssetData } from './company';
 import { watchAssetsTypesListData } from './product/readAllTypes';
 import { watchIndividualRequestAssetData } from './company/individual';
+import { watchCreateInvoiceData } from './invoice/create';
+import { watchUpdateInvoiceStatusData } from './invoice/updateStatus';
+import { watchgetInvoicesListData } from './invoice/read';
 
 export default function* rootSaga() {
     yield all([
@@ -33,6 +36,9 @@ export default function* rootSaga() {
         fork(watchDriverDeleteData),
         fork(watchCompanyRequestAssetData),
         fork(watchAssetsTypesListData),
-        fork(watchIndividualRequestAssetData)
+        fork(watchIndividualRequestAssetData),
+        fork(watchCreateInvoiceData),
+        fork(watchUpdateInvoiceStatusData),
+        fork(watchgetInvoicesListData)
     ]);
 }

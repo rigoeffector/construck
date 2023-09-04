@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {columns} from './table-column';
-import {Box, Paper, Typography} from '@mui/material';
+import React, {useState, useEffect} from 'react';
+import {Columns} from './table-column';
+import {Box, Button, CircularProgress, Paper, Typography} from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -11,6 +11,9 @@ import PageContainer from '../../reusable/breadcrumbs';
 import DateRange from '../../reusable/daterange';
 import DataTable from '../../reusable/table';
 import {Search, SearchIconWrapper, TableInputBase} from '../allrequests/helpers';
+import {GET_INVOICES_LIST_REQUEST, UPDATE_INVOICE_STATUS_REQUEST} from '../../reducers/invoice/constant';
+import {useDispatch, useSelector} from 'react-redux';
+import ConstruckModal from '../../reusable/modal';
 const statusList = ['Paid', 'Unpaid', 'Archived', 'Active', 'All'];
 const initialState = {
     from: null,
@@ -22,76 +25,45 @@ const InvoicesPage = () => {
     const [thisState, setThisState] = useState(initialState);
     const [distance, setDistance] = useState(6);
     const [anchorEl, setAnchorEl] = useState(false);
+    const [showArchiveModel, setShowArchiveModel] = useState(false);
+    const [moreInfo, setMoreInfo] = useState({});
+    const {
+        listInvoices,
+        updateInvoice: {success: updateSuccess, loading: updateStatusLoading},
+        createInvoice: {success: createSuccess}
+    } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({
+            type: GET_INVOICES_LIST_REQUEST
+        });
+    }, [dispatch]);
 
-    const data = [
-        {
-            id: '1',
-            number: 'ASD4555',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Pesa Choice',
-            amount: '123,000',
-            status: 'Active'
-        },
-        {
-            id: '2',
-            number: 'ASD4555AWE',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Benefactors',
-            amount: '103,809,000',
-            status: 'Paid'
-        },
-        {
-            id: '3',
-            number: 'ASD4555',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Pesa Choice',
-            amount: '123,000',
-            status: 'Active'
-        },
-        {
-            id: '4',
-            number: 'ASD455W45AWE',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Benefactors Focus',
-            amount: '13,809,000',
-            status: 'Paid'
-        },
-        {
-            id: '5',
-            number: 'ASD455W45AWE',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Benefactors Focus',
-            amount: '13,809,000',
-            status: 'Archived'
-        },
-
-        {
-            id: '6',
-            number: 'ASD455W45AWE',
-            invoiceDate: '2023/08/12',
-            dueDate: '2023/09/12',
-            description: 'You must pay this bill before due date',
-            company: 'Benefactors Focus',
-            amount: '13,809,000',
-            status: 'Unpaid'
+    useEffect(() => {
+        if (createSuccess || updateSuccess) {
+            handleClose();
         }
-    ];
+    }, [createSuccess, updateSuccess]);
+
+    const handleChangeStatus = (data) => {
+        setShowArchiveModel(true);
+        const {row} = data;
+        setMoreInfo(row);
+    };
+
+    const handleDelete = (data) => {
+        console.log(data);
+    };
+
+    const handleDownload = (data) => {
+        console.log(data);
+    };
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(false);
-
+        setShowArchiveModel(false);
         // setSelectedEvent(null);
     };
     const handlePrevWeek = () => {
@@ -120,6 +92,15 @@ const InvoicesPage = () => {
             handleClose();
         }
     };
+
+    const handleArchiveConfirm = () => {
+        const payload = {
+            status: 'ARCHIVE',
+            id: moreInfo.id
+        };
+        dispatch({type: UPDATE_INVOICE_STATUS_REQUEST, payload});
+    };
+
     return (
         <PageContainer pageHeading="Invoicing">
             <Typography
@@ -132,6 +113,69 @@ const InvoicesPage = () => {
             >
                 View and send invoices to you clients
             </Typography>
+            <ConstruckModal title="Archive asset" show={showArchiveModel} handleClose={handleClose}>
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    Are you sure you want to archive{' '}
+                    <span
+                        style={{
+                            fontWeight: '700',
+                            color: '#282546'
+                        }}
+                    >
+                        {` ${moreInfo.invoiceNumber} Invoice`}
+                    </span>
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    <Button
+                        onClick={handleClose}
+                        sx={{
+                            margin: '0px 10px',
+                            borderRadius: '8px',
+                            background: '#EDEFF2',
+                            color: '#64748A !important',
+                            fontWeight: '500'
+                        }}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button
+                        onClick={handleArchiveConfirm}
+                        variant="contained"
+                        sx={{
+                            borderRadius: '8px',
+                            background: '#1090CB',
+                            color: '#FFF',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {updateStatusLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
+                    </Button>
+                </Box>
+            </ConstruckModal>
             <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
                 <Search>
                     <SearchIconWrapper>
@@ -197,7 +241,12 @@ const InvoicesPage = () => {
                     alignItems: 'center'
                 }}
             >
-                <DataTable showQuickSearchToolbar={false} rows={data} columns={columns()} />
+                <DataTable
+                    loader={listInvoices?.loading}
+                    showQuickSearchToolbar={false}
+                    rows={listInvoices?.data}
+                    columns={Columns(handleDownload, handleChangeStatus, handleDelete)}
+                />
             </Paper>
         </PageContainer>
     );

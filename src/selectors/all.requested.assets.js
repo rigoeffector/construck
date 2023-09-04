@@ -26,7 +26,11 @@ export function formatRequestedAssetsInfo(state) {
         phoneNumber: asset.phoneNumber,
         requestedBy: asset.requestedBy,
         idNumber: asset.idNumber,
-        invoice: asset.invoice
+        invoice: asset.invoice,
+        amount: asset?.invoice?.amount?asset?.invoice?.amount: '----------',
+        dueDate:asset?.invoice?.dueDate ?asset?.invoice?.dueDate : '-------' ,
+        invoiceNumber:asset?.invoice?.invoiceNumber?asset?.invoice?.invoiceNumber: '--------',
+        invoiceStatus:asset?.invoice?.invoiceStatus?asset?.invoice?.invoiceStatus: '--------'
 
       }));
     });

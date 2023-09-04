@@ -275,12 +275,13 @@ export const ProductsInternal = (props) => {
                     onClick={handleShowAddNew}
                     sx={{
                         borderRadius: '8px',
-                        background: '#1090CB'
+                        background: '#1090CB',
+                        
                     }}
                 >
                     Add asset
                 </Button>
-                <Button
+                {/* <Button
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={handleShowAssignNew}
@@ -291,8 +292,8 @@ export const ProductsInternal = (props) => {
                     }}
                 >
                     Assign asset
-                </Button>
-                <Button
+                </Button> */}
+                {/* <Button
                     variant="outlined"
                     endIcon={<SystemUpdateAltIcon />}
                     sx={{
@@ -302,7 +303,7 @@ export const ProductsInternal = (props) => {
                     }}
                 >
                     Bulk import
-                </Button>
+                </Button> */}
             </Grid>
 
             {/* EDIT MODALS  */}
