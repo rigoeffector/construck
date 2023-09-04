@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CompanyRequestAssetForm from './company.form';
-import {Grid} from '@mui/material';
+import IndividualRequestAssetForm from './individual.form';
+import {useDispatch, useSelector} from 'react-redux';
+import {GET_ALL_TYPES_LIST_REQUEST} from '../../../../../reducers/product/constant';
+import {CircularProgress} from '@material-ui/core';
 
 function CustomTabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -36,7 +39,13 @@ function a11yProps(index) {
 
 export const Contact = () => {
     const [value, setValue] = React.useState(0);
+    const dispatch = useDispatch();
 
+    const {listAssetTypes} = useSelector((state) => state);
+
+    useEffect(() => {
+        dispatch({type: GET_ALL_TYPES_LIST_REQUEST});
+    }, [dispatch]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -78,11 +87,27 @@ export const Contact = () => {
                         justifyContent: 'center'
                     }}
                 >
-                    <CompanyRequestAssetForm />
+                    {listAssetTypes.loading ? (
+                        <CircularProgress />
+                    ) : (
+                        listAssetTypes && listAssetTypes?.data && <CompanyRequestAssetForm typesData={listAssetTypes?.data} />
+                    )}
                 </Box>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Individual
+                <Box
+                    sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                >
+                    {listAssetTypes.loading ? (
+                        <CircularProgress />
+                    ) : (
+                        listAssetTypes && listAssetTypes?.data && <IndividualRequestAssetForm typesData={listAssetTypes?.data} />
+                    )}
+                </Box>
             </CustomTabPanel>
         </Box>
     );

@@ -8,7 +8,9 @@ export const productApi = {
         changeStatus: (data) => request('PUT', `api/v1/asset-mgmt/assets/${data.id}/status/${data.status}`, data, true),
         update: (data) => request('PUT', `entity/instance/update`, data, true),
         listInternal: (data) => request('GET', `api/v1/asset-mgmt/assets?status=${data.status}&name=${data.name}`, data, true),
-        viewRequests: (data) => request('GET', 'api/v1/asset-mgmt/asset-requests/all', data, true)
+        viewRequests: (data) => request('GET', 'api/v1/asset-mgmt/asset-requests/all', data, true),
+        viewAssetTypes: (data) => request('GET', 'api/v1/asset-mgmt/assets/all', data, true),
+
     },
     externalAssets: {
         create: (data) => request('POST', `api/v1/asset-mgmt/external-assets`, data, true),

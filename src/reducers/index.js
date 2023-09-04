@@ -16,6 +16,9 @@ import updateDriverReducer from './drivers/update';
 import createDriverReducer from './drivers/create';
 import deleteDriverReducer from './drivers/delete';
 import getDriversListReducer from './drivers/read';
+import companyRequestAssetReducer from './company/requestasset';
+import getAssetTypesListReducer from './product/assetTypes';
+import individualRequestAssetReducer from './company/individual';
 
 const rootReducer = combineReducers({
     customization: customizationReducer,
@@ -33,7 +36,10 @@ const rootReducer = combineReducers({
     updateDriver: updateDriverReducer,
     createDriver: createDriverReducer,
     deleteDriver: deleteDriverReducer,
-    listDrivers: getDriversListReducer
+    listDrivers: getDriversListReducer,
+    companyRequestAsset: companyRequestAssetReducer,
+    listAssetTypes: getAssetTypesListReducer,
+    individualRequestAsset : individualRequestAssetReducer
 });
 
 export default rootReducer;

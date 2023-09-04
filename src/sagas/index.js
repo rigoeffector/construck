@@ -12,6 +12,9 @@ import { watchUpdateExternalAssetStatusData } from './product/external/update.in
 import { watchDriverCreateData } from './drivers/create';
 import { watchDriversListData } from './drivers/read';
 import { watchDriverDeleteData } from './drivers/delete';
+import { watchCompanyRequestAssetData } from './company';
+import { watchAssetsTypesListData } from './product/readAllTypes';
+import { watchIndividualRequestAssetData } from './company/individual';
 
 export default function* rootSaga() {
     yield all([
@@ -27,6 +30,9 @@ export default function* rootSaga() {
         fork(watchUpdateExternalAssetStatusData),
         fork(watchDriverCreateData),
         fork(watchDriversListData),
-        fork(watchDriverDeleteData)
+        fork(watchDriverDeleteData),
+        fork(watchCompanyRequestAssetData),
+        fork(watchAssetsTypesListData),
+        fork(watchIndividualRequestAssetData)
     ]);
 }

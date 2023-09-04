@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
-import {Box, Grid, TextField} from '@mui/material';
+import {Box, CircularProgress, Grid, TextField} from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import {useFormik} from 'formik';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +12,8 @@ import {styled} from '@mui/system';
 import moment from 'moment';
 import DaaDAlerts from '../../../../../reusable/alerts';
 import SubmitButton from '../../../../../reusable/submit-button';
+import {COMPANY_REQUEST_ASSET_REQUEST} from '../../../../../reducers/company/constant';
+import {GET_ALL_TYPES_LIST_REQUEST} from '../../../../../reducers/product/constant';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -20,12 +22,13 @@ const StyledDateTextField = styled(TextField)({
         height: '30px' // You can adjust the padding as needed
     }
 });
-const CompanyRequestAssetForm = (props) => {
+const CompanyRequestAssetForm = ({typesData}) => {
     const dispatch = useDispatch();
 
     const {
-        createInternalAsset: {loading, success, error, message}
+        companyRequestAsset: {loading, success, error, message}
     } = useSelector((state) => state);
+
 
     const initialValues = {
         requestedBy: '',
@@ -50,15 +53,14 @@ const CompanyRequestAssetForm = (props) => {
                 email: values.email,
                 tinNumber: values.tinNumber,
                 idNumber: values.idNumber,
-                assetIds: [],
+                assetIds: [values.assetIds],
                 from: values.from,
                 to: values.to,
                 purpose: values.purpose
             };
 
-
             console.log(payload);
-            // dispatch({type: CREATE_INTERNAL_ASSET_REQUEST, payload});
+            dispatch({type: COMPANY_REQUEST_ASSET_REQUEST, payload});
         }
     });
 
@@ -164,14 +166,11 @@ const CompanyRequestAssetForm = (props) => {
                                     error={formik.touched.assetIds && Boolean(formik.errors.assetIds)}
                                     helperText={formik.touched.assetIds && formik.errors.assetIds}
                                 >
-                                    <MenuItem value="Bulldozers">Bulldozers</MenuItem>
-                                    <MenuItem value="Excavators">Excavators</MenuItem>
-                                    <MenuItem value="WheelLoaders"> Wheel Loaders</MenuItem>
-                                    <MenuItem value="MotorGraders">Motor Graders</MenuItem>
-                                    <MenuItem value="Backhoe">Backhoe</MenuItem>
-                                    <MenuItem value="Loaders">Loaders</MenuItem>
-                                    <MenuItem value="HeavyTrucks">Heavy Trucks</MenuItem>
-                                    <MenuItem value="SoilCompactors">Soil Compactors</MenuItem>
+                                    {typesData.map((type, i) => (
+                                        <MenuItem value={type.id} key={i}>
+                                            {type.assetName}
+                                        </MenuItem>
+                                    ))}
                                 </TextField>
                             </FormControl>
                         </Box>
@@ -252,6 +251,7 @@ const CompanyRequestAssetForm = (props) => {
                 </Box>
 
                 {error && <DaaDAlerts show={error} message={error} variant={'error'} />}
+                {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             </form>
         </div>
     );
