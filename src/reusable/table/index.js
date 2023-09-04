@@ -123,7 +123,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         setIsExportDropdownOpen(!isExportDropdownOpen);
         // Filter out columns with type "checkbox" and "actions"
         const columnsToExport = columns
-            .filter((column) => column.field !== 'checkbox' && column.type !== 'actions' && column.field !== 'status')
+            .filter((column) => column.field !== 'checkbox' && column.type !== 'actions' && column.field !== 'status' && column.field !== '')
             .map((column) => column.field);
 
         // Prepare the data for export

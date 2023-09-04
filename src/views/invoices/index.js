@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import {Columns} from './table-column';
-import {Box, Button, CircularProgress, Paper, Typography} from '@mui/material';
+import {Box, Button, Chip, CircularProgress, Grid, Paper, Typography} from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
+import {Table} from 'reactstrap';
 
 import {addDays, differenceInDays} from 'date-fns';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -12,9 +14,10 @@ import PageContainer from '../../reusable/breadcrumbs';
 import DateRange from '../../reusable/daterange';
 import DataTable from '../../reusable/table';
 import {Search, SearchIconWrapper, TableInputBase} from '../allrequests/helpers';
-import {GET_INVOICES_LIST_REQUEST, UPDATE_INVOICE_STATUS_REQUEST} from '../../reducers/invoice/constant';
+import {CREATE_INVOICE_RESET, GET_INVOICES_LIST_REQUEST, UPDATE_INVOICE_STATUS_REQUEST} from '../../reducers/invoice/constant';
 import {useDispatch, useSelector} from 'react-redux';
 import ConstruckModal from '../../reusable/modal';
+import moment from 'moment';
 const statusList = ['Paid', 'Unpaid', 'Archived', 'Active', 'All'];
 const initialState = {
     from: null,
@@ -29,6 +32,7 @@ const InvoicesPage = () => {
     const [showPaidModel, setShowPaidModel] = useState(false);
     const [showArchiveModel, setShowArchiveModel] = useState(false);
     const [moreInfo, setMoreInfo] = useState({});
+    const [showInvoiceModel, setShowInvoiceModel] = useState(false);
     const {
         listInvoices,
         updateInvoice: {success: updateSuccess, loading: updateStatusLoading},
@@ -60,7 +64,9 @@ const InvoicesPage = () => {
     };
 
     const handleDownload = (data) => {
+        setShowInvoiceModel(true);
         console.log(data);
+        setMoreInfo(data);
     };
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -69,6 +75,11 @@ const InvoicesPage = () => {
         setAnchorEl(false);
         setShowArchiveModel(false);
         setShowPaidModel(false);
+        setShowInvoiceModel(false);
+
+        dispatch({
+            type: CREATE_INVOICE_RESET
+        });
         // setSelectedEvent(null);
     };
     const handlePrevWeek = () => {
@@ -252,6 +263,185 @@ const InvoicesPage = () => {
                         )}
                     </Button>
                 </Box>
+            </ConstruckModal>
+
+            <ConstruckModal title="View invoice" show={showInvoiceModel} handleClose={handleClose}>
+                <Grid>
+                    <img src="/assets/images/logo.png" alt=''/>
+                    <Grid
+                        container
+                        spacing={2}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '20px'
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                margin: '10px'
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    fontSize: '15px',
+                                    margin: '5px 0px '
+                                }}
+                            >
+                                Tax Invoice
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '400',
+                                    fontSize: '15px',
+                                    margin: '5px 0px '
+                                }}
+                            >
+                                Bill To {moreInfo?.companyName ? moreInfo.companyName : '--------'}
+                            </Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                margin: '10px'
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    fontSize: '15px',
+                                    margin: '5px 0px '
+                                }}
+                            >
+                                Invoice Number {moreInfo.invoiceNumber}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '400',
+                                    fontSize: '15px',
+                                    margin: '5px 0px '
+                                }}
+                            >
+                                Date {moment(moreInfo.createdAt).format('YYYY-MM-DD')}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '400',
+                                    fontSize: '15px',
+                                    margin: '5px 0px '
+                                }}
+                            >
+                                Due Date {moment(moreInfo.dueDate).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid container>
+                        <Table
+                            size="sm"
+                            style={{
+                                width: '100%'
+                            }}
+                        >
+                            <thead
+                                style={{
+                                    background: '#dadada'
+                                }}
+                            >
+                                <tr>
+                                    <th>Description</th>
+                                    <th>TAX</th>
+                                    <th>QTY</th>
+                                    <th>AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{moreInfo.description}</td>
+                                    <td>{moreInfo.taxAmount}</td>
+                                    <td>1</td>
+                                    <td>{moreInfo.amount}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </Grid>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end'
+                        }}
+                    >
+                        <Box sx={{width: '170px'}}>
+                            <Grid container>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                        marginBottom: '10px',
+                                        marginTop: '20px'
+                                    }}
+                                >
+                                    <Typography>SubTotal</Typography>
+                                    <Typography>{moreInfo.amount || 0}</Typography>
+                                </Box>
+                                <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '10px'}}>
+                                    <Typography>Taxes</Typography>
+                                    <Typography>{moreInfo.taxAmount || 0}</Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                        marginBottom: '10px',
+                                        borderBottom: '1px solid #dddd'
+                                    }}
+                                >
+                                    <Typography>Total</Typography>
+                                    <Typography>{moreInfo.taxAmount + moreInfo.amount || 0}</Typography>
+                                </Box>
+
+                                <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '10px'}}>
+                                    <Typography>Balance Due</Typography>
+                                    <Typography> RWF {moreInfo.taxAmount + moreInfo.amount || 0}</Typography>
+                                </Box>
+                                <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '10px'}}>
+                                    <Typography>Status</Typography>
+                                    {moreInfo.invoiceStatus === 'ACTIVE' ? (
+                                        <Chip
+                                            label={moreInfo.invoiceStatus}
+                                            color="primary"
+                                            sx={{
+                                                width: '100px !important',
+                                                textAlign: 'center'
+                                            }}
+                                        />
+                                    ) : moreInfo.invoiceStatus === 'PAID' ? (
+                                        <Chip
+                                            label={moreInfo.invoiceStatus}
+                                            color="success"
+                                            sx={{
+                                                width: '100px !important',
+                                                textAlign: 'center'
+                                            }}
+                                        />
+                                    ) : moreInfo.invoiceStatus === 'UNPAID' ? (
+                                        <Chip
+                                            label={moreInfo.invoiceStatus}
+                                            color="warning"
+                                            sx={{
+                                                width: '100px !important',
+                                                textAlign: 'center'
+                                            }}
+                                        />
+                                    ) : (
+                                        <Chip label={moreInfo.invoiceStatus} />
+                                    )}
+                                </Box>
+                            </Grid>
+                        </Box>
+                    </Box>
+                </Grid>
             </ConstruckModal>
             {/* <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
                 <Search>

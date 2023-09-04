@@ -26,15 +26,13 @@ const IndividualRequestAssetForm = ({typesData}) => {
     const dispatch = useDispatch();
 
     const {
-        individualRequestAsset: {loading, success, error, message},
-     
+        individualRequestAsset: {loading, success, error, message}
     } = useSelector((state) => state);
 
-
     const initialValues = {
-        firstName: '',
+        requestedBy: '',
         requestorType: 'INDIVIDUAL',
-        lastName: '',
+        phoneNumber: '',
         email: '',
         idNumber: '',
         assetIds: [],
@@ -47,22 +45,22 @@ const IndividualRequestAssetForm = ({typesData}) => {
         // validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
-                firstName: values.firstName,
+                requestedBy: values.firstName + ' ' + values.lastName,
                 requestorType: 'INDIVIDUAL',
-                lastName: values.lastName,
                 email: values.email,
                 idNumber: values.idNumber,
                 assetIds: [values.assetIds],
-                from: values.from,
-                to: values.to,
-                purpose: values.purpose
+                from: moment(values.from).format('YYYY-MM-DD'),
+                to: moment(values.to).format('YYYY-MM-DD'),
+                purpose: values.purpose,
+                phoneNumber: values.phoneNumber
             };
 
             console.log(payload);
             dispatch({type: INDIVIDUAL_REQUEST_ASSET_REQUEST, payload});
         }
     });
-
+    const filteredData = typesData.filter((item) => item.assetStatus === 'AVAILABLE');
     return (
         <div
             style={{
@@ -118,7 +116,7 @@ const IndividualRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                label="Email/Phone Number"
+                                label="Email"
                                 type="text"
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
@@ -127,7 +125,25 @@ const IndividualRequestAssetForm = ({typesData}) => {
                             />
                         </Box>
                     </Grid>
-
+                    <Grid item xs={6}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                label="Phone Number"
+                                type="text"
+                                value={formik.values.phoneNumber}
+                                onChange={formik.handleChange}
+                                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                            />
+                        </Box>
+                    </Grid>
                     <Grid item xs={6}>
                         <Box
                             sx={{
@@ -153,27 +169,25 @@ const IndividualRequestAssetForm = ({typesData}) => {
                                 margin: '4px 0px'
                             }}
                         >
-                            
-                                <FormControl fullWidth>
-                                    <TextField
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Asset Name"
-                                        name="assetIds"
-                                        select
-                                        value={formik.values.assetIds}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.assetIds && Boolean(formik.errors.assetIds)}
-                                        helperText={formik.touched.assetIds && formik.errors.assetIds}
-                                    >
-                                        {typesData.map((type, i) => (
-                                            <MenuItem value={type.id} key={i}>
-                                                {type.assetName}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </FormControl>
-                            
+                            <FormControl fullWidth>
+                                <TextField
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Asset Name"
+                                    name="assetIds"
+                                    select
+                                    value={formik.values.assetIds}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.assetIds && Boolean(formik.errors.assetIds)}
+                                    helperText={formik.touched.assetIds && formik.errors.assetIds}
+                                >
+                                    {filteredData.map((type, i) => (
+                                        <MenuItem value={type.id} key={i}>
+                                            {type.assetName}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </FormControl>
                         </Box>
                     </Grid>
 
@@ -198,7 +212,7 @@ const IndividualRequestAssetForm = ({typesData}) => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Box
                             sx={{
                                 margin: '4px 0px'

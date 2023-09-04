@@ -5,15 +5,11 @@ import {withRouter} from 'react-router-dom';
 import {gridSpacing} from '../../store/constant';
 import ConstructDataTable from '../../reusable/datatable/index';
 import PageContainer from '../../reusable/breadcrumbs';
-import {Button, CircularProgress} from '@mui/material';
+import {Box, Button, CircularProgress, Typography} from '@mui/material';
 import AssetsSummaryCardsView from './summary';
 import DoughnutChart from './donout';
 import LineBarComboChart from './lineChart';
 import ConstruckModal from '../../reusable/modal';
-import AssignInternalAssetForm from '../assets/form/assign.internal';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Fade from '@mui/material/Fade';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
 import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
@@ -28,6 +24,7 @@ const Dashboard = () => {
     const [showAssignModal, setShowAssignModal] = useState(false);
     const [moreInfo, setMoreInfo] = useState({});
     const [allRequests, setAllRequests] = useState([]);
+    const [showMoreViewModal, setShowMoreViewModal] = useState(false);
     useEffect(() => {
         dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
     }, [dispatch]);
@@ -95,7 +92,7 @@ const Dashboard = () => {
         // },
         {
             selector: '',
-            name: 'Action',
+            name: 'Assign',
             type: 'actions',
             cell: (params) => [
                 <div className="actions_button">
@@ -115,6 +112,29 @@ const Dashboard = () => {
                     </Button>
                 </div>
             ]
+        },
+        {
+            selector: '',
+            name: 'More',
+            type: 'actions',
+            cell: (params) => [
+                <div className="actions_button">
+                    <Button
+                        style={{
+                            borderRadius: '8px',
+                            border: '1px solid  #DCDFE5',
+                            background: '#F9FAFB',
+                            color: '#1090CB',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            lineHeight: 'normal'
+                        }}
+                        onClick={() => handleViewMore(params)}
+                    >
+                        View More
+                    </Button>
+                </div>
+            ]
         }
     ];
 
@@ -123,15 +143,286 @@ const Dashboard = () => {
         console.log(data);
         setMoreInfo(data);
     };
+
+    const handleViewMore = (data) => {
+        setShowMoreViewModal(true);
+        console.log(data);
+        setMoreInfo(data);
+    };
     const handleClose = () => {
         setShowAssignModal(false);
+        setShowMoreViewModal(false);
     };
 
     return (
         <PageContainer pageHeading="Overview">
+            <ConstruckModal show={showMoreViewModal} title={`More information`} handleClose={handleClose}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Name</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.assetName}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Status</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.assetStatus}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Type</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.assetType}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Category</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.category}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Condition</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.condition}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Manufacture Date</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(moreInfo?.manufacturedDate).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Requested By</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.requestedBy}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Requestor Type</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.requestorType}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Tin Number</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.tinNumber ? moreInfo?.tinNumber: '-------'}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Request From</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(moreInfo?.from).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Request To</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(moreInfo?.to).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Purpose</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.purpose}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Customer Name</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moreInfo?.customerName? moreInfo?.customerName: '------'}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </ConstruckModal>
             <ConstruckModal
                 show={showAssignModal}
-                title={`Create ${moreInfo.assetName} 's Invoice for ${moreInfo.email}`}
+                title={`Create invoice for ${moreInfo.requestedBy}`}
                 handleClose={handleClose}
             >
                 <CreateAssetInvoiceForm moreInfo={moreInfo} />

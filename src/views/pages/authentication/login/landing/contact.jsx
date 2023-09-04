@@ -51,65 +51,67 @@ export const Contact = () => {
     };
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Box
-                sx={{
-                    width: '100%',
-                    transform: 'translate(40%, 50%)',
-                    margin: '30px 0px',
-                    height: '150px'
-                }}
-            >
-                <Typography
+        <div id="contact">
+            <Box sx={{width: '100%'}}>
+                <Box
                     sx={{
-                        color: '#000',
-                        fontSize: '30px',
-                        fontWeight: '400',
-                        lineHeight: '189.5%'
+                        width: '100%',
+                        transform: 'translate(40%, 50%)',
+                        margin: '30px 0px',
+                        height: '150px'
                     }}
                 >
-                    Request a construck Asset
-                </Typography>
-                <span>Lorem Ipsum is simply dummy text of the printing </span>
-            </Box>
+                    <Typography
+                        sx={{
+                            color: '#000',
+                            fontSize: '30px',
+                            fontWeight: '400',
+                            lineHeight: '189.5%'
+                        }}
+                    >
+                        Request a construck Asset
+                    </Typography>
+                    <span>Lorem Ipsum is simply dummy text of the printing </span>
+                </Box>
 
-            <Box sx={{borderBottom: 0, display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Company" {...a11yProps(0)} />
-                    <Tab label="Individual" {...a11yProps(1)} />
-                </Tabs>
+                <Box sx={{borderBottom: 0, display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="Company" {...a11yProps(0)} />
+                        <Tab label="Individual" {...a11yProps(1)} />
+                    </Tabs>
+                </Box>
+                <CustomTabPanel value={value} index={0}>
+                    <Box
+                        sx={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {listAssetTypes.loading ? (
+                            <CircularProgress />
+                        ) : (
+                            listAssetTypes && listAssetTypes?.data && <CompanyRequestAssetForm typesData={listAssetTypes?.data} />
+                        )}
+                    </Box>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={1}>
+                    <Box
+                        sx={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {listAssetTypes.loading ? (
+                            <CircularProgress />
+                        ) : (
+                            listAssetTypes && listAssetTypes?.data && <IndividualRequestAssetForm typesData={listAssetTypes?.data} />
+                        )}
+                    </Box>
+                </CustomTabPanel>
             </Box>
-            <CustomTabPanel value={value} index={0}>
-                <Box
-                    sx={{
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                >
-                    {listAssetTypes.loading ? (
-                        <CircularProgress />
-                    ) : (
-                        listAssetTypes && listAssetTypes?.data && <CompanyRequestAssetForm typesData={listAssetTypes?.data} />
-                    )}
-                </Box>
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <Box
-                    sx={{
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}
-                >
-                    {listAssetTypes.loading ? (
-                        <CircularProgress />
-                    ) : (
-                        listAssetTypes && listAssetTypes?.data && <IndividualRequestAssetForm typesData={listAssetTypes?.data} />
-                    )}
-                </Box>
-            </CustomTabPanel>
-        </Box>
+        </div>
     );
 };
 

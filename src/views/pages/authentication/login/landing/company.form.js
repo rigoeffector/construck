@@ -63,6 +63,7 @@ const CompanyRequestAssetForm = ({typesData}) => {
             dispatch({type: COMPANY_REQUEST_ASSET_REQUEST, payload});
         }
     });
+    const filteredData = typesData.filter(item => item.assetStatus === 'AVAILABLE');
 
     return (
         <div
@@ -166,7 +167,7 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                     error={formik.touched.assetIds && Boolean(formik.errors.assetIds)}
                                     helperText={formik.touched.assetIds && formik.errors.assetIds}
                                 >
-                                    {typesData.map((type, i) => (
+                                    {filteredData.map((type, i) => (
                                         <MenuItem value={type.id} key={i}>
                                             {type.assetName}
                                         </MenuItem>
@@ -250,7 +251,7 @@ const CompanyRequestAssetForm = ({typesData}) => {
                     </SubmitButton>
                 </Box>
 
-                {error && <DaaDAlerts show={error} message={error} variant={'error'} />}
+                {error && <DaaDAlerts show={error} message={error} variant={'Request failed, try again'} />}
                 {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             </form>
         </div>

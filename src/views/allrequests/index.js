@@ -2,8 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import PageContainer from '../../reusable/breadcrumbs';
 import DataTable from '../../reusable/table';
-import {columns} from './table-column';
-import {Box, Paper} from '@mui/material';
+import {Columns, columns} from './table-column';
+import {Box, Grid, Paper, Typography} from '@mui/material';
 import {Search, SearchIconWrapper, TableInputBase} from './helpers';
 import SearchIcon from '@mui/icons-material/Search';
 import DateRange from '../../reusable/daterange';
@@ -13,10 +13,14 @@ import TextField from '@mui/material/TextField';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
 import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
+import moment from 'moment';
+import ConstruckModal from '../../reusable/modal';
 
 const statusList = ['Completed', 'Assigned', 'Pending'];
 const initialState = {
     from: null,
+    moreInfo:{},
+    showMoreModel: false,
     to: null,
     view: 'week'
 };
@@ -39,7 +43,11 @@ const AllAssetsRequests = () => {
     };
     const handleClose = () => {
         setAnchorEl(false);
-
+        setThisState((prev)=>({
+            ...prev,
+            showMoreModel: false,
+            moreInfo:{}
+        }));
         // setSelectedEvent(null);
     };
     const handlePrevWeek = () => {
@@ -75,7 +83,15 @@ const AllAssetsRequests = () => {
         }
     }, [listAssets, listAssetsLoading]);
 
-    console.log(formatRequestedAssetsInfo(listAssets))
+   const handleViewMore =(data)=>{
+    const{row}= data;
+    console.log(row)
+    setThisState((prev)=>({
+        ...prev,
+        showMoreModel: true,
+        moreInfo:row
+    }));
+   }
     return (
         <PageContainer pageHeading="All requests">
             {/* <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
@@ -135,6 +151,271 @@ const AllAssetsRequests = () => {
                     />
                 </div>
             </div> */}
+            <ConstruckModal show={thisState.showMoreModel} title={`More information`} handleClose={handleClose}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Name</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.assetName}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Status</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.assetStatus}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Type</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.assetType}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Category</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.category}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Condition</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.condition}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Manufacture Date</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(thisState.moreInfo?.manufacturedDate).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Requested By</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.requestedBy}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Requestor Type</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.requestorType}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Tin Number</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.tinNumber ? thisState.moreInfo?.tinNumber: '-------'}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Request From</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(thisState.moreInfo?.from).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Request To</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {moment(thisState.moreInfo?.to).format('YYYY-MM-DD')}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Purpose</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.purpose}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
+                            }}
+                        >
+                            <Typography>Asset Customer Name</Typography>
+                            <Typography
+                                sx={{
+                                    fontWeight: '700',
+                                    color: '#494577'
+                                }}
+                            >
+                                {thisState.moreInfo?.customerName? thisState.moreInfo?.customerName: '------'}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </ConstruckModal>
+
             <Paper
                 className="py-4 px-2"
                 sx={{
@@ -148,7 +429,7 @@ const AllAssetsRequests = () => {
                     showQuickSearchToolbar={true}
                     checkboxSelection={false}
                     rows={allRequests.data || []}
-                    columns={columns}
+                    columns={Columns(handleViewMore)}
                 />
             </Paper>
         </PageContainer>

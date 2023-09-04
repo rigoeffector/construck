@@ -42,7 +42,7 @@ export const Header = (props) => {
                                     offer comprehensive solutions to optimize your asset utilization, reduce downtime, and enhance overall
                                     project performance.
                                 </p>
-                                   <Button
+                                   <Button href="#contact" className="page-scroll"
                                     sx={{
                                         borderRadius: '10px',
                                         background: '#1090CB',

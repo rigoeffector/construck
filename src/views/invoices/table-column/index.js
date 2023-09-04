@@ -10,9 +10,9 @@ import Fade from '@mui/material/Fade';
 import {Chip} from '@mui/material';
 import moment from 'moment';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useState } from 'react';
+import {useState} from 'react';
 
-export const Columns = (handleDownload,handleChangeStatus, handleDelete) => {
+export const Columns = (handleDownload, handleChangeStatus, handleDelete) => {
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -38,7 +38,7 @@ export const Columns = (handleDownload,handleChangeStatus, handleDelete) => {
         } else if (menuItem === 'Mark Delete' && selectedRowData) {
             // Handle "Mark Delete" action with selectedRowData
             handleDelete(selectedRowData);
-        } 
+        }
         setAnchorEl(null);
     };
 
@@ -140,8 +140,11 @@ export const Columns = (handleDownload,handleChangeStatus, handleDelete) => {
                         onClose={handleClose}
                         TransitionComponent={Fade}
                     >
-                        {/* <MenuItem onClick={() => handleMenuItemClick('Download Invoice')}>Download</MenuItem> */}
-                        <MenuItem onClick={() => handleMenuItemClick('Mark as Paid')} disabled={params.row.assetStatus === 'ARCHIVED'}>
+                        <MenuItem onClick={() => handleMenuItemClick('Download Invoice')}>View Invoice</MenuItem>
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Mark as Paid')}
+                            disabled={params.row.assetStatus === 'ARCHIVED' || params.row.assetStatus === 'PAID'}
+                        >
                             Mark as Paid
                         </MenuItem>
                         <MenuItem
