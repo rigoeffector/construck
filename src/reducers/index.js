@@ -19,6 +19,9 @@ import getDriversListReducer from './drivers/read';
 import companyRequestAssetReducer from './company/requestasset';
 import getAssetTypesListReducer from './product/assetTypes';
 import individualRequestAssetReducer from './company/individual';
+import createInvoiceReducer from './invoice/create';
+import getInvoicesListReducer from './invoice/read';
+import updateInvoiceStatusReducer from './invoice/update.status';
 
 const rootReducer = combineReducers({
     customization: customizationReducer,
@@ -39,7 +42,10 @@ const rootReducer = combineReducers({
     listDrivers: getDriversListReducer,
     companyRequestAsset: companyRequestAssetReducer,
     listAssetTypes: getAssetTypesListReducer,
-    individualRequestAsset : individualRequestAssetReducer
+    individualRequestAsset : individualRequestAssetReducer,
+    createInvoice:createInvoiceReducer,
+    listInvoices: getInvoicesListReducer,
+    updateInvoice: updateInvoiceStatusReducer
 });
 
 export default rootReducer;

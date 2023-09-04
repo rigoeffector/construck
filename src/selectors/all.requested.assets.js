@@ -4,7 +4,7 @@ export function formatRequestedAssetsInfo(state) {
       if (!Array.isArray(asset.assets)) return []; // Skip assets without requests
     debugger; 
       return asset.assets.map((request,i) => ({
-        id: i,
+        id: asset.id,
         assetName: request.assetName,
         createdAt: request.createdAt,
         updatedAt: request.updatedAt,

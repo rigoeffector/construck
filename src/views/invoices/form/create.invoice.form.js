@@ -15,93 +15,47 @@ import {img, thumbsContainer} from '../../assets/schema';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {v4} from 'uuid';
 import IconButton from '@mui/material/IconButton';
+import {styled} from '@mui/system';
+import {CREATE_INVOICE_REQUEST} from '../../../reducers/invoice/constant';
 
-const CreateProductCategoryForm = () => {
+const StyledDateTextField = styled(TextField)({
+    width: '100%',
+    height: '50px', // Set the width to 100%
+    '& input[type="date"]': {
+        padding: '10px',
+        height: '30px' // You can adjust the padding as needed
+    }
+});
+const CreateAssetInvoiceForm = ({moreInfo}) => {
     const dispatch = useDispatch();
-    const [loadingUpload, setLoadingUpload] = useState(false);
-    const [files, setFiles] = useState([]);
-    const [imageUrls, setImageUrls] = useState({});
     const initialValues = {
-        name: '',
-        description: ''
+        clientRequestId: '',
+        invoiceNumber: '',
+        dueDate: '',
+        description: '',
+        amount: '',
+        taxAmount: ''
     };
     const {
-        auth,
-        createProductCategory: {loading, success, message}
+        createInvoice: {loading, success, message, error}
     } = useSelector((state) => state);
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationCategorySchema,
         onSubmit: (values) => {
-            // const payload = {
-            //     entity_name: 'product_category',
-            //     username: auth?.data?.username,
-            //     login_token: auth?.data?.login_token,
-            //     api_key: keys,
-            //     details: {...values, ...imageUrls}
-            // };
+            const payload = {
+                clientRequestId: moreInfo?.id,
+                invoiceNumber: values.invoiceNumber,
+                dueDate: values.dueDate,
+                description: values.description,
+                amount: values.amount,
+                taxAmount: values.taxAmount
+            };
 
-            // dispatch({type: CREATE_INTERNAL_ASSET_CATEGORY_REQUEST, payload});
-            // setImageUrls({});
-        }
-    });
-    useEffect(() => {
-        return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-    }, [files]);
-    const {getRootProps, getInputProps} = useDropzone({
-        maxFiles: 1,
-        accept: {
-            'image/png': ['.png'],
-            'image/jpg': ['.jpg'],
-            'image/jpeg': ['.jpeg']
-        },
-        onDrop: (acceptedFiles) => {
-            setFiles(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file)
-                    })
-                )
-            );
+            dispatch({type: CREATE_INVOICE_REQUEST, payload});
         }
     });
 
-    const thumbs = files.map((file) => (
-        <div style={thumb} key={file.name}>
-            <div style={thumbInner}>
-                <img
-                    src={file.preview}
-                    style={img}
-                    // Revoke data uri after image is loaded
-                    onLoad={() => {
-                        URL.revokeObjectURL(file.preview);
-                    }}
-                />
-            </div>
-        </div>
-    ));
-    const handleUploadProductImages = async () => {
-        setLoadingUpload(true);
-        const urls = {};
-        await Promise.all(
-            files.map((image, i) => {
-                const imageRef = ref(storage, `categories/${image.path + v4()}`);
-                uploadBytes(imageRef, image, 'data_url').then(async (data) => {
-                    if (data) {
-                        const downLoadURL = await getDownloadURL(imageRef);
-
-                        urls[`icon`] = downLoadURL;
-
-                        setTimeout(() => {
-                            setLoadingUpload(false);
-                            setImageUrls(urls);
-                        }, 2000);
-                        console.log(urls);
-                    }
-                });
-            })
-        );
-    };
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
@@ -124,31 +78,42 @@ const CreateProductCategoryForm = () => {
                             />
                         </Box>
                     </Grid>
-                    <Grid
-                        item
-                        sx={12}
-                        style={{
-                            width: '100%',
-                            border: '3px solid #ddd',
-                            borderRadius: '10px',
-                            margin: '10px 0px 4px 18px',
-                            borderStyle: 'dashed'
-                        }}
-                    >
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
                             }}
                         >
-                            <div {...getRootProps({className: 'dropzone'})}>
-                                <input {...getInputProps()} />
-                                <p>Drag and drop some images files here, or click to select files </p>
-                                <em>(1 files are the maximum number of files you can drop here)</em>
-                                <IconButton aria-label="delete">
-                                    <AddCircleOutlineIcon />
-                                </IconButton>
-                            </div>
-                            <aside style={thumbsContainer}>{thumbs}</aside>
+                            <TextField
+                                fullWidth
+                                id="invoiceNumber"
+                                name="invoiceNumber"
+                                label="Invoice Number"
+                                value={formik.values.invoiceNumber}
+                                onChange={formik.handleChange}
+                                error={formik.touched.invoiceNumber && Boolean(formik.errors.invoiceNumber)}
+                                helperText={formik.touched.invoiceNumber && formik.errors.invoiceNumber}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <StyledDateTextField
+                                label="Due Date"
+                                name="to"
+                                type="date"
+                                value={formik.values.to}
+                                onChange={formik.handleChange}
+                                error={formik.touched.to && Boolean(formik.errors.to)}
+                                helperText={formik.touched.to && formik.errors.to}
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
@@ -171,35 +136,41 @@ const CreateProductCategoryForm = () => {
                             />
                         </Box>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                id="amount"
+                                name="Amount"
+                                label="Amount (RWF)"
+                                value={formik.values.Amount}
+                                onChange={formik.handleChange}
+                                error={formik.touched.Amount && Boolean(formik.errors.Amount)}
+                                helperText={formik.touched.Amount && formik.errors.Amount}
+                            />
+                        </Box>
+                    </Grid>
                 </Grid>
                 <Box
                     sx={{
                         display: 'flex',
-                        justifyContent: 'space-between'
+                        justifyContent: 'flex-end'
                     }}
                 >
-                    <SubmitButton isLoading={loading} disabled={Object.keys(imageUrls).length < 1}>
+                    <SubmitButton isLoading={loading} disabled={loading} type="submit">
                         Save
                     </SubmitButton>
-                    {Object.keys(imageUrls).length > 0 ? (
-                        ''
-                    ) : (
-                        <Button
-                            sx={{
-                                marginTop: '2rem'
-                            }}
-                            variant="outlined"
-                            disabled={files.length < 1}
-                            onClick={handleUploadProductImages}
-                        >
-                            {loadingUpload ? 'Uploading.....' : 'Upload All Images'}
-                        </Button>
-                    )}
                 </Box>
-                {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />}
+
+                {error  && <DaaDAlerts show={error} message={error} variant={'error'} />}
+                {success  && <DaaDAlerts show={success} message={'Invoice Created Successful'} variant={'success'} />}
             </form>
         </div>
     );
 };
 
-export default CreateProductCategoryForm;
+export default CreateAssetInvoiceForm;

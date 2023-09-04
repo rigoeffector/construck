@@ -17,6 +17,7 @@ import Fade from '@mui/material/Fade';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant';
 import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
+import CreateAssetInvoiceForm from '../invoices/form/create.invoice.form';
 const Dashboard = () => {
     const {
         auth,
@@ -24,6 +25,7 @@ const Dashboard = () => {
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     const [showAssignModal, setShowAssignModal] = useState(false);
+    const [moreInfo, setMoreInfo] = useState({});
     const [allRequests, setAllRequests] = useState([]);
     useEffect(() => {
         dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
@@ -94,8 +96,10 @@ const Dashboard = () => {
     ];
 
    
-    const handleAssign = () => {
+    const handleAssign = (data) => {
         setShowAssignModal(true);
+        console.log(data);
+        setMoreInfo(data);
     };
     const handleClose = () => {
         setShowAssignModal(false);
@@ -103,8 +107,8 @@ const Dashboard = () => {
 
     return (
         <PageContainer pageHeading="Overview">
-            <ConstruckModal show={showAssignModal} title={'Assign Asset'} handleClose={handleClose}>
-                <AssignInternalAssetForm />
+            <ConstruckModal show={showAssignModal} title={`Create ${moreInfo.assetName} 's Invoice for ${moreInfo.email}`} handleClose={handleClose}>
+                <CreateAssetInvoiceForm moreInfo={moreInfo}/>
             </ConstruckModal>
             <Grid container spacing={gridSpacing}>
                 <Grid

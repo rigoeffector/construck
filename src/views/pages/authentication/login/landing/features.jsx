@@ -16,11 +16,11 @@ textTransform: 'lower-case'
         </div>
         <div className="row" style={{padding: '20px'}}>
         <img
-                                    src="/img/frame.png"
+                                    src="/img/clients.jpeg"
                                     alt=""
                                     style={{
                                      
-                                        height: '120px'
+                                        height: '250px'
                                     }}
                                 />
         </div>

@@ -14,11 +14,11 @@ export const columns = [
         flex: 4
         // width: 200
     },
-    {
-        field: 'customerName',
-        headerName: 'Customer Name',
-        flex: 3
-    },
+    // {
+    //     field: 'customerName',
+    //     headerName: 'Customer Name',
+    //     flex: 3
+    // },
 
     {
         field: 'category',
