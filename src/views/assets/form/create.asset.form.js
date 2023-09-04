@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
-import {Box, Grid, TextField} from '@mui/material';
+import {Box, CircularProgress, Grid, TextField} from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import {useFormik} from 'formik';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,6 +13,7 @@ import {styled} from '@mui/system';
 import {CREATE_INTERNAL_ASSET_REQUEST} from '../../../reducers/product/constant';
 import moment from 'moment';
 import DaaDAlerts from '../../../reusable/alerts';
+import {GET_DRIVERS_LIST_REQUEST} from '../../../reducers/drivers/constant';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -21,7 +22,7 @@ const StyledDateTextField = styled(TextField)({
         height: '30px' // You can adjust the padding as needed
     }
 });
-const CreateAssetForm = (props) => {
+const CreateAssetForm = ({drivers}) => {
     const dispatch = useDispatch();
 
     const {
@@ -36,6 +37,7 @@ const CreateAssetForm = (props) => {
         description: '',
         make: '',
         condition: '',
+        driverId: '',
         manufacturedDate: ''
     };
     const formik = useFormik({
@@ -48,12 +50,12 @@ const CreateAssetForm = (props) => {
                 category: values.category,
                 condition: values.condition,
                 plateNumber: values.plateNumber,
+                driverId: values.driverId,
                 manufacturedDate: moment(values.manufacturedDate).format('YYYY-MM-DD'),
                 make: values.make,
                 status: 'AVAILABLE'
             };
 
-    
             dispatch({type: CREATE_INTERNAL_ASSET_REQUEST, payload});
         }
     });
@@ -125,6 +127,34 @@ const CreateAssetForm = (props) => {
                                 margin: '4px 0px'
                             }}
                         >
+                           
+                           <FormControl fullWidth>
+                                <TextField
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Driver Names"
+                                    name="driverId"
+                                    select
+                                    value={formik.values.driverId}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.driverId && Boolean(formik.errors.driverId)}
+                                    helperText={formik.touched.driverId && formik.errors.driverId}
+                                >
+                                {drivers.map((driver,i)=><MenuItem value={driver.id} key={i}>{`${driver.firstName} ${driver.lastName}`}</MenuItem>)}
+                                    
+                                   
+                                </TextField>
+                            </FormControl>
+                        
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Box
+                            sx={{
+                                margin: '4px 0px'
+                            }}
+                        >
                             <FormControl fullWidth>
                                 <TextField
                                     labelId="demo-simple-select-label"
@@ -176,7 +206,7 @@ const CreateAssetForm = (props) => {
                             </FormControl>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'

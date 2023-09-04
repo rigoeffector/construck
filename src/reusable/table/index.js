@@ -145,7 +145,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                             : {}
                     }
                 >
-                    <Autocomplete
+                    {/* <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         options={[
@@ -155,7 +155,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                         ]}
                         sx={{width: 300}}
                         renderInput={(params) => <TextField {...params} label="Status" />}
-                    />
+                    /> */}
                 </Box>
             </Stack>
         );

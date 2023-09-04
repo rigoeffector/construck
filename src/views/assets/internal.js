@@ -25,6 +25,7 @@ import {
 import moment from 'moment';
 import DaaDAlerts from '../../reusable/alerts';
 import EditInternalAssetForm from './form/edit.internal.asset.form';
+import { GET_DRIVERS_LIST_REQUEST } from '../../reducers/drivers/constant';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const ProductsInternal = (props) => {
@@ -38,7 +39,8 @@ export const ProductsInternal = (props) => {
             success: updateStatusSuccess,
             message: updateStatusMessage,
             error: updateStatusError
-        }
+        },
+        listDrivers: {loading: listDriversLoading, data: drivers}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -50,7 +52,12 @@ export const ProductsInternal = (props) => {
             }
         });
     }, [dispatch]);
-
+   ;
+    useEffect(() => {
+        dispatch({
+            type: GET_DRIVERS_LIST_REQUEST
+        });
+    }, [dispatch]);
     useEffect(() => {
         if (createInternalAssetSuccess || deleteSuccess || updateStatusSuccess) {
             handleClose();
@@ -140,7 +147,7 @@ export const ProductsInternal = (props) => {
     return (
         <Box>
             <ConstruckModal title="Add asset" show={showNewModal} handleClose={handleClose}>
-                <CreateAssetForm />
+               {listDriversLoading ? <CircularProgress/>: <CreateAssetForm drivers={drivers} /> }
             </ConstruckModal>
             <ConstruckModal title={modalTitle} show={showAssignModel} handleClose={handleClose}>
                 <AssignInternalAssetForm />

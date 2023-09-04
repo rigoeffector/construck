@@ -70,29 +70,29 @@ const Dashboard = () => {
             name: 'Purpose'
             // width: 200
         },
-        {
-            selector: 'amount',
-            name: 'Invoice Amount'
-            // width: 200
-        },
-        {
-            selector: 'dueDate',
-            name: 'Invoice Due Date',
-            cell: (params) => moment(params.row.dueDate).format('YYYY-MM-DD')
-            // width: 200
-        },
-        {
-            selector: 'invoiceNumber',
-            name: 'Invoice Number',
-          
-            // width: 200
-        },
-        {
-            selector: 'invoiceStatus',
-            name: 'Invoice Status',
-          
-            // width: 200
-        },
+        // {
+        //     selector: 'invoice.amount',
+        //     name: 'Invoice Amount'
+        //     // width: 200
+        // },
+        // {
+        //     selector: 'invoice.dueDate',
+        //     name: 'Invoice Due Date',
+        //     cell: (params) => (params.row.dueDate ? moment(params.row.dueDate).format('YYYY-MM-DD') : '-------')
+        //     // width: 200
+        // },
+        // {
+        //     selector: 'invoice.invoiceNumber',
+        //     name: 'Invoice Number'
+
+        //     // width: 200
+        // },
+        // {
+        //     selector: 'invoice.invoiceStatus',
+        //     name: 'Invoice Status'
+
+        //     // width: 200
+        // },
         {
             selector: '',
             name: 'Action',
@@ -118,12 +118,6 @@ const Dashboard = () => {
         }
     ];
 
-
-   
-   
-  
-    
-   
     const handleAssign = (data) => {
         setShowAssignModal(true);
         console.log(data);
@@ -135,8 +129,12 @@ const Dashboard = () => {
 
     return (
         <PageContainer pageHeading="Overview">
-            <ConstruckModal show={showAssignModal} title={`Create ${moreInfo.assetName} 's Invoice for ${moreInfo.email}`} handleClose={handleClose}>
-                <CreateAssetInvoiceForm moreInfo={moreInfo}/>
+            <ConstruckModal
+                show={showAssignModal}
+                title={`Create ${moreInfo.assetName} 's Invoice for ${moreInfo.email}`}
+                handleClose={handleClose}
+            >
+                <CreateAssetInvoiceForm moreInfo={moreInfo} />
             </ConstruckModal>
             <Grid container spacing={gridSpacing}>
                 <Grid
@@ -160,7 +158,9 @@ const Dashboard = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    {listAssetsLoading ? <CircularProgress/>: (
+                    {listAssetsLoading ? (
+                        <CircularProgress />
+                    ) : (
                         <ConstructDataTable
                             title="Assets request list"
                             enabledSearch={true}

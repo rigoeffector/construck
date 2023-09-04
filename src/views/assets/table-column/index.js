@@ -52,6 +52,13 @@ export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete)
             flex: 4
         },
         {
+            field: 'driver',
+            headerName: 'Driver Name',
+            flex: 4,
+            renderCell:(params) => params.row.driver?.firstName ? `${params.row.driver?.firstName} ${params.row.driver?.lastName }` : '-------'
+             
+        },
+        {
             field: 'assetStatus',
             headerName: 'Status',
             width: 100,
