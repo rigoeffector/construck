@@ -8,8 +8,10 @@ import {
     CREATE_INVOICE_RESET,
     CREATE_INVOICE_REQUEST,
     CREATE_INVOICE_SUCCESS,
+    GET_INVOICES_LIST_REQUEST,
 } from '../../reducers/invoice/constant';
 import {invoiceApi} from '../../api/invoice';
+import { getInvoicesListRequestSaga } from './read';
 
 
 export function* createInvoiceRequestSaga(action) {
@@ -19,7 +21,9 @@ export function* createInvoiceRequestSaga(action) {
         const response = yield call(invoiceApi.invoice.create, {...payload});
         if (response && response.status === 201) {
             yield put(success(CREATE_INVOICE_SUCCESS, response));
-            
+            yield* getInvoicesListRequestSaga({
+                type: GET_INVOICES_LIST_REQUEST
+            });
             yield delay(2000);
             yield put({type: CREATE_INVOICE_RESET});
         } else {

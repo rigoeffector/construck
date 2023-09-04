@@ -8,8 +8,10 @@ import {
     UPDATE_INVOICE_STATUS_RESET,
     UPDATE_INVOICE_STATUS_REQUEST,
     UPDATE_INVOICE_STATUS_SUCCESS,
+    GET_INVOICES_LIST_REQUEST,
 } from '../../reducers/invoice/constant';
 import {invoiceApi} from '../../api/invoice';
+import { getInvoicesListRequestSaga } from './read';
 
 
 export function* UpdateInvoiceStatusRequestSaga(action) {
@@ -17,9 +19,11 @@ export function* UpdateInvoiceStatusRequestSaga(action) {
         yield put(loading(UPDATE_INVOICE_STATUS_LOADING, {loading: true}));
         const {payload} = action;
         const response = yield call(invoiceApi.invoice.updateStatus, {...payload});
-        if (response && response.status === 201) {
+        if (response && response.status === 200) {
             yield put(success(UPDATE_INVOICE_STATUS_SUCCESS, response));
-            
+            yield* getInvoicesListRequestSaga({
+                type: GET_INVOICES_LIST_REQUEST
+            });
             yield delay(2000);
             yield put({type: UPDATE_INVOICE_STATUS_RESET});
         } else {

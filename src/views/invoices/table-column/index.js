@@ -140,8 +140,8 @@ export const Columns = (handleDownload,handleChangeStatus, handleDelete) => {
                         onClose={handleClose}
                         TransitionComponent={Fade}
                     >
-                        <MenuItem onClick={() => handleMenuItemClick('Download Invoice')}>Download</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Edit Asset')} disabled={params.row.assetStatus === 'ARCHIVED'}>
+                        {/* <MenuItem onClick={() => handleMenuItemClick('Download Invoice')}>Download</MenuItem> */}
+                        <MenuItem onClick={() => handleMenuItemClick('Mark as Paid')} disabled={params.row.assetStatus === 'ARCHIVED'}>
                             Mark as Paid
                         </MenuItem>
                         <MenuItem

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import PageContainer from '../../reusable/breadcrumbs';
 import DataTable from '../../reusable/table';
@@ -77,7 +78,7 @@ const AllAssetsRequests = () => {
     console.log(formatRequestedAssetsInfo(listAssets))
     return (
         <PageContainer pageHeading="All requests">
-            <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
+            {/* <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon fontSize="medium" sx={{color: 'var(--midas-color-dark-blue)'}} />
@@ -133,7 +134,7 @@ const AllAssetsRequests = () => {
                         handleDateRangeChange={handleDateRangeChange}
                     />
                 </div>
-            </div>
+            </div> */}
             <Paper
                 className="py-4 px-2"
                 sx={{
@@ -144,7 +145,7 @@ const AllAssetsRequests = () => {
             >
                 <DataTable
                     loader={listAssetsLoading}
-                    showQuickSearchToolbar={false}
+                    showQuickSearchToolbar={true}
                     checkboxSelection={false}
                     rows={allRequests.data || []}
                     columns={columns}

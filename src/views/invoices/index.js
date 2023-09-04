@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import {Columns} from './table-column';
 import {Box, Button, CircularProgress, Paper, Typography} from '@mui/material';
@@ -25,6 +26,7 @@ const InvoicesPage = () => {
     const [thisState, setThisState] = useState(initialState);
     const [distance, setDistance] = useState(6);
     const [anchorEl, setAnchorEl] = useState(false);
+    const [showPaidModel, setShowPaidModel] = useState(false);
     const [showArchiveModel, setShowArchiveModel] = useState(false);
     const [moreInfo, setMoreInfo] = useState({});
     const {
@@ -46,13 +48,15 @@ const InvoicesPage = () => {
     }, [createSuccess, updateSuccess]);
 
     const handleChangeStatus = (data) => {
-        setShowArchiveModel(true);
-        const {row} = data;
-        setMoreInfo(row);
+        setShowPaidModel(true);
+        console.log(data);
+        setMoreInfo(data);
     };
 
     const handleDelete = (data) => {
+        setShowArchiveModel(true);
         console.log(data);
+        setMoreInfo(data);
     };
 
     const handleDownload = (data) => {
@@ -64,6 +68,7 @@ const InvoicesPage = () => {
     const handleClose = () => {
         setAnchorEl(false);
         setShowArchiveModel(false);
+        setShowPaidModel(false);
         // setSelectedEvent(null);
     };
     const handlePrevWeek = () => {
@@ -93,6 +98,14 @@ const InvoicesPage = () => {
         }
     };
 
+    const handlePaidConfirm = () => {
+        const payload = {
+            status: 'PAID',
+            id: moreInfo.id
+        };
+        dispatch({type: UPDATE_INVOICE_STATUS_REQUEST, payload});
+    };
+
     const handleArchiveConfirm = () => {
         const payload = {
             status: 'ARCHIVE',
@@ -113,7 +126,8 @@ const InvoicesPage = () => {
             >
                 View and send invoices to you clients
             </Typography>
-            <ConstruckModal title="Archive asset" show={showArchiveModel} handleClose={handleClose}>
+
+            <ConstruckModal title="Change invoice status" show={showArchiveModel} handleClose={handleClose}>
                 <Typography
                     sx={{
                         display: 'flex',
@@ -122,7 +136,7 @@ const InvoicesPage = () => {
                         margin: '30px 0px'
                     }}
                 >
-                    Are you sure you want to archive{' '}
+                    Are you sure you want to archive this{' '}
                     <span
                         style={{
                             fontWeight: '700',
@@ -176,7 +190,70 @@ const InvoicesPage = () => {
                     </Button>
                 </Box>
             </ConstruckModal>
-            <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
+            <ConstruckModal title="Mark this invoice" show={showPaidModel} handleClose={handleClose}>
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    Are you sure you want to mark as Paid this{' '}
+                    <span
+                        style={{
+                            fontWeight: '700',
+                            color: '#282546'
+                        }}
+                    >
+                        {` ${moreInfo.invoiceNumber} Invoice`}
+                    </span>
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    <Button
+                        onClick={handleClose}
+                        sx={{
+                            margin: '0px 10px',
+                            borderRadius: '8px',
+                            background: '#EDEFF2',
+                            color: '#64748A !important',
+                            fontWeight: '500'
+                        }}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button
+                        onClick={handlePaidConfirm}
+                        variant="contained"
+                        sx={{
+                            borderRadius: '8px',
+                            background: '#1090CB',
+                            color: '#FFF',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {updateStatusLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
+                    </Button>
+                </Box>
+            </ConstruckModal>
+            {/* <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon fontSize="medium" sx={{color: 'var(--midas-color-dark-blue)'}} />
@@ -232,7 +309,7 @@ const InvoicesPage = () => {
                         handleDateRangeChange={handleDateRangeChange}
                     />
                 </div>
-            </div>
+            </div> */}
             <Paper
                 className="py-4 px-2"
                 sx={{
@@ -243,7 +320,7 @@ const InvoicesPage = () => {
             >
                 <DataTable
                     loader={listInvoices?.loading}
-                    showQuickSearchToolbar={false}
+                    showQuickSearchToolbar={true}
                     rows={listInvoices?.data}
                     columns={Columns(handleDownload, handleChangeStatus, handleDelete)}
                 />

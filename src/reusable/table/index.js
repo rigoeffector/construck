@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {DataGrid, GridLinkOperator, GridToolbar, GridToolbarQuickFilter} from '@mui/x-data-grid';
+import {DataGrid, GridLinkOperator, GridToolbarExport, GridToolbar, GridToolbarQuickFilter} from '@mui/x-data-grid';
 import './index.css';
 import {Box, Grid, withStyles} from '@material-ui/core';
 
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import {CircularProgress, Stack} from '@mui/material';
-
+import * as XLSX from 'xlsx';
 const useStyles = makeStyles(() => ({
     root: {
         background: 'white',
@@ -77,7 +77,7 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         onSelectionModelChange,
         selectionModel,
         dropdownItems,
-        dropdownFilterItems = false,
+        dropdownFilterItems = true,
         onRowSelected,
         allowFilters,
         actions = [],
@@ -88,7 +88,12 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         showQuickSearchToolbar = true
     } = props;
     const [pageSize, setPageSize] = React.useState(5);
+    const [isExportDropdownOpen, setIsExportDropdownOpen] = React.useState(false);
     // const [selectedValue, setSelectedValue] = React.useState('');
+    const getColumnsToExport = (columns) => {
+        // Filter out columns with type "actions"
+        return columns.filter((column) => column.type !== 'actions').map((column) => column.field);
+    };
     const styles = {
         filterInput: {
             border: '1px solid #ccc',
@@ -112,6 +117,31 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
             .filter((colDef) => colDef.filterable && !filteredFields.includes(colDef.field))
             .find((colDef) => colDef.filterOperators?.length);
         return columnForNewFilter?.field ?? null;
+    };
+
+    const handleExport = () => {
+        setIsExportDropdownOpen(!isExportDropdownOpen);
+        // Filter out columns with type "checkbox" and "actions"
+        const columnsToExport = columns
+            .filter((column) => column.field !== 'checkbox' && column.type !== 'actions' && column.field !== 'status')
+            .map((column) => column.field);
+
+        // Prepare the data for export
+        const dataForExport = rows.map((row) => {
+            const rowData = {};
+            columnsToExport.forEach((field) => {
+                rowData[field] = row[field];
+            });
+            return rowData;
+        });
+
+        // Create a worksheet and workbook using XLSX
+        const ws = XLSX.utils.json_to_sheet(dataForExport);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'DataGrid Export');
+
+        // Save the workbook as a file
+        XLSX.writeFile(wb, 'construck-report.xlsx');
     };
     function QuickSearchToolbar() {
         return (
@@ -145,6 +175,23 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                             : {}
                     }
                 >
+                    <div>
+                        {isExportDropdownOpen ? (
+                            // Render the export options when the dropdown is open
+                            <Button variant="outlined" onClick={handleExport} sx={{
+                                    width: '200px'
+                            }}>
+                               Download Report
+                            </Button>
+                        ) : (
+                            // Render a button to open the dropdown when it's closed
+                            <Button variant="outlined" onClick={handleExport} sx={{
+                                    width: '200px'
+                            }}>
+                               Download Report
+                            </Button>
+                        )}
+                    </div>
                     {/* <Autocomplete
                         disablePortal
                         id="combo-box-demo"
@@ -162,92 +209,103 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
     }
 
     return (
-        <><div className={idName} style={{ width: '100%' }}>
-            {selectionModel?.length > 0 &&
-                dropdownFilterItems &&
-                actions.map((action, actionIdx) => (
-                    <Button
-                        key={actionIdx}
-                        variant="outlined"
-                        sx={{
-                            margin: '0.5rem',
-                            textTransform: 'none',
-                            color: 'var(--dark-blue-500)',
-                            backgroundColor: '#F7F9FC',
-                            borderRadius: '8px',
-                            border: '1px solid var(--border-color)'
-                        }}
-                        onClick={action.click}
-                    >
-                        {action.name}
-                    </Button>
-                ))}
-            <StyledDataGrid
-                sx={{
-                    boxShadow: 0,
-                    border: 0,
-                    color: 'rgb(26 26 26 / 87%)',
-                    borderColor: 'red',
-                    '& .MuiDataGrid-cell': {
-                        whiteSpace: 'normal',
-                        padding: '7px 0px'
-                    }
-                }}
-                // slots={{ toolbar: GridToolbar }}
-                loading={loader}
-                showQuickSearchToolbar={showQuickSearchToolbar}
-                components={{ Toolbar: showQuickSearchToolbar && QuickSearchToolbar }}
-                componentsProps={{
-                    toolbar: {
-                        className: idName,
-                        filterToolbarButton: {
-                            overrides: {
-                                FilterInput: {
-                                    style: styles.filterInput
+        <>
+            <div className={idName} style={{width: '100%'}}>
+                {selectionModel?.length > 0 &&
+                    dropdownFilterItems &&
+                    actions.map((action, actionIdx) => (
+                        <Button
+                            key={actionIdx}
+                            variant="outlined"
+                            sx={{
+                                margin: '0.5rem',
+                                textTransform: 'none',
+                                color: 'var(--dark-blue-500)',
+                                backgroundColor: '#F7F9FC',
+                                borderRadius: '8px',
+                                border: '1px solid var(--border-color)'
+                            }}
+                            onClick={action.click}
+                        >
+                            {action.name}
+                        </Button>
+                    ))}
+                <StyledDataGrid
+                    sx={{
+                        boxShadow: 0,
+                        border: 0,
+                        color: 'rgb(26 26 26 / 87%)',
+                        borderColor: 'red',
+                        '& .MuiDataGrid-cell': {
+                            whiteSpace: 'normal',
+                            padding: '7px 0px'
+                        }
+                    }}
+                    // slots={{ toolbar: GridToolbar }}
+                    loading={loader}
+                    showQuickSearchToolbar={showQuickSearchToolbar}
+                    components={{
+                        Toolbar: showQuickSearchToolbar && QuickSearchToolbar,
+                        Export: showQuickSearchToolbar && GridToolbarExport
+                    }}
+                    exportOptions={{
+                        columns: getColumnsToExport(columns), // Use the function to get columns to export
+                        fileName: 'exported-data',
+                        exportButtonLabel: 'Export'
+                    }}
+                    componentsProps={{
+                        toolbar: {
+                            className: idName,
+                            filterToolbarButton: {
+                                overrides: {
+                                    FilterInput: {
+                                        style: styles.filterInput
+                                    }
                                 }
                             }
                         }
-                    }
-                }}
-                slots={{ toolbar: GridToolbar }}
-                slotProps={{
-                    filterPanel: {
-                        filterFormProps: {
-                            filterColumns
-                        },
-                        getColumnForNewFilter
-                    }
-                }}
-                disableColumnSelector
-                disableDensitySelector
-                enabledFilters={enabledFilters}
-                columns={columns}
-                rows={rows || []}
-                checkboxSelection={checkboxSelection}
-                disableSelectionOnClick={true}
-                onSelectionModelChange={onSelectionModelChange}
-                selectionModel={selectionModel}
-                dropdownItems={dropdownItems}
-                dropdownFilterItems={dropdownFilterItems}
-                onRowSelected={onRowSelected}
-                autoHeight
-                id={Math.random()}
-                pagination
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={rowsPerPageOptions}
-                getRowId={(r) => r.id}
-                density={'standard'}
-                getRowHeight={() => 'auto'}
-                initialState={{
-                    filter: {
-                        filterModel: {
-                            items: [],
-                            quickFilterLogicOperator: GridLinkOperator.Or
+                    }}
+                    slots={{toolbar: GridToolbar}}
+                    slotProps={{
+                        filterPanel: {
+                            filterFormProps: {
+                                filterColumns
+                            },
+                            getColumnForNewFilter
                         }
-                    }
-                }} />
-        </div></>
+                    }}
+                    disableColumnSelector
+                    disableDensitySelector
+                    enabledFilters={enabledFilters}
+                    columns={columns}
+                    rows={rows || []}
+                    checkboxSelection={false}
+                    disableSelectionOnClick={true}
+                    onSelectionModelChange={onSelectionModelChange}
+                    selectionModel={selectionModel}
+                    dropdownItems={dropdownItems}
+                    dropdownFilterItems={dropdownFilterItems}
+                    onRowSelected={onRowSelected}
+                    autoHeight
+                    id={Math.random()}
+                    pagination
+                    pageSize={pageSize}
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowsPerPageOptions={rowsPerPageOptions}
+                    getRowId={(r) => r.id}
+                    density={'standard'}
+                    getRowHeight={() => 'auto'}
+                    initialState={{
+                        filter: {
+                            filterModel: {
+                                items: [],
+                                quickFilterLogicOperator: GridLinkOperator.Or
+                            }
+                        }
+                    }}
+                />
+            </div>
+        </>
     );
 }
 export default DataTable;
