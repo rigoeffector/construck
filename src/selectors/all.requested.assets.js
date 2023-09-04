@@ -3,7 +3,8 @@ export function formatRequestedAssetsInfo(state) {
     const data = state.flatMap((asset) => {
       if (!Array.isArray(asset.assets)) return []; // Skip assets without requests
     debugger; 
-      return asset.assets.map((request) => ({
+      return asset.assets.map((request,i) => ({
+        id: i,
         assetName: request.assetName,
         createdAt: request.createdAt,
         updatedAt: request.updatedAt,

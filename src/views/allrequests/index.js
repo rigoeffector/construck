@@ -73,6 +73,8 @@ const AllAssetsRequests = () => {
             setAllRequests(formatRequestedAssetsInfo(listAssets));
         }
     }, [listAssets, listAssetsLoading]);
+
+    console.log(formatRequestedAssetsInfo(listAssets))
     return (
         <PageContainer pageHeading="All requests">
             <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
@@ -144,7 +146,7 @@ const AllAssetsRequests = () => {
                     loader={listAssetsLoading}
                     showQuickSearchToolbar={false}
                     checkboxSelection={false}
-                    rows={allRequests || []}
+                    rows={allRequests.data || []}
                     columns={columns}
                 />
             </Paper>

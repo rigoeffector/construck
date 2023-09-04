@@ -42,7 +42,7 @@ const Dashboard = () => {
         },
 
         {
-            selector: 'assetCategory',
+            selector: 'category',
             name: 'Category'
             // width: 100
         },
