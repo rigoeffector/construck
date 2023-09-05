@@ -16,7 +16,7 @@ export function* listRequestedAssetsRequestSaga(action) {
     try {
         yield put(loading(VIEW_ALL_REQUESTS_ASSETS_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(productApi.products.viewRequests);
+        const response = yield call(productApi.products.viewRequests,{...payload});
         if (response && response.status === 201) {
             yield put(success(VIEW_ALL_REQUESTS_ASSETS_SUCCESS, response));
         } else {

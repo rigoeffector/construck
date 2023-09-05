@@ -27,7 +27,9 @@ const Dashboard = () => {
     const [allRequests, setAllRequests] = useState([]);
     const [showMoreViewModal, setShowMoreViewModal] = useState(false);
     useEffect(() => {
-        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
+        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST,payload: {
+            status: 'PENDING'
+        }});
     }, [dispatch]);
     useEffect(() => {
         if (listAssets && !listAssetsLoading) {

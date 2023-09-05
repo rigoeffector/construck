@@ -19,7 +19,7 @@ import ConstruckModal from '../../reusable/modal';
 const statusList = ['Completed', 'Assigned', 'Pending'];
 const initialState = {
     from: null,
-    moreInfo:{},
+    moreInfo: {},
     showMoreModel: false,
     to: null,
     view: 'week'
@@ -30,23 +30,27 @@ const AllAssetsRequests = () => {
     const [distance, setDistance] = useState(6);
     const [anchorEl, setAnchorEl] = useState(false);
     const {
-        
         listRequestedAssets: {data: listAssets, loading: listAssetsLoading}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     const [allRequests, setAllRequests] = useState([]);
     useEffect(() => {
-        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST});
+        dispatch({
+            type: VIEW_ALL_REQUESTS_ASSETS_REQUEST,
+            payload: {
+                status: ''
+            }
+        });
     }, [dispatch]);
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(false);
-        setThisState((prev)=>({
+        setThisState((prev) => ({
             ...prev,
             showMoreModel: false,
-            moreInfo:{}
+            moreInfo: {}
         }));
         // setSelectedEvent(null);
     };
@@ -83,15 +87,15 @@ const AllAssetsRequests = () => {
         }
     }, [listAssets, listAssetsLoading]);
 
-   const handleViewMore =(data)=>{
-    const{row}= data;
-    console.log(row)
-    setThisState((prev)=>({
-        ...prev,
-        showMoreModel: true,
-        moreInfo:row
-    }));
-   }
+    const handleViewMore = (data) => {
+        const {row} = data;
+        console.log(row);
+        setThisState((prev) => ({
+            ...prev,
+            showMoreModel: true,
+            moreInfo: row
+        }));
+    };
     return (
         <PageContainer pageHeading="All requests">
             {/* <div style={{display: 'flex', justifyContent: 'space-between', margin: '2rem 0px '}}>
@@ -329,7 +333,7 @@ const AllAssetsRequests = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {thisState.moreInfo?.tinNumber ? thisState.moreInfo?.tinNumber: '-------'}
+                                {thisState.moreInfo?.tinNumber ? thisState.moreInfo?.tinNumber : '-------'}
                             </Typography>
                         </Box>
                     </Grid>
@@ -409,7 +413,7 @@ const AllAssetsRequests = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {thisState.moreInfo?.customerName? thisState.moreInfo?.customerName: '------'}
+                                {thisState.moreInfo?.customerName ? thisState.moreInfo?.customerName : '------'}
                             </Typography>
                         </Box>
                     </Grid>
