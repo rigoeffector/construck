@@ -205,7 +205,7 @@ const Dashboard = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {moreInfo?.assetStatus}
+                                {moreInfo?.status}
                             </Typography>
                         </Box>
                     </Grid>

@@ -58,18 +58,18 @@ export const Columns =(handleViewMore)=> [
         flex: 4,
 
         renderCell: (params) =>
-            params.row.assetStatus === 'COMPLETED' ? (
+            params.row.status === 'PROGRESS' ? (
                 <Chip
-                    label={params.row.assetStatus}
+                    label={params.row.status}
                     color="primary"
                     sx={{
                         width: '100px',
                         textAlign: 'center'
                     }}
                 />
-            ) : params.row.assetStatus === 'ASSIGNED' ? (
+            ) : params.row.status === 'APPROVED' ? (
                 <Chip
-                    label={params.row.assetStatus}
+                    label={params.row.status}
                     color="success"
                     sx={{
                         width: '100px',
@@ -78,7 +78,7 @@ export const Columns =(handleViewMore)=> [
                 />
             ) : (
                 <Chip
-                    label={params.row.assetStatus}
+                    label={params.row.status}
                     color="warning"
                     sx={{
                         width: '100px',

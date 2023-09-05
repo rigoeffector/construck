@@ -69,7 +69,15 @@ const CreateNewDriverForm = (props) => {
                                 fullWidth
                                 id="firstName"
                                 name="firstName"
-                                label="First Name"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            First Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 value={formik.values.firstName}
                                 onChange={formik.handleChange}
                                 error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -87,7 +95,15 @@ const CreateNewDriverForm = (props) => {
                                 fullWidth
                                 id="lastName"
                                 name="lastName"
-                                label="Last Name"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Last Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 value={formik.values.lastName}
                                 onChange={formik.handleChange}
                                 error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -105,7 +121,15 @@ const CreateNewDriverForm = (props) => {
                                 fullWidth
                                 id="phoneNumber"
                                 name="phoneNumber"
-                                label="Phone Number"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Phone Number <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 value={formik.values.phoneNumber}
                                 onChange={formik.handleChange}
                                 error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}

@@ -189,7 +189,7 @@ const AllAssetsRequests = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {thisState.moreInfo?.assetStatus}
+                                {thisState.moreInfo?.status}
                             </Typography>
                         </Box>
                     </Grid>

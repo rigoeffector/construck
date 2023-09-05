@@ -70,7 +70,7 @@ export const Columns = (handleDownload, handleChangeStatus, handleDelete) => {
         },
         {
             field: 'companyName',
-            headerName: 'Company',
+            headerName: 'Customer',
             flex: 4
         },
         {

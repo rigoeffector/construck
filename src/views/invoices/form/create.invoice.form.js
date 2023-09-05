@@ -11,7 +11,7 @@ import {CREATE_INVOICE_REQUEST} from '../../../reducers/invoice/constant';
 import moment from 'moment';
 import {Table} from 'reactstrap';
 import {validationSchema} from '../schema';
-import { random } from '@mui/x-data-grid-generator';
+import {random} from '@mui/x-data-grid-generator';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -85,7 +85,6 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                         }}
                                     >
                                         <StyledDateTextField
-                                            label="Due Date"
                                             name="dueDate"
                                             type="date"
                                             value={formik.values.dueDate}
@@ -94,7 +93,13 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                             helperText={formik.touched.to && formik.errors.dueDate}
                                             InputLabelProps={{
                                                 shrink: true
+                                                // Add red color to the label
                                             }}
+                                            label={
+                                                <div>
+                                                    Due Date <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                                </div>
+                                            }
                                         />
                                     </Box>
                                 </Grid>
@@ -108,7 +113,15 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                             fullWidth
                                             id="description"
                                             name="description"
-                                            label="Description"
+                                            InputLabelProps={{
+                                                shrink: true
+                                                // Add red color to the label
+                                            }}
+                                            label={
+                                                <div>
+                                                    Description <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                                </div>
+                                            }
                                             multiline={true}
                                             rows={4}
                                             value={formik.values.description}
@@ -128,7 +141,15 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                             fullWidth
                                             id="amount"
                                             name="amount"
-                                            label="Amount (RWF)"
+                                            InputLabelProps={{
+                                                shrink: true
+                                                // Add red color to the label
+                                            }}
+                                            label={
+                                                <div>
+                                                    Amount (RWF) <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                                </div>
+                                            }
                                             value={formik.values.amount}
                                             onChange={formik.handleChange}
                                             error={formik.touched.amount && Boolean(formik.errors.amount)}
@@ -146,7 +167,15 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                             fullWidth
                                             id="taxAmount"
                                             name="taxAmount"
-                                            label="Tax Amount (RWF)"
+                                            InputLabelProps={{
+                                                shrink: true
+                                                // Add red color to the label
+                                            }}
+                                            label={
+                                                <div>
+                                                    Tax Amount (RWF) <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                                </div>
+                                            }
                                             value={formik.values.taxAmount}
                                             onChange={formik.handleChange}
                                             error={formik.touched.taxAmount && Boolean(formik.errors.taxAmount)}
@@ -344,7 +373,7 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
-        onSubmit: async (values, {resetForm}) =>{
+        onSubmit: async (values, {resetForm}) => {
             const payload = {
                 clientRequestId: moreInfo?.id,
                 invoiceNumber: randomInvoice,

@@ -84,7 +84,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="requestedBy"
                                 name="requestedBy"
-                                label="Company Name"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Company Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 value={formik.values.requestedBy}
                                 onChange={formik.handleChange}
                                 error={formik.touched.requestedBy && Boolean(formik.errors.requestedBy)}
@@ -102,7 +110,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="phoneNumber"
                                 name="phoneNumber"
-                                label="Phone Number"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Phone Number <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 type="text"
                                 value={formik.values.phoneNumber}
                                 onChange={formik.handleChange}
@@ -121,7 +137,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                label="Company Email"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Company Email <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 type="text"
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
@@ -141,7 +165,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="tinNumber"
                                 name="tinNumber"
-                                label="Tin Number"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            TIN Number <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 type="text"
                                 value={formik.values.tinNumber}
                                 onChange={formik.handleChange}
@@ -160,7 +192,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Asset Name"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Asset Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="assetIds"
                                     select
                                     value={formik.values.assetIds}
@@ -185,7 +225,7 @@ const CompanyRequestAssetForm = ({typesData}) => {
                             }}
                         >
                             <StyledDateTextField
-                                label="From"
+                                
                                 name="from"
                                 type="date"
                                 value={formik.values.from}
@@ -193,8 +233,14 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 error={formik.touched.from && Boolean(formik.errors.from)}
                                 helperText={formik.touched.from && formik.errors.from}
                                 InputLabelProps={{
-                                    shrink: true
-                                }}
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            From <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                             />
                         </Box>
                     </Grid>
@@ -206,7 +252,7 @@ const CompanyRequestAssetForm = ({typesData}) => {
                             }}
                         >
                             <StyledDateTextField
-                                label="To"
+                                
                                 name="to"
                                 type="date"
                                 value={formik.values.to}
@@ -214,8 +260,14 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 error={formik.touched.to && Boolean(formik.errors.to)}
                                 helperText={formik.touched.to && formik.errors.to}
                                 InputLabelProps={{
-                                    shrink: true
-                                }}
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            To <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                             />
                         </Box>
                     </Grid>
@@ -229,7 +281,15 @@ const CompanyRequestAssetForm = ({typesData}) => {
                                 fullWidth
                                 id="purpose"
                                 name="purpose"
-                                label="Purpose"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Purpose <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 multiline
                                 minRows={3}
                                 type="text"

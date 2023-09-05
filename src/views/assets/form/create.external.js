@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
 import {Box, Grid, TextField} from '@mui/material';
-import React, {} from 'react';
+import React from 'react';
 import {useFormik} from 'formik';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import DaaDAlerts from '../../../reusable/alerts';
 import {styled} from '@mui/system';
 import moment from 'moment';
-import { CREATE_EXTERNAL_ASSET_REQUEST } from '../../../reducers/product/external/constant';
+import {CREATE_EXTERNAL_ASSET_REQUEST} from '../../../reducers/product/external/constant';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     // Set the width to 100%
@@ -76,7 +76,15 @@ const CreateExternalAssetForm = (props) => {
                                 fullWidth
                                 id="customerName"
                                 name="customerName"
-                                label="Customer Name"
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Customer Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 value={formik.values.customerName}
                                 onChange={formik.handleChange}
                                 error={formik.touched.customerName && Boolean(formik.errors.customerName)}
@@ -94,7 +102,15 @@ const CreateExternalAssetForm = (props) => {
                                 fullWidth
                                 id="customerId"
                                 name="customerId"
-                                label="Customer Id"
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Customer Id <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.customerId}
                                 onChange={formik.handleChange}
@@ -113,7 +129,15 @@ const CreateExternalAssetForm = (props) => {
                                 fullWidth
                                 id="assetName"
                                 name="assetName"
-                                label="Asset Name"
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Asset Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.assetName}
                                 onChange={formik.handleChange}
@@ -132,7 +156,15 @@ const CreateExternalAssetForm = (props) => {
                                 fullWidth
                                 id="description"
                                 name="description"
-                                label="Description"
+                                InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Description <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                 type="text"
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
@@ -151,7 +183,15 @@ const CreateExternalAssetForm = (props) => {
                                 fullWidth
                                 id="palteNumber"
                                 name="plateNumber"
-                                label="Plate Number"
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Plate Number <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.plateNumber}
                                 onChange={formik.handleChange}
@@ -166,19 +206,25 @@ const CreateExternalAssetForm = (props) => {
                                 margin: '4px 0px'
                             }}
                         >
-                          
                             <TextField
                                 fullWidth
                                 id="make"
                                 name="make"
-                                label="Make Model"
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Make/Model <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.make}
                                 onChange={formik.handleChange}
                                 error={formik.touched.make && Boolean(formik.errors.make)}
                                 helperText={formik.touched.make && formik.errors.make}
                             />
-                            
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
@@ -186,11 +232,21 @@ const CreateExternalAssetForm = (props) => {
                             sx={{
                                 margin: '4px 0px'
                             }}
-                        > <FormControl fullWidth>
+                        >
+                            {' '}
+                            <FormControl fullWidth>
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Category"
+                                    InputLabelProps={{
+                                        shrink: true
+                                        // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Category <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="category"
                                     select
                                     value={formik.values.category}
@@ -220,7 +276,15 @@ const CreateExternalAssetForm = (props) => {
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Condition"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Condition <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="condition"
                                     select
                                     value={formik.values.condition}
@@ -237,24 +301,28 @@ const CreateExternalAssetForm = (props) => {
                         </Box>
                     </Grid>
 
-                   
                     <Grid item xs={6}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
                             }}
                         >
-                           <StyledDateTextField
-                                label="Year of manufacture"
+                            <StyledDateTextField
+                                InputLabelProps={{
+                                    shrink: true
+                                    // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Year of manufacture <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 name="manufacturedDate"
                                 type="date"
                                 value={formik.values.manufacturedDate}
                                 onChange={formik.handleChange}
                                 error={formik.touched.manufacturedDate && Boolean(formik.errors.manufacturedDate)}
                                 helperText={formik.touched.manufacturedDate && formik.errors.manufacturedDate}
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
                             />
                         </Box>
                     </Grid>

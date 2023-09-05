@@ -28,11 +28,7 @@ const CreateAssetForm = ({drivers}) => {
     const {
         createInternalAsset: {loading, success, error, message}
     } = useSelector((state) => state);
-  
-    
-  
-    
-    
+
     const initialValues = {
         plateNumber: '',
         assetName: '',
@@ -77,7 +73,15 @@ const CreateAssetForm = ({drivers}) => {
                                 fullWidth
                                 id="assetName"
                                 name="assetName"
-                                label="Asset Name"
+                                InputLabelProps={{
+                                    shrink: true,
+                                     // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Asset Name <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 value={formik.values.assetName}
                                 onChange={formik.handleChange}
                                 error={formik.touched.assetName && Boolean(formik.errors.assetName)}
@@ -95,7 +99,15 @@ const CreateAssetForm = ({drivers}) => {
                                 fullWidth
                                 id="description"
                                 name="description"
-                                label="Description"
+                                InputLabelProps={{
+                                    shrink: true,
+                                     // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Description <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
@@ -114,7 +126,15 @@ const CreateAssetForm = ({drivers}) => {
                                 fullWidth
                                 id="plateNumber"
                                 name="plateNumber"
-                                label="Plate Number"
+                                InputLabelProps={{
+                                    shrink: true,
+                                     // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Plate Number <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.plateNumber}
                                 onChange={formik.handleChange}
@@ -130,12 +150,19 @@ const CreateAssetForm = ({drivers}) => {
                                 margin: '4px 0px'
                             }}
                         >
-                           
-                           <FormControl fullWidth>
+                            <FormControl fullWidth>
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Driver Names"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Driver Names <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="driverId"
                                     select
                                     value={formik.values.driverId}
@@ -143,12 +170,11 @@ const CreateAssetForm = ({drivers}) => {
                                     error={formik.touched.driverId && Boolean(formik.errors.driverId)}
                                     helperText={formik.touched.driverId && formik.errors.driverId}
                                 >
-                                {drivers.map((driver,i)=><MenuItem value={driver?.id} key={i}>{`${driver?.firstName} ${driver?.lastName}`}</MenuItem>)}
-                                    
-                                   
+                                    {drivers.map((driver, i) => (
+                                        <MenuItem value={driver?.id} key={i}>{`${driver?.firstName} ${driver?.lastName}`}</MenuItem>
+                                    ))}
                                 </TextField>
                             </FormControl>
-                        
                         </Box>
                     </Grid>
 
@@ -162,7 +188,15 @@ const CreateAssetForm = ({drivers}) => {
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Category"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Category <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="category"
                                     select
                                     value={formik.values.category}
@@ -193,7 +227,15 @@ const CreateAssetForm = ({drivers}) => {
                                 <TextField
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="Condition"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                         // Add red color to the label
+                                    }}
+                                    label={
+                                        <div>
+                                            Condition <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                        </div>
+                                    }
                                     name="condition"
                                     select
                                     value={formik.values.condition}
@@ -219,7 +261,15 @@ const CreateAssetForm = ({drivers}) => {
                                 fullWidth
                                 id="make"
                                 name="make"
-                                label="Make/Model"
+                                InputLabelProps={{
+                                    shrink: true,
+                                     // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Make/Model <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 type="text"
                                 value={formik.values.make}
                                 onChange={formik.handleChange}
@@ -235,16 +285,21 @@ const CreateAssetForm = ({drivers}) => {
                             }}
                         >
                             <StyledDateTextField
-                                label="Year of manufacture"
+                                InputLabelProps={{
+                                    shrink: true,
+                                     // Add red color to the label
+                                }}
+                                label={
+                                    <div>
+                                        Year of manufacture <span style={{color: 'red', fontSize: '20px'}}>*</span>
+                                    </div>
+                                }
                                 name="manufacturedDate"
                                 type="date"
                                 value={formik.values.manufacturedDate}
                                 onChange={formik.handleChange}
                                 error={formik.touched.manufacturedDate && Boolean(formik.errors.manufacturedDate)}
                                 helperText={formik.touched.manufacturedDate && formik.errors.manufacturedDate}
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
                             />
                         </Box>
                     </Grid>
