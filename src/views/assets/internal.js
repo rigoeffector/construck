@@ -179,7 +179,7 @@ export const ProductsInternal = (props) => {
                             color: '#282546'
                         }}
                     >
-                        {`${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
+                        {` ${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
                     </span>
                 </Typography>
                 <Box

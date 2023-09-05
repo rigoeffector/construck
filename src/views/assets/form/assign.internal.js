@@ -187,7 +187,6 @@ const AssignInternalAssetForm = (props) => {
                         </Button>
                     </Box>
 
-                    {/* {message && !success && <DaaDAlerts show={!success} message={message} variant={'error'} />} */}
                 </form>
             )}
 
