@@ -2,7 +2,6 @@ export function formatRequestedAssetsInfo(state) {
     if (!Array.isArray(state)) return state;
     const data = state.flatMap((asset) => {
         if (!Array.isArray(asset.assets)) return []; // Skip assets without requests
-        debugger;
         return asset.assets.map((request, i) => ({
             id: asset.id,
             assetName: request.assetName,

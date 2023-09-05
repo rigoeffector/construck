@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {gridSpacing} from '../../store/constant';
 import ConstructDataTable from '../../reusable/datatable/index';
 import PageContainer from '../../reusable/breadcrumbs';
-import {Box, Button, CircularProgress, Typography} from '@mui/material';
+import {Box, Button, Chip, CircularProgress, Typography} from '@mui/material';
 import AssetsSummaryCardsView from './summary';
 import DoughnutChart from './donout';
 import LineBarComboChart from './lineChart';
@@ -34,9 +34,7 @@ const Dashboard = () => {
             setAllRequests(formatRequestedAssetsInfo(listAssets));
         }
     }, [listAssets, listAssetsLoading]);
-
     const columns = [
-        
         {
             selector: 'requestedBy',
             name: 'Requested By'
@@ -53,7 +51,6 @@ const Dashboard = () => {
             // width: 100
         },
 
-       
         {
             selector: 'from',
             name: 'From'
@@ -69,17 +66,41 @@ const Dashboard = () => {
             name: 'Purpose'
             // width: 200
         },
-        // {
-        //     selector: 'invoice.amount',
-        //     name: 'Invoice Amount'
-        //     // width: 200
-        // },
-        // {
-        //     selector: 'invoice.dueDate',
-        //     name: 'Invoice Due Date',
-        //     cell: (params) => (params.row.dueDate ? moment(params.row.dueDate).format('YYYY-MM-DD') : '-------')
-        //     // width: 200
-        // },
+
+        {
+            selector: 'status',
+            name: 'Status',
+            cell: (params) =>
+                params.status === 'PROGRESS' ? (
+                    <Chip
+                        label={params.status}
+                        color="primary"
+                        sx={{
+                            width: '100px',
+                            textAlign: 'center'
+                        }}
+                    />
+                ) : params.status === 'APPROVED' ? (
+                    <Chip
+                        label={params.status}
+                        color="success"
+                        sx={{
+                            width: '100px',
+                            textAlign: 'center'
+                        }}
+                    />
+                ) : (
+                    <Chip
+                        label={params.status}
+                        color="warning"
+                        sx={{
+                            width: '100px',
+                            textAlign: 'center'
+                        }}
+                    />
+                )
+            // width: 200
+        },
         // {
         //     selector: 'invoice.invoiceNumber',
         //     name: 'Invoice Number'
@@ -108,6 +129,7 @@ const Dashboard = () => {
                             fontWeight: '600',
                             lineHeight: 'normal'
                         }}
+                        disabled={params.status === 'APPROVED' ? true : false}
                         onClick={() => handleAssign(params)}
                     >
                         Assign
@@ -144,10 +166,8 @@ const Dashboard = () => {
         const randomNumber = Math.floor(Math.random() * Math.pow(10, length));
         const numberString = randomNumber.toString().padStart(length, '0');
         return `${prefix}${numberString}`;
-      }
-      
-    
-     
+    }
+
     const handleAssign = (data) => {
         setRandomInvoice(generateRandomTextWithNumber('INV0', 4));
         setShowAssignModal(true);
@@ -345,7 +365,7 @@ const Dashboard = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {moreInfo?.tinNumber ? moreInfo?.tinNumber: '-------'}
+                                {moreInfo?.tinNumber ? moreInfo?.tinNumber : '-------'}
                             </Typography>
                         </Box>
                     </Grid>
@@ -425,17 +445,13 @@ const Dashboard = () => {
                                     color: '#494577'
                                 }}
                             >
-                                {moreInfo?.customerName? moreInfo?.customerName: '------'}
+                                {moreInfo?.customerName ? moreInfo?.customerName : '------'}
                             </Typography>
                         </Box>
                     </Grid>
                 </Grid>
             </ConstruckModal>
-            <ConstruckModal
-                show={showAssignModal}
-                title={`Create invoice for ${moreInfo.requestedBy}`}
-                handleClose={handleClose}
-            >
+            <ConstruckModal show={showAssignModal} title={`Create invoice for ${moreInfo.requestedBy}`} handleClose={handleClose}>
                 <CreateAssetInvoiceForm moreInfo={moreInfo} randomInvoice={randomInvoice} />
             </ConstruckModal>
             <Grid container spacing={gridSpacing}>
