@@ -184,14 +184,14 @@ export const ProductsExternal = (props) => {
                         alignSelf: 'center'
                     }}
                 >
-                    Are you sure you want to delete{' '}
+                    Are you sure you want to delete {' '}
                     <span
                         style={{
                             fontWeight: '700',
                             color: '#282546'
                         }}
                     >
-                        {`${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
+                        {` ${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
                     </span>
                 </Typography>
                 <Box
@@ -247,7 +247,7 @@ export const ProductsExternal = (props) => {
                         margin: '30px 0px'
                     }}
                 >
-                    Are you sure you want to archive{' '}
+                    Are you sure you want to archive {' '}
                     <span
                         style={{
                             fontWeight: '700',
@@ -310,7 +310,7 @@ export const ProductsExternal = (props) => {
                         margin: '30px 0px'
                     }}
                 >
-                    Are you sure you want to mark as available{' '}
+                    Are you sure you want to mark as available {' '}
                     <span
                         style={{
                             fontWeight: '700',

@@ -147,7 +147,7 @@ const InvoicesPage = () => {
                         margin: '30px 0px'
                     }}
                 >
-                    Are you sure you want to archive this{' '}
+                    Are you sure you want to archive this {' '}
                     <span
                         style={{
                             fontWeight: '700',
@@ -210,7 +210,7 @@ const InvoicesPage = () => {
                         margin: '30px 0px'
                     }}
                 >
-                    Are you sure you want to mark as Paid this{' '}
+                    Are you sure you want to mark as Paid this {' '}
                     <span
                         style={{
                             fontWeight: '700',
