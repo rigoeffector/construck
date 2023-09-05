@@ -14,6 +14,7 @@ import DaaDAlerts from '../../../../../reusable/alerts';
 import SubmitButton from '../../../../../reusable/submit-button';
 import {COMPANY_REQUEST_ASSET_REQUEST} from '../../../../../reducers/company/constant';
 import {GET_ALL_TYPES_LIST_REQUEST} from '../../../../../reducers/product/constant';
+import {validationSchema} from './schema';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -29,23 +30,20 @@ const CompanyRequestAssetForm = ({typesData}) => {
         companyRequestAsset: {loading, success, error, message}
     } = useSelector((state) => state);
 
-
     const initialValues = {
         requestedBy: '',
-        requestorType: '',
         phoneNumber: '',
         email: '',
         tinNumber: '',
-        idNumber: '',
-        assetIds: [],
+        assetIds: '',
         from: '',
         to: '',
         purpose: ''
     };
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationSchema,
-        onSubmit: (values) => {
+        validationSchema: validationSchema,
+        onSubmit: async (values, {resetForm}) => {
             const payload = {
                 requestedBy: values.requestedBy,
                 requestorType: 'COMPANY',
@@ -61,9 +59,10 @@ const CompanyRequestAssetForm = ({typesData}) => {
 
             console.log(payload);
             dispatch({type: COMPANY_REQUEST_ASSET_REQUEST, payload});
+            resetForm();
         }
     });
-    const filteredData = typesData.filter(item => item.assetStatus === 'AVAILABLE');
+    const filteredData = typesData.filter((item) => item.assetStatus === 'AVAILABLE');
 
     return (
         <div

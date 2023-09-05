@@ -12,6 +12,8 @@ import {
 } from '../../reducers/invoice/constant';
 import {invoiceApi} from '../../api/invoice';
 import {getInvoicesListRequestSaga} from './read';
+import { listRequestedAssetsRequestSaga } from '../product/view.requested.assets';
+import { VIEW_ALL_REQUESTS_ASSETS_REQUEST } from '../../reducers/product/constant';
 
 export function* createInvoiceRequestSaga(action) {
     try {
@@ -22,6 +24,9 @@ export function* createInvoiceRequestSaga(action) {
             yield put(success(CREATE_INVOICE_SUCCESS, response));
             yield* getInvoicesListRequestSaga({
                 type: GET_INVOICES_LIST_REQUEST
+            });
+            yield* listRequestedAssetsRequestSaga({
+                type: VIEW_ALL_REQUESTS_ASSETS_REQUEST
             });
         } else {
             yield put(error(CREATE_INVOICE_ERROR, response));

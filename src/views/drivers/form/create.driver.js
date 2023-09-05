@@ -42,7 +42,7 @@ const CreateNewDriverForm = (props) => {
     };
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationSchema,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
                 driverStatus: 'AVAILABLE',

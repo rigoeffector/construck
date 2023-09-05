@@ -14,6 +14,7 @@ import DaaDAlerts from '../../../../../reusable/alerts';
 import SubmitButton from '../../../../../reusable/submit-button';
 import {COMPANY_REQUEST_ASSET_REQUEST, INDIVIDUAL_REQUEST_ASSET_REQUEST} from '../../../../../reducers/company/constant';
 import {GET_ALL_TYPES_LIST_REQUEST} from '../../../../../reducers/product/constant';
+import { validationSchemaIndiv } from './schema';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -30,20 +31,21 @@ const IndividualRequestAssetForm = ({typesData}) => {
     } = useSelector((state) => state);
 
     const initialValues = {
-        requestedBy: '',
         requestorType: 'INDIVIDUAL',
         phoneNumber: '',
         email: '',
         idNumber: '',
-        assetIds: [],
+        assetIds: '',
         from: '',
         to: '',
-        purpose: ''
+        purpose: '',
+        firstName: '',
+        lastName: ''
     };
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationSchema,
-        onSubmit: (values) => {
+        validationSchema: validationSchemaIndiv,
+        onSubmit: async (values, { resetForm }) => {
             const payload = {
                 requestedBy: values.firstName + ' ' + values.lastName,
                 requestorType: 'INDIVIDUAL',
@@ -58,6 +60,7 @@ const IndividualRequestAssetForm = ({typesData}) => {
 
             console.log(payload);
             dispatch({type: INDIVIDUAL_REQUEST_ASSET_REQUEST, payload});
+            resetForm();
         }
     });
     const filteredData = typesData.filter((item) => item.assetStatus === 'AVAILABLE');

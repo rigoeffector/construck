@@ -36,23 +36,24 @@ const Dashboard = () => {
     }, [listAssets, listAssetsLoading]);
 
     const columns = [
+        
+        {
+            selector: 'requestedBy',
+            name: 'Requested By'
+            // width: 100
+        },
         {
             selector: 'assetName',
             name: 'Asset Name'
             // width: 200
         },
-
         {
             selector: 'category',
             name: 'Category'
             // width: 100
         },
 
-        {
-            selector: 'requestedBy',
-            name: 'Requested By'
-            // width: 100
-        },
+       
         {
             selector: 'from',
             name: 'From'

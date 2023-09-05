@@ -25,7 +25,7 @@ import {
 import moment from 'moment';
 import DaaDAlerts from '../../reusable/alerts';
 import EditInternalAssetForm from './form/edit.internal.asset.form';
-import { GET_DRIVERS_LIST_REQUEST } from '../../reducers/drivers/constant';
+import {GET_DRIVERS_LIST_REQUEST} from '../../reducers/drivers/constant';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
 
 export const ProductsInternal = (props) => {
@@ -52,7 +52,6 @@ export const ProductsInternal = (props) => {
             }
         });
     }, [dispatch]);
-   ;
     useEffect(() => {
         dispatch({
             type: GET_DRIVERS_LIST_REQUEST
@@ -70,6 +69,7 @@ export const ProductsInternal = (props) => {
     const [showDeleteModel, setShowDeleteModel] = useState(false);
     const [showArchiveModel, setShowArchiveModel] = useState(false);
     const [showEditInternalModal, setShowEditInternalModal] = useState(false);
+    const [showAvailableModel, setShowAvailableModel] = useState(false);
     const [modalTitle, setModalTitle] = useState('Assign asset');
     const [selectionModel, setSelectionModel] = useState({});
     const handleClose = () => {
@@ -79,6 +79,8 @@ export const ProductsInternal = (props) => {
         setShowMoreInfo(false);
         setShowArchiveModel(false);
         setShowEditInternalModal(false);
+        setShowAvailableModel(false);
+
         setThisState((prev) => ({
             ...prev,
             showAlertConfirm: false,
@@ -113,7 +115,13 @@ export const ProductsInternal = (props) => {
             moreInfo: data
         }));
     };
-
+    const handleAvailable = (data) => {
+        setShowAvailableModel(true);
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
+    };
     const handleArchiveConfirm = () => {
         const payload = {
             status: 'ARCHIVED',
@@ -121,7 +129,13 @@ export const ProductsInternal = (props) => {
         };
         dispatch({type: UPDATE_INTERNAL_ASSET_STATUS_REQUEST, payload});
     };
-
+    const handleAvailableConfirm = () => {
+        const payload = {
+            status: 'AVAILABLE',
+            id: thisState.moreInfo.id
+        };
+        dispatch({type: UPDATE_INTERNAL_ASSET_STATUS_REQUEST, payload});
+    };
     const handleEdit = (data) => {
         setShowEditInternalModal(true);
         setThisState((prev) => ({
@@ -147,7 +161,7 @@ export const ProductsInternal = (props) => {
     return (
         <Box>
             <ConstruckModal title="Add asset" show={showNewModal} handleClose={handleClose}>
-               {listDriversLoading ? <CircularProgress/>: <CreateAssetForm drivers={drivers} /> }
+                {listDriversLoading ? <CircularProgress /> : <CreateAssetForm drivers={drivers} />}
             </ConstruckModal>
             <ConstruckModal title={modalTitle} show={showAssignModel} handleClose={handleClose}>
                 <AssignInternalAssetForm />
@@ -275,6 +289,69 @@ export const ProductsInternal = (props) => {
                     </Button>
                 </Box>
             </ConstruckModal>
+            <ConstruckModal title="Mark asset" show={showAvailableModel} handleClose={handleClose}>
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    Are you sure you want to mark as available{' '}
+                    <span
+                        style={{
+                            fontWeight: '700',
+                            color: '#282546'
+                        }}
+                    >
+                        {` ${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
+                    </span>
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    <Button
+                        onClick={handleClose}
+                        sx={{
+                            margin: '0px 10px',
+                            borderRadius: '8px',
+                            background: '#EDEFF2',
+                            color: '#64748A !important',
+                            fontWeight: '500'
+                        }}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button
+                        onClick={handleAvailableConfirm}
+                        variant="contained"
+                        sx={{
+                            borderRadius: '8px',
+                            background: '#1090CB',
+                            color: '#FFF',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {updateStatusLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
+                    </Button>
+                </Box>
+            </ConstruckModal>
             <Grid container direction="row" justifyContent="flex-end" alignItems="center">
                 <Button
                     variant="contained"
@@ -282,8 +359,7 @@ export const ProductsInternal = (props) => {
                     onClick={handleShowAddNew}
                     sx={{
                         borderRadius: '8px',
-                        background: '#1090CB',
-                        
+                        background: '#1090CB'
                     }}
                 >
                     Add asset
@@ -330,7 +406,7 @@ export const ProductsInternal = (props) => {
                     actionButton={''}
                     contents={
                         <DataTable
-                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)}
+                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete, handleAvailable)}
                             rows={listInternalAllAssets || []}
                             rowsPerPageOptions={['5', '10', '15', '30', '100']}
                             selectionModel={selectionModel}
@@ -393,11 +469,7 @@ export const ProductsInternal = (props) => {
                                 padding: '5px 0px'
                             }}
                         >
-                            <Box
-                                item
-                                xs={12}
-                               
-                            >
+                            <Box item xs={12}>
                                 <Typography>Description </Typography>
                             </Box>
                             <Typography

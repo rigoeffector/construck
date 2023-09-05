@@ -10,6 +10,8 @@ import {styled} from '@mui/system';
 import {CREATE_INVOICE_REQUEST} from '../../../reducers/invoice/constant';
 import moment from 'moment';
 import {Table} from 'reactstrap';
+import {validationSchema} from '../schema';
+import { random } from '@mui/x-data-grid-generator';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -20,9 +22,8 @@ const StyledDateTextField = styled(TextField)({
 });
 const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
     const dispatch = useDispatch();
+
     const initialValues = {
-        clientRequestId: '',
-        invoiceNumber: '',
         dueDate: '',
         description: '',
         amount: '',
@@ -176,7 +177,7 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                     <CircularProgress />
                 ) : (
                     <Grid>
-                        <img src="/assets/images/logo.png" alt='' />
+                        <img src="/assets/images/logo.png" alt="" />
                         <Grid
                             container
                             spacing={2}
@@ -342,11 +343,11 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
     }, [success]);
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationCategorySchema,
-        onSubmit: (values) => {
+        validationSchema: validationSchema,
+        onSubmit: async (values, {resetForm}) =>{
             const payload = {
                 clientRequestId: moreInfo?.id,
-                invoiceNumber: values.invoiceNumber,
+                invoiceNumber: randomInvoice,
                 dueDate: moment(values.dueDate).format('YYYY-MM-DD'),
                 description: values.description,
                 amount: values.amount,
@@ -354,6 +355,7 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
             };
 
             dispatch({type: CREATE_INVOICE_REQUEST, payload});
+            resetForm();
         }
     });
 
@@ -396,9 +398,15 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                     variant="contained"
                                     onClick={formik.handleSubmit}
                                 >
-                                    {loading ? <CircularProgress style={{
-                                        color: 'white'
-                                    }} /> : 'Save'}
+                                    {loading ? (
+                                        <CircularProgress
+                                            style={{
+                                                color: 'white'
+                                            }}
+                                        />
+                                    ) : (
+                                        'Save'
+                                    )}
                                 </Button>
                             )}
                         </Box>

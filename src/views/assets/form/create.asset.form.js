@@ -28,12 +28,15 @@ const CreateAssetForm = ({drivers}) => {
     const {
         createInternalAsset: {loading, success, error, message}
     } = useSelector((state) => state);
-
+  
+    
+  
+    
+    
     const initialValues = {
-        plate: '',
+        plateNumber: '',
         assetName: '',
         category: '',
-        status: '',
         description: '',
         make: '',
         condition: '',
@@ -42,7 +45,7 @@ const CreateAssetForm = ({drivers}) => {
     };
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationSchema,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
                 assetName: values.assetName,
@@ -140,7 +143,7 @@ const CreateAssetForm = ({drivers}) => {
                                     error={formik.touched.driverId && Boolean(formik.errors.driverId)}
                                     helperText={formik.touched.driverId && formik.errors.driverId}
                                 >
-                                {drivers.map((driver,i)=><MenuItem value={driver.id} key={i}>{`${driver.firstName} ${driver.lastName}`}</MenuItem>)}
+                                {drivers.map((driver,i)=><MenuItem value={driver?.id} key={i}>{`${driver?.firstName} ${driver?.lastName}`}</MenuItem>)}
                                     
                                    
                                 </TextField>

@@ -49,9 +49,11 @@ export const Columns = (handleDownload, handleChangeStatus, handleDelete) => {
         },
 
         {
-            field: 'invoiceDate',
+            field: 'createdAt',
             headerName: 'Invoice Date',
-            flex: 4
+            flex: 4,
+            renderCell: (params) => moment(params.row.createdAt).format('YYYY-MM-DD')
+
         },
 
         {

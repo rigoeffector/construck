@@ -18,7 +18,7 @@ export function* updateExternalAssetStatusRequestSaga(action) {
     try {
         yield put(loading(UPDATE_EXTERNAL_ASSET_STATUS_LOADING, {loading: true}));
         const {payload} = action;
-        const response = yield call(productApi.externalAssets.delete, {...payload});
+        const response = yield call(productApi.externalAssets.changeStatus, {...payload});
         if (response && response.status === 201) {
             yield put(success(UPDATE_EXTERNAL_ASSET_STATUS_SUCCESS, response));
             yield* listExternallAssetsRequestSaga({

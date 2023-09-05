@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import {Chip} from '@mui/material';
 
-export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete) => {
+export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete, handleAvailable) => {
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -30,13 +30,17 @@ export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete)
         } else if (menuItem === 'Edit Asset' && selectedRowData) {
             // Handle "Edit Asset" action with selectedRowData
             handleEdit(selectedRowData);
-        } else if (menuItem === 'Mark Delete' && selectedRowData) {
-            // Handle "Mark Delete" action with selectedRowData
+        } else if (menuItem === 'Delete' && selectedRowData) {
+            // Handle "Delete" action with selectedRowData
             handleDelete(selectedRowData);
         } else if (menuItem === 'Archive' && selectedRowData) {
             // Handle "Archive" action with selectedRowData
             handleArchive(selectedRowData);
+        } else if (menuItem === 'Mark Available' && selectedRowData) {
+            // Handle "Archive" action with selectedRowData
+            handleAvailable(selectedRowData);
         }
+
         setAnchorEl(null);
     };
 
@@ -113,18 +117,24 @@ export const Columns = (handleViewMore, handleEdit, handleArchive, handleDelete)
                         TransitionComponent={Fade}
                     >
                         <MenuItem onClick={() => handleMenuItemClick('View More')}>View More</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Edit Asset')} disabled={params.row.assetStatus === 'ARCHIVED'}>
-                            Edit Asset
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Mark Available')}
+                            disabled={selectedRowData?.assetStatus === 'AVAILABLE' ? true : false}
+                        >
+                            Mark Available
                         </MenuItem>
                         <MenuItem
-                            onClick={() => handleMenuItemClick('Mark Delete')}
+                            onClick={() => handleMenuItemClick('Delete')}
                             sx={{
                                 color: 'red'
                             }}
                         >
-                            Mark Delete
+                            Delete
                         </MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Archive')} disabled={params.row.assetStatus === 'ARCHIVED'}>
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Archive')}
+                            disabled={selectedRowData?.assetStatus === 'ARCHIVED' ? true : false}
+                        >
                             Archive
                         </MenuItem>
                     </Menu>

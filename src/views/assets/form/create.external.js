@@ -6,7 +6,7 @@ import React, {} from 'react';
 import {useFormik} from 'formik';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import {validationSchema} from '../schema';
+import {validationSchema} from '../schema/external';
 import SubmitButton from '../../../reusable/submit-button';
 import {useDispatch, useSelector} from 'react-redux';
 import DaaDAlerts from '../../../reusable/alerts';
@@ -32,7 +32,6 @@ const CreateExternalAssetForm = (props) => {
         customerName: '',
         customerId: '',
         category: '',
-        status: '',
         description: '',
         assetName: '',
         condition: '',
@@ -43,7 +42,7 @@ const CreateExternalAssetForm = (props) => {
     };
     const formik = useFormik({
         initialValues: initialValues,
-        // validationSchema: validationSchema,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             const payload = {
                 customerName: values.customerName,

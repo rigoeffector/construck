@@ -24,7 +24,11 @@ import {Columns} from './table-column/external';
 import CreateExternalAssetForm from './form/create.external';
 import ConstruckModal from '../../reusable/modal';
 import AssignExternalAssetForm from './form/assign.external';
-import {DELETE_EXTERNAL_ASSET_REQUEST, GET_EXTERNAL_ASSETS_LIST_REQUEST, UPDATE_EXTERNAL_ASSET_STATUS_REQUEST} from '../../reducers/product/external/constant';
+import {
+    DELETE_EXTERNAL_ASSET_REQUEST,
+    GET_EXTERNAL_ASSETS_LIST_REQUEST,
+    UPDATE_EXTERNAL_ASSET_STATUS_REQUEST
+} from '../../reducers/product/external/constant';
 import DaaDAlerts from '../../reusable/alerts';
 import moment from 'moment';
 const keys = process.env.REACT_APP_ADDAX_API_KEY;
@@ -59,6 +63,7 @@ export const ProductsExternal = (props) => {
     const [showMoreInfo, setShowMoreInfo] = useState(false);
     const [showDeleteModel, setShowDeleteModel] = useState(false);
     const [showArchiveModel, setShowArchiveModel] = useState(false);
+    const [showAvailableModel, setShowAvailableModel] = useState(false);
 
     const handleAddNewProduct = () => {
         setThisState((prev) => ({
@@ -75,6 +80,7 @@ export const ProductsExternal = (props) => {
         setShowDeleteModel(false);
         setShowMoreInfo(false);
         setShowArchiveModel(false);
+        setShowAvailableModel(false);
 
         setThisState((prev) => ({
             ...prev,
@@ -123,10 +129,24 @@ export const ProductsExternal = (props) => {
             moreInfo: data
         }));
     };
+    const handleAvailable = (data) => {
+        setShowAvailableModel(true);
+        setThisState((prev) => ({
+            ...prev,
+            moreInfo: data
+        }));
+    };
 
     const handleArchiveConfirm = () => {
         const payload = {
             status: 'ARCHIVED',
+            id: thisState.moreInfo.id
+        };
+        dispatch({type: UPDATE_EXTERNAL_ASSET_STATUS_REQUEST, payload});
+    };
+    const handleAvailableConfirm = () => {
+        const payload = {
+            status: 'AVAILABLE',
             id: thisState.moreInfo.id
         };
         dispatch({type: UPDATE_EXTERNAL_ASSET_STATUS_REQUEST, payload});
@@ -281,7 +301,69 @@ export const ProductsExternal = (props) => {
                     </Button>
                 </Box>
             </ConstruckModal>
+            <ConstruckModal title="Mark asset" show={showAvailableModel} handleClose={handleClose}>
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    Are you sure you want to mark as available{' '}
+                    <span
+                        style={{
+                            fontWeight: '700',
+                            color: '#282546'
+                        }}
+                    >
+                        {` ${thisState.moreInfo.assetName} (${thisState.moreInfo.plateNumber})`}
+                    </span>
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        margin: '30px 0px'
+                    }}
+                >
+                    <Button
+                        onClick={handleClose}
+                        sx={{
+                            margin: '0px 10px',
+                            borderRadius: '8px',
+                            background: '#EDEFF2',
+                            color: '#64748A !important',
+                            fontWeight: '500'
+                        }}
+                    >
+                        Cancel
+                    </Button>
 
+                    <Button
+                        onClick={handleAvailableConfirm}
+                        variant="contained"
+                        sx={{
+                            borderRadius: '8px',
+                            background: '#1090CB',
+                            color: '#FFF',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {updateStatusLoading ? (
+                            <CircularProgress
+                                size={20}
+                                sx={{
+                                    color: 'white'
+                                }}
+                            />
+                        ) : (
+                            'Confirm'
+                        )}
+                    </Button>
+                </Box>
+            </ConstruckModal>
 
             <Grid container direction="row" justifyContent="flex-end" alignItems="center">
                 <Button
@@ -321,7 +403,7 @@ export const ProductsExternal = (props) => {
             </Grid>
 
             <BodyContainer>
-            {createExternalAssetSuccess && (
+                {createExternalAssetSuccess && (
                     <DaaDAlerts show={createExternalAssetSuccess} message={'External Asset is created successful'} variant={'success'} />
                 )}
                 <DashBoardLayoutForPage
@@ -332,14 +414,14 @@ export const ProductsExternal = (props) => {
                             rows={listExternalAllAssets || []}
                             loader={listExternalAllAssetsLoading}
                             enabledFilters={false}
-                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete)}
+                            columns={Columns(handleViewMore, handleEdit, handleArchive, handleDelete, handleAvailable)}
                         />
                     }
                 />
             </BodyContainer>
 
-             {/* modal more info  */}
-             <ConstruckModal title="Asset informatIon" show={showMoreInfo} handleClose={handleClose}>
+            {/* modal more info  */}
+            <ConstruckModal title="Asset informatIon" show={showMoreInfo} handleClose={handleClose}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Box
@@ -391,11 +473,7 @@ export const ProductsExternal = (props) => {
                                 padding: '5px 0px'
                             }}
                         >
-                            <Box
-                                item
-                                xs={12}
-                               
-                            >
+                            <Box item xs={12}>
                                 <Typography>Description </Typography>
                             </Box>
                             <Typography
