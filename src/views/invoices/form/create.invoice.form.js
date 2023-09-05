@@ -18,7 +18,7 @@ const StyledDateTextField = styled(TextField)({
         height: '30px' // You can adjust the padding as needed
     }
 });
-const CreateAssetInvoiceForm = ({moreInfo}) => {
+const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
     const dispatch = useDispatch();
     const initialValues = {
         clientRequestId: '',
@@ -70,7 +70,7 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
                                             id="invoiceNumber"
                                             name="invoiceNumber"
                                             label="Invoice Number"
-                                            value={formik.values.invoiceNumber}
+                                            value={randomInvoice}
                                             onChange={formik.handleChange}
                                             error={formik.touched.invoiceNumber && Boolean(formik.errors.invoiceNumber)}
                                             helperText={formik.touched.invoiceNumber && formik.errors.invoiceNumber}
@@ -398,7 +398,7 @@ const CreateAssetInvoiceForm = ({moreInfo}) => {
                                 >
                                     {loading ? <CircularProgress style={{
                                         color: 'white'
-                                    }} /> : 'Next'}
+                                    }} /> : 'Save'}
                                 </Button>
                             )}
                         </Box>

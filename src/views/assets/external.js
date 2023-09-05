@@ -341,13 +341,13 @@ export const ProductsExternal = (props) => {
              {/* modal more info  */}
              <ConstruckModal title="Asset informatIon" show={showMoreInfo} handleClose={handleClose}>
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Customer Name</Typography>
@@ -361,13 +361,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Customer ID</Typography>
@@ -388,15 +388,13 @@ export const ProductsExternal = (props) => {
                                 display: 'block',
 
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Box
                                 item
                                 xs={12}
-                                sx={{
-                                    margin: '20px 0px'
-                                }}
+                               
                             >
                                 <Typography>Description </Typography>
                             </Box>
@@ -410,13 +408,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Year of Manufacture</Typography>
@@ -430,13 +428,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Plate Number</Typography>
@@ -450,13 +448,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Make/Model</Typography>
@@ -470,13 +468,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Category</Typography>
@@ -490,13 +488,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                // borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Status</Typography>
@@ -510,13 +508,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                // borderBottom: '1px solid #ddd',
-                                padding: '20px 0px'
+                                borderBottom: '1px solid #ddd',
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Asset Name</Typography>
@@ -530,13 +528,13 @@ export const ProductsExternal = (props) => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
 
-                                padding: '20px 0px'
+                                padding: '5px 0px'
                             }}
                         >
                             <Typography>Condition</Typography>

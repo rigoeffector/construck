@@ -23,6 +23,7 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const [showAssignModal, setShowAssignModal] = useState(false);
     const [moreInfo, setMoreInfo] = useState({});
+    const [randomInvoice, setRandomInvoice] = useState('');
     const [allRequests, setAllRequests] = useState([]);
     const [showMoreViewModal, setShowMoreViewModal] = useState(false);
     useEffect(() => {
@@ -138,7 +139,16 @@ const Dashboard = () => {
         }
     ];
 
+    function generateRandomTextWithNumber(prefix, length) {
+        const randomNumber = Math.floor(Math.random() * Math.pow(10, length));
+        const numberString = randomNumber.toString().padStart(length, '0');
+        return `${prefix}${numberString}`;
+      }
+      
+    
+     
     const handleAssign = (data) => {
+        setRandomInvoice(generateRandomTextWithNumber('INVO', 4));
         setShowAssignModal(true);
         console.log(data);
         setMoreInfo(data);
@@ -425,7 +435,7 @@ const Dashboard = () => {
                 title={`Create invoice for ${moreInfo.requestedBy}`}
                 handleClose={handleClose}
             >
-                <CreateAssetInvoiceForm moreInfo={moreInfo} />
+                <CreateAssetInvoiceForm moreInfo={moreInfo} randomInvoice={randomInvoice} />
             </ConstruckModal>
             <Grid container spacing={gridSpacing}>
                 <Grid

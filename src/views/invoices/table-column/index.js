@@ -28,7 +28,6 @@ export const Columns = (handleDownload, handleChangeStatus, handleDelete) => {
     };
 
     const handleMenuItemClick = (menuItem) => {
-        debugger;
         if (menuItem === 'Download Invoice' && selectedRowData) {
             // Handle "View More" action with selectedRowData
             handleDownload(selectedRowData);
@@ -141,12 +140,11 @@ export const Columns = (handleDownload, handleChangeStatus, handleDelete) => {
                         TransitionComponent={Fade}
                     >
                         <MenuItem onClick={() => handleMenuItemClick('Download Invoice')}>View Invoice</MenuItem>
-                        <MenuItem
-                            onClick={() => handleMenuItemClick('Mark as Paid')}
-                            disabled={params.row.assetStatus === 'ARCHIVED' || params.row.assetStatus === 'PAID'}
-                        >
+
+                        <MenuItem disabled={selectedRowData?.invoiceStatus === 'PAID' ?true: false} onClick={() => handleMenuItemClick('Mark as Paid')}>
                             Mark as Paid
                         </MenuItem>
+
                         <MenuItem
                             onClick={() => handleMenuItemClick('Mark Delete')}
                             sx={{
