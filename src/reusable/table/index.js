@@ -123,7 +123,14 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
         setIsExportDropdownOpen(!isExportDropdownOpen);
         // Filter out columns with type "checkbox" and "actions"
         const columnsToExport = columns
-            .filter((column) => column.field !== 'checkbox' && column.type !== 'actions' && column.field !== 'status' && column.field !== '')
+            .filter(
+                (column) =>
+                    column.field !== 'checkbox' &&
+                    column.type !== 'actions' &&
+                    column.field !== 'status' &&
+                    column.field !== '' &&
+                    column.field !== 'driver'
+            )
             .map((column) => column.field);
 
         // Prepare the data for export
@@ -178,17 +185,25 @@ export function DataTable(props, disableColumnFilter, loading, idName) {
                     <div>
                         {isExportDropdownOpen ? (
                             // Render the export options when the dropdown is open
-                            <Button variant="outlined" onClick={handleExport} sx={{
+                            <Button
+                                variant="outlined"
+                                onClick={handleExport}
+                                sx={{
                                     width: '200px'
-                            }}>
-                               Download Report
+                                }}
+                            >
+                                Download Report
                             </Button>
                         ) : (
                             // Render a button to open the dropdown when it's closed
-                            <Button variant="outlined" onClick={handleExport} sx={{
+                            <Button
+                                variant="outlined"
+                                onClick={handleExport}
+                                sx={{
                                     width: '200px'
-                            }}>
-                               Download Report
+                                }}
+                            >
+                                Download Report
                             </Button>
                         )}
                     </div>
