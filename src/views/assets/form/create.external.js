@@ -36,7 +36,7 @@ const CreateExternalAssetForm = (props) => {
         assetName: '',
         condition: '',
         manufacturedDate: '',
-        duration: '',
+        // duration: '',
         make: '',
         plateNumber: ''
     };
@@ -53,7 +53,7 @@ const CreateExternalAssetForm = (props) => {
                 manufacturedDate: moment(values.manufacturedDate).format('YYYY-MM-DD'),
                 description: values.description,
                 status: 'AVAILABLE',
-                duration: values.duration,
+                // duration: values.duration,
                 make: values.make,
                 plateNumber: values.plateNumber
             };
@@ -258,7 +258,7 @@ const CreateExternalAssetForm = (props) => {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <Box
                             sx={{
                                 margin: '4px 0px'
@@ -276,7 +276,7 @@ const CreateExternalAssetForm = (props) => {
                                 helperText={formik.touched.duration && formik.errors.duration}
                             />
                         </Box>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 <Box
                     sx={{

@@ -18,5 +18,5 @@ export const validationSchema = yup.object({
     manufacturedDate: yup.date().required('Manufactured date is required'),
     make: yup.string('Enter model name').required('Model name is required').nullable(),
     description: yup.string('Enter Asset description').required('Asset description is required').nullable(),
-    duration: yup.string('Enter duration ').required('Duration is required').nullable()
+    // duration: yup.string('Enter duration ').required('Duration is required').nullable()
 });

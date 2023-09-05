@@ -14,7 +14,7 @@ import DaaDAlerts from '../../../../../reusable/alerts';
 import SubmitButton from '../../../../../reusable/submit-button';
 import {COMPANY_REQUEST_ASSET_REQUEST, INDIVIDUAL_REQUEST_ASSET_REQUEST} from '../../../../../reducers/company/constant';
 import {GET_ALL_TYPES_LIST_REQUEST} from '../../../../../reducers/product/constant';
-import { validationSchemaIndiv } from './schema';
+import {validationSchemaIndiv} from './schema';
 const StyledDateTextField = styled(TextField)({
     width: '100%',
     height: '50px', // Set the width to 100%
@@ -45,7 +45,7 @@ const IndividualRequestAssetForm = ({typesData}) => {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchemaIndiv,
-        onSubmit: async (values, { resetForm }) => {
+        onSubmit: async (values, {resetForm}) => {
             const payload = {
                 requestedBy: values.firstName + ' ' + values.lastName,
                 requestorType: 'INDIVIDUAL',
@@ -70,6 +70,8 @@ const IndividualRequestAssetForm = ({typesData}) => {
                 width: '50%'
             }}
         >
+            {error && <DaaDAlerts show={error} message={error} variant={'error'} />}
+            {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -267,9 +269,6 @@ const IndividualRequestAssetForm = ({typesData}) => {
                         Request
                     </SubmitButton>
                 </Box>
-
-                {error && <DaaDAlerts show={error} message={error} variant={'error'} />}
-                {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             </form>
         </div>
     );

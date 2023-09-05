@@ -70,6 +70,8 @@ const CompanyRequestAssetForm = ({typesData}) => {
                 width: '50%'
             }}
         >
+                {error && <DaaDAlerts show={error} message={error} variant={'Request failed, try again'} />}
+                {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -250,8 +252,6 @@ const CompanyRequestAssetForm = ({typesData}) => {
                     </SubmitButton>
                 </Box>
 
-                {error && <DaaDAlerts show={error} message={error} variant={'Request failed, try again'} />}
-                {success && <DaaDAlerts show={success} message={'Asset Requested Successful'} variant={'success'} />}
             </form>
         </div>
     );

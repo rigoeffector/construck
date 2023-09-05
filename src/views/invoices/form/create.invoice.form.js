@@ -375,13 +375,13 @@ const CreateAssetInvoiceForm = ({moreInfo, randomInvoice}) => {
                                 justifyContent: 'flex-end'
                             }}
                         >
-                            <Button
+                            {/* <Button
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
                                 sx={{border: '1px solid #ddd', height: '47px', marginRight: '20px', marginTop: '32px'}}
                             >
                                 Back
-                            </Button>
+                            </Button> */}
                             {activeStep === 0 && (
                                 <Button
                                     sx={{

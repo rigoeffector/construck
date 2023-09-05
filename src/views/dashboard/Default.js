@@ -149,7 +149,7 @@ const Dashboard = () => {
     
      
     const handleAssign = (data) => {
-        setRandomInvoice(generateRandomTextWithNumber('INVO', 4));
+        setRandomInvoice(generateRandomTextWithNumber('INV0', 4));
         setShowAssignModal(true);
         console.log(data);
         setMoreInfo(data);
