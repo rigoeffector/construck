@@ -3,7 +3,7 @@ import Chart from 'chart.js';
 import {Box, Paper, Typography} from '@mui/material';
 import YearPicker from './filter.linearchart';
 
-const DoughnutChart = () => {
+const DoughnutChart = ({data}) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const DoughnutChart = () => {
                 labels: ['Available Assets', 'Assigned Assets'],
                 datasets: [
                     {
-                        data: [12, 19],
+                        data: [data?.totalAvailableAssets, data?.totalAssignedAssets],
                         backgroundColor: ['#1090CB', '#D9D9D9']
                     }
                 ]
@@ -25,7 +25,7 @@ const DoughnutChart = () => {
                 maintainAspectRatio: false
             }
         });
-    }, []);
+    }, [data?.totalAssignedAssets, data?.totalAvailableAssets]);
 
     return (
         <Box

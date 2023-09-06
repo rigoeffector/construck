@@ -480,7 +480,7 @@ const Dashboard = () => {
                             <LineBarComboChart />
                         </Grid>
                         <Grid item xs={12} sm={12} md={4}>
-                            <DoughnutChart />
+                        {loadingStats ? <CircularProgress /> : <DoughnutChart data={statistics}  />}
                         </Grid>
                     </Grid>
                 </Grid>
