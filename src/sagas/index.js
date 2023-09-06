@@ -18,6 +18,7 @@ import { watchIndividualRequestAssetData } from './company/individual';
 import { watchCreateInvoiceData } from './invoice/create';
 import { watchUpdateInvoiceStatusData } from './invoice/updateStatus';
 import { watchgetInvoicesListData } from './invoice/read';
+import { watchStatsListData } from './stats/read';
 
 export default function* rootSaga() {
     yield all([
@@ -39,6 +40,7 @@ export default function* rootSaga() {
         fork(watchIndividualRequestAssetData),
         fork(watchCreateInvoiceData),
         fork(watchUpdateInvoiceStatusData),
-        fork(watchgetInvoicesListData)
+        fork(watchgetInvoicesListData),
+        fork(watchStatsListData)
     ]);
 }

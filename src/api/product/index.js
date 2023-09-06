@@ -19,10 +19,7 @@ export const productApi = {
         listExternal: (data) => request('GET', `api/v1/asset-mgmt/external-assets/all`, data, true)
     },
 
-    categories: {
-        create: (data) => request('POST', `entity/save`, data, true),
-        delete: (data) => request('POST', `entity/instance/delete`, data, true),
-        update: (data) => request('POST', `entity/instance/update`, data, true),
-        list: (data) => request('POST', `entity/read/data`, data, true)
+    stats: {
+        list: (data) => request('GET', `api/v1/asset-mgmt/stats/`, data, true)
     }
 };

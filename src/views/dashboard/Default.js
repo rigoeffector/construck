@@ -15,10 +15,12 @@ import {VIEW_ALL_REQUESTS_ASSETS_REQUEST} from '../../reducers/product/constant'
 import {formatRequestedAssetsInfo} from '../../selectors/all.requested.assets';
 import CreateAssetInvoiceForm from '../invoices/form/create.invoice.form';
 import moment from 'moment';
+import {GET_STATS_LIST_REQUEST} from '../../reducers/stats/constants';
 const Dashboard = () => {
     const {
         auth,
-        listRequestedAssets: {data: listAssets, loading: listAssetsLoading}
+        listRequestedAssets: {data: listAssets, loading: listAssetsLoading},
+        getStats: {data: statistics, loading: loadingStats}
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     const [showAssignModal, setShowAssignModal] = useState(false);
@@ -27,9 +29,15 @@ const Dashboard = () => {
     const [allRequests, setAllRequests] = useState([]);
     const [showMoreViewModal, setShowMoreViewModal] = useState(false);
     useEffect(() => {
-        dispatch({type: VIEW_ALL_REQUESTS_ASSETS_REQUEST,payload: {
-            status: 'PENDING'
-        }});
+        dispatch({
+            type: VIEW_ALL_REQUESTS_ASSETS_REQUEST,
+            payload: {
+                status: 'PENDING'
+            }
+        });
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: GET_STATS_LIST_REQUEST});
     }, [dispatch]);
     useEffect(() => {
         if (listAssets && !listAssetsLoading) {
@@ -464,7 +472,7 @@ const Dashboard = () => {
                         marginTop: '20px'
                     }}
                 >
-                    <AssetsSummaryCardsView />
+                    {loadingStats ? <CircularProgress /> : <AssetsSummaryCardsView data={statistics} />}
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={gridSpacing}>

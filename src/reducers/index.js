@@ -22,6 +22,7 @@ import individualRequestAssetReducer from './company/individual';
 import createInvoiceReducer from './invoice/create';
 import getInvoicesListReducer from './invoice/read';
 import updateInvoiceStatusReducer from './invoice/update.status';
+import getStatisticsReducer from './stats/read';
 
 const rootReducer = combineReducers({
     customization: customizationReducer,
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     individualRequestAsset : individualRequestAssetReducer,
     createInvoice:createInvoiceReducer,
     listInvoices: getInvoicesListReducer,
-    updateInvoice: updateInvoiceStatusReducer
+    updateInvoice: updateInvoiceStatusReducer,
+    getStats: getStatisticsReducer
 });
 
 export default rootReducer;

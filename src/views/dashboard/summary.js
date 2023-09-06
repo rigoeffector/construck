@@ -5,7 +5,7 @@ import {RootStateOrAny, useDispatch, useSelector} from 'react-redux';
 // import { states } from '../../../constants';
 import StatCardWidget from './StatCardWidget';
 
-export default function AssetsSummaryCardsView() {
+export default function AssetsSummaryCardsView({data}) {
     //
     // React hooks
     //
@@ -33,25 +33,25 @@ export default function AssetsSummaryCardsView() {
         {
             title: 'Total Available Assets',
             icon: '/assets/images/purple.svg',
-            data: 1240,
+            data: data?.totalAvailableAssets,
             color: '#F6F0FD'
         },
         {
             title: 'Total Assigned Assets',
             icon: '/assets/images/green.svg',
-            data: 70,
+            data: data?.totalAssignedAssets,
             color: '#F0FDF8'
         },
         {
             title: 'Total Paid Assets',
             icon: '/assets/images/orange.svg',
-            data: 10000,
+            data: data?.totalPaidAssets,
             color: '#FDF7F0'
         },
         {
             title: 'Total Unpaid Assets',
             icon: '/assets/images/purple.svg',
-            data: 50,
+            data: data?.totalUnpaidAssets,
             color: 'rgba(16, 144, 203, 0.24)'
         }
     ];
